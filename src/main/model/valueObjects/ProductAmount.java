@@ -1,7 +1,7 @@
 package main.model.valueObjects;
 
 import lombok.Getter;
-import main.model.exceptions.InvalidProductAmountException;
+import main.model.exceptions.validation.InvalidProductAmountException;
 
 @Getter
 public class ProductAmount {

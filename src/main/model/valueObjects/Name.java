@@ -1,7 +1,7 @@
 package main.model.valueObjects;
 
 import lombok.Getter;
-import main.model.exceptions.InvalidRecordNameException;
+import main.model.exceptions.validation.InvalidRecordNameException;
 
 @Getter
 public abstract class Name {

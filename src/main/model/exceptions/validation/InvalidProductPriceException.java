@@ -1,4 +1,4 @@
-package main.model.exceptions;
+package main.model.exceptions.validation;
 
 public class InvalidProductPriceException extends ValidationException{
     public InvalidProductPriceException(double value) {
