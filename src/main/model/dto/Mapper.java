@@ -2,6 +2,7 @@ package main.model.dto;
 
 import main.model.data.records.GroupRecord;
 import main.model.data.records.ProductRecord;
+import main.model.valueObjects.GroupName;
 
 import java.util.UUID;
 
@@ -25,12 +26,13 @@ public class Mapper {
                 groupId);
     }
 
-    public static ProductDto map(ProductRecord record){
+    public static ProductDto map(ProductRecord record, GroupName groupName){
         return new ProductDto(
                 record.getName(),
                 record.getDescription(),
                 record.getManufacturer(),
                 record.getAmount(),
-                record.getPrice());
+                record.getPrice(),
+                groupName);
     }
 }

@@ -20,29 +20,30 @@ public class ProductTable implements IProductTable {
     private final Map<UUID, List<ProductRecord>> groupIdIndex = new HashMap<>();
 
     @Override
-    public ProductDto get(UUID id) {
+    public ProductRecord get(UUID id) {
         throwIfDoesNotExist(id);
-        return Mapper.map(primaryKey.get(id));
+        return primaryKey.get(id);
     }
 
     @Override
-    public ProductDto get(ProductName name) {
+    public ProductRecord get(ProductName name) {
         throwIfDoesNotExist(name);
-        return Mapper.map(nameIndex.get(name));
+        return nameIndex.get(name);
     }
 
     @Override
-    public List<ProductDto> getByGroupId(UUID groupId) {
+    public List<ProductRecord> getByGroupId(UUID groupId) {
         throwIfGroupDoesNotExist(groupId);
-        return groupIdIndex.get(groupId).stream().map(Mapper::map).toList();
+        //copy of internal list
+        return groupIdIndex.get(groupId).stream().toList();
     }
 
     @Override
     public void create(ProductDto toCreate) {
         throwIfExists(toCreate.getName());
         UUID id = UUID.randomUUID();
-        UUID groupId = DataContext.getInstance().getGroupTable().get(toCreate.getGroupName()).getId;
-        ProductRecord record = Mapper.map(toCreate, id, );
+        UUID groupId = DataContext.getInstance().getGroupTable().get(toCreate.getGroupName()).getId();
+        ProductRecord record = Mapper.map(toCreate, id, groupId);
     }
 
     @Override

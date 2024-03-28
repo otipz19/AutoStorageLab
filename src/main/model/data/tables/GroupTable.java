@@ -17,15 +17,15 @@ public class GroupTable implements IGroupTable {
     private final Map<GroupName, GroupRecord> nameIndex = new HashMap<>();
 
     @Override
-    public GroupDto get(UUID id) {
+    public GroupRecord get(UUID id) {
         throwIfDoesNotExist(id);
-        return Mapper.map(primaryKey.get(id));
+        return primaryKey.get(id);
     }
 
     @Override
-    public GroupDto get(GroupName name) {
+    public GroupRecord get(GroupName name) {
         throwIfDoesNotExist(name);
-        return Mapper.map(nameIndex.get(name));
+        return nameIndex.get(name);
     }
 
     @Override
