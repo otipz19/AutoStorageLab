@@ -7,12 +7,10 @@ import main.model.dto.ProductDto;
 import main.model.exceptions.crud.GroupNotFoundException;
 import main.model.exceptions.crud.ProductNameAlreadyExists;
 import main.model.exceptions.crud.ProductNotFoundException;
+import main.model.valueObjects.GroupName;
 import main.model.valueObjects.ProductName;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ProductTable implements IProductTable {
     private final Map<UUID, ProductRecord> primaryKey = new HashMap<>();
@@ -42,8 +40,29 @@ public class ProductTable implements IProductTable {
     public void create(ProductDto toCreate) {
         throwIfExists(toCreate.getName());
         UUID id = UUID.randomUUID();
-        UUID groupId = DataContext.getInstance().getGroupTable().get(toCreate.getGroupName()).getId();
+        //here is group existence already validated
+        UUID groupId = getGroupIdByGroupName(toCreate.getGroupName());
         ProductRecord record = Mapper.map(toCreate, id, groupId);
+        addRecordToIndexes(id, record);
+    }
+
+    private static UUID getGroupIdByGroupName(GroupName groupName) {
+        return DataContext.getInstance().getGroupTable().get(groupName).getId();
+    }
+
+    private void addRecordToIndexes(UUID id, ProductRecord record) {
+        primaryKey.put(id, record);
+        nameIndex.put(record.getName(), record);
+        addRecordToGroupIdIndex(record);
+    }
+
+    private void addRecordToGroupIdIndex(ProductRecord record) {
+        var groupIndex = groupIdIndex.get(record.getGroupId());
+        if(groupIndex.isEmpty()){
+            groupIndex = new ArrayList<ProductRecord>();
+        }
+        groupIndex.add(record);
+        groupIdIndex.put(record.getGroupId(), groupIndex);
     }
 
     @Override
