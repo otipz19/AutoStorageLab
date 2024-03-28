@@ -1,12 +1,12 @@
 package main.model.data.records;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import main.model.valueObjects.GroupName;
 
 import java.util.UUID;
 
-@Data
+@Getter
 @AllArgsConstructor
 public class GroupRecord {
     //Primary key
@@ -14,4 +14,8 @@ public class GroupRecord {
 
     private GroupName name;
     private String description;
+
+    public GroupRecord copy(){
+        return new GroupRecord(id, name, description);
+    }
 }

@@ -1,7 +1,7 @@
 package main.model.data.records;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import main.model.valueObjects.ManufacturerName;
 import main.model.valueObjects.ProductAmount;
 import main.model.valueObjects.ProductName;
@@ -9,7 +9,7 @@ import main.model.valueObjects.ProductPrice;
 
 import java.util.UUID;
 
-@Data
+@Getter
 @AllArgsConstructor
 public class ProductRecord {
     //Primary key
@@ -23,4 +23,8 @@ public class ProductRecord {
 
     //Foreign key to GroupTable
     private UUID groupId;
+
+    public ProductRecord copy(){
+        return new ProductRecord(id, name, description, manufacturer, amount, price, groupId);
+    }
 }
