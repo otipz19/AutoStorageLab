@@ -67,17 +67,47 @@ public class ProductTable implements IProductTable {
 
     @Override
     public void delete(UUID id) {
-
+        throwIfDoesNotExist(id);
+        ProductRecord record = primaryKey.get(id);
+        removeRecordFromIndexes(record);
     }
 
     @Override
     public void delete(ProductName name) {
-
+        throwIfDoesNotExist(name);
+        ProductRecord record = nameIndex.get(name);
+        removeRecordFromIndexes(record);
     }
 
     @Override
     public void deleteByGroupId(UUID groupId) {
+        throwIfGroupDoesNotExist(groupId);
+        List<ProductRecord> records = groupIdIndex.get(groupId);
+        for(ProductRecord record : records){
+            removeRecordFromPrimaryKey(record);
+            removeRecordFromNameIndex(record);
+        }
+        groupIdIndex.remove(groupId);
+    }
 
+    private void removeRecordFromIndexes(ProductRecord record) {
+        removeRecordFromPrimaryKey(record);
+        removeRecordFromNameIndex(record);
+        removeRecordFromGroupIdIndex(record);
+    }
+
+    private void removeRecordFromNameIndex(ProductRecord record) {
+        nameIndex.remove(record.getName());
+    }
+
+    private void removeRecordFromPrimaryKey(ProductRecord record) {
+        primaryKey.remove(record.getId());
+    }
+
+    private void removeRecordFromGroupIdIndex(ProductRecord record) {
+        var groupIndex = groupIdIndex.get(record.getGroupId());
+        groupIndex.remove(record);
+        groupIdIndex.put(record.getGroupId(), groupIndex);
     }
 
     @Override
