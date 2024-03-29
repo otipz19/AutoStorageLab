@@ -8,17 +8,17 @@ import main.model.data.tables.ProductTable;
 
 public class DataContext implements IDataContext {
     @Getter
-    private static final DataContext instance;
+    private static DataContext instance = new DataContext();
 
     @Getter
     private final IGroupTable groupTable = new GroupTable();
     @Getter
     private final IProductTable productTable = new ProductTable();
 
-    static {
-        instance = new DataContext();
-    }
-
     //Forbid to create new instances
     private DataContext(){}
+
+    public static void resetData(){
+        instance = new DataContext();
+    }
 }
