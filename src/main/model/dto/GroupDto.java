@@ -9,4 +9,9 @@ import main.model.valueObjects.GroupName;
 public class GroupDto {
     private GroupName name;
     private String description;
+
+    public GroupDto(String name, String description){
+        this.name = new GroupName(name);
+        this.description = description;
+    }
 }

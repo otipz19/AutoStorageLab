@@ -70,11 +70,14 @@ public class ProductTable implements IProductTable {
     public void deleteByGroupId(UUID groupId) {
         throwIfGroupDoesNotExist(groupId);
         List<ProductRecord> records = groupIdIndex.get(groupId);
-        for (ProductRecord record : records) {
-            removeRecordFromPrimaryKey(record);
-            removeRecordFromNameIndex(record);
+        //records would be null if group exists, but no related products present
+        if(records != null){
+            for (ProductRecord record : records) {
+                removeRecordFromPrimaryKey(record);
+                removeRecordFromNameIndex(record);
+            }
+            groupIdIndex.remove(groupId);
         }
-        groupIdIndex.remove(groupId);
     }
 
     @Override
@@ -90,6 +93,7 @@ public class ProductTable implements IProductTable {
         updateRecord(toUpdate, oldRecord);
     }
 
+    //TODO: this method can be simplified by removing redundant if's
     private void updateRecord(ProductDto toUpdate, ProductRecord oldRecord) {
         GroupRecord oldGroup = DataContext.getInstance().getGroupTable().get(oldRecord.getGroupId());
         UUID groupId = oldGroup.getId();
@@ -102,7 +106,7 @@ public class ProductTable implements IProductTable {
             removeRecordFromNameIndex(oldRecord);
             addRecordToGroupIdIndex(updatedRecord);
         }
-        if(!oldGroup.getId().equals(groupId)){
+        if (!oldGroup.getId().equals(groupId)){
             removeRecordFromGroupIdIndex(oldRecord);
             addRecordToGroupIdIndex(updatedRecord);
         }
@@ -124,11 +128,10 @@ public class ProductTable implements IProductTable {
 
     private void addRecordToGroupIdIndex(ProductRecord record) {
         var groupIndex = groupIdIndex.get(record.getGroupId());
-        if (groupIndex.isEmpty()) {
+        if (groupIndex == null) {
             groupIndex = new ArrayList<ProductRecord>();
         }
         groupIndex.add(record);
-        groupIdIndex.put(record.getGroupId(), groupIndex);
     }
 
     private void removeRecordFromIndexes(ProductRecord record) {
@@ -163,9 +166,7 @@ public class ProductTable implements IProductTable {
     }
 
     private void throwIfGroupDoesNotExist(UUID groupId) {
-        if (!groupIdIndex.containsKey(groupId)) {
-            throw new GroupNotFoundException(groupId);
-        }
+        DataContext.getInstance().getGroupTable().get(groupId);
     }
 
     private void throwIfExists(ProductName name) {
