@@ -66,21 +66,20 @@ public class GroupTable implements IGroupTable {
 
     @Override
     public void update(UUID id, GroupDto toUpdate) {
-        throwIfDoesNotExist(id);
         updateGroup(id, toUpdate);
     }
 
     @Override
     public void update(GroupName name, GroupDto toUpdate) {
-        throwIfDoesNotExist(name);
-        UUID id = nameIndex.get(name).getId();
+        UUID id = get(name).getId();
         updateGroup(id, toUpdate);
     }
 
     private void updateGroup(UUID id, GroupDto toUpdate) {
-        GroupRecord existing = primaryKey.get(id);
+        GroupRecord existing = get(id);
         GroupRecord newRecord = Mapper.map(toUpdate, id);
         if (isNameChanged(existing, newRecord)) {
+            throwIfExists(toUpdate.getName());
             nameIndex.remove(existing.getName());
         }
         nameIndex.put(newRecord.getName(), newRecord);
