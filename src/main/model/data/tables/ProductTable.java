@@ -41,22 +41,31 @@ public class ProductTable implements IProductTable {
         return nameIndex.get(name);
     }
 
+
+    /**
+     * Throws GroupNotFoundException if group does not exist.
+     * Returns empty list if group exists, but no related products do
+     */
     @Override
     public List<ProductRecord> getByGroupId(UUID groupId) {
         throwIfGroupDoesNotExist(groupId);
+        List<ProductRecord> related = groupIdIndex.get(groupId);
+        if(related == null){
+            return new ArrayList<>();
+        }
         //copy of internal list
-        return groupIdIndex.get(groupId).stream().toList();
+        return related.stream().toList();
     }
 
     @Override
-    public UUID create(ProductDto toCreate) {
+    public ProductRecord create(ProductDto toCreate) {
         throwIfExists(toCreate.getName());
         UUID id = UUID.randomUUID();
         //here is group existence already validated
         UUID groupId = getGroupIdByGroupName(toCreate.getGroupName());
         ProductRecord record = Mapper.map(toCreate, id, groupId);
         addRecordToIndexes(record);
-        return id;
+        return record;
     }
 
     private static UUID getGroupIdByGroupName(GroupName groupName) {
@@ -141,6 +150,7 @@ public class ProductTable implements IProductTable {
         var groupIndex = groupIdIndex.get(record.getGroupId());
         if (groupIndex == null) {
             groupIndex = new ArrayList<ProductRecord>();
+            groupIdIndex.put(record.getGroupId(), groupIndex);
         }
         groupIndex.add(record);
     }

@@ -12,7 +12,7 @@ public interface IGroupTable {
     List<GroupRecord> getAll();
     GroupRecord get(UUID id);
     GroupRecord get(GroupName name);
-    UUID create(GroupDto toCreate);
+    GroupRecord create(GroupDto toCreate);
     void delete(UUID id);
     void delete(GroupName name);
     void update(UUID id, GroupDto toUpdate);

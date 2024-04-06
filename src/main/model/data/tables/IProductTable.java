@@ -13,8 +13,14 @@ public interface IProductTable {
     List<ProductRecord> getAll();
     ProductRecord get(UUID id);
     ProductRecord get(ProductName name);
+
+    /**
+     * Throws GroupNotFoundException if group does not exist.
+     * Returns empty list if group exists, but no related products do
+     */
     List<ProductRecord> getByGroupId(UUID groupId);
-    UUID create(ProductDto toCreate);
+
+    ProductRecord create(ProductDto toCreate);
     void delete(UUID id);
     void delete(ProductName name);
     void deleteByGroupId(UUID groupId);
