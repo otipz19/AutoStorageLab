@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IGroupTable {
+    void resetData();
     List<GroupRecord> getAll();
     GroupRecord get(UUID id);
     GroupRecord get(GroupName name);

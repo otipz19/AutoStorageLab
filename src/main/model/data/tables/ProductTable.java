@@ -18,6 +18,13 @@ public class ProductTable implements IProductTable {
     private final Map<UUID, List<ProductRecord>> groupIdIndex = new HashMap<>();
 
     @Override
+    public void resetData(){
+        primaryKey.clear();
+        nameIndex.clear();
+        groupIdIndex.clear();
+    }
+
+    @Override
     public List<ProductRecord> getAll(){
         return primaryKey.values().stream().toList();
     }

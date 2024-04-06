@@ -15,6 +15,12 @@ public class GroupTable implements IGroupTable {
     private final Map<GroupName, GroupRecord> nameIndex = new HashMap<>();
 
     @Override
+    public void resetData(){
+        primaryKey.clear();
+        nameIndex.clear();
+    }
+
+    @Override
     public List<GroupRecord> getAll(){
         return primaryKey.values().stream().toList();
     }

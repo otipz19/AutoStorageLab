@@ -8,7 +8,7 @@ import main.model.data.tables.ProductTable;
 
 public class DataContext implements IDataContext {
     @Getter
-    private static DataContext instance = new DataContext();
+    private static final DataContext instance = new DataContext();
 
     @Getter
     private final IGroupTable groupTable = new GroupTable();
@@ -19,6 +19,7 @@ public class DataContext implements IDataContext {
     private DataContext(){}
 
     public static void resetData(){
-        instance = new DataContext();
+        instance.groupTable.resetData();
+        instance.productTable.resetData();
     }
 }

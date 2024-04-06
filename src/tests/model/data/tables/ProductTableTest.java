@@ -22,6 +22,6 @@ public class ProductTableTest {
         ProductTableTest.group = DataContext.getInstance().getGroupTable().get(group.getName());
     }
 
-//    @Test
-//    public void create_givenProductWithNewName_
+    @Test
+    public void create_givenProductWithNewName_
 }

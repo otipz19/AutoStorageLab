@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IProductTable {
+    void resetData();
     List<ProductRecord> getAll();
     ProductRecord get(UUID id);
     ProductRecord get(ProductName name);
