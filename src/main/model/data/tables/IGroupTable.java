@@ -11,7 +11,7 @@ public interface IGroupTable {
     List<GroupRecord> getAll();
     GroupRecord get(UUID id);
     GroupRecord get(GroupName name);
-    void create(GroupDto toCreate);
+    UUID create(GroupDto toCreate);
     void delete(UUID id);
     void delete(GroupName name);
     void update(UUID id, GroupDto toUpdate);

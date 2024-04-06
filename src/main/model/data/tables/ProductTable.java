@@ -5,13 +5,11 @@ import main.model.data.records.GroupRecord;
 import main.model.data.records.ProductRecord;
 import main.model.dto.Mapper;
 import main.model.dto.ProductDto;
-import main.model.exceptions.crud.GroupNotFoundException;
 import main.model.exceptions.crud.ProductNameAlreadyExists;
 import main.model.exceptions.crud.ProductNotFoundException;
 import main.model.valueObjects.GroupName;
 import main.model.valueObjects.ProductName;
 
-import javax.xml.crypto.Data;
 import java.util.*;
 
 public class ProductTable implements IProductTable {
@@ -44,13 +42,14 @@ public class ProductTable implements IProductTable {
     }
 
     @Override
-    public void create(ProductDto toCreate) {
+    public UUID create(ProductDto toCreate) {
         throwIfExists(toCreate.getName());
         UUID id = UUID.randomUUID();
         //here is group existence already validated
         UUID groupId = getGroupIdByGroupName(toCreate.getGroupName());
         ProductRecord record = Mapper.map(toCreate, id, groupId);
         addRecordToIndexes(record);
+        return id;
     }
 
     private static UUID getGroupIdByGroupName(GroupName groupName) {

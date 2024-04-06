@@ -13,7 +13,7 @@ public interface IProductTable {
     ProductRecord get(UUID id);
     ProductRecord get(ProductName name);
     List<ProductRecord> getByGroupId(UUID groupId);
-    void create(ProductDto toCreate);
+    UUID create(ProductDto toCreate);
     void delete(UUID id);
     void delete(ProductName name);
     void deleteByGroupId(UUID groupId);

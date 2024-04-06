@@ -32,11 +32,12 @@ public class GroupTable implements IGroupTable {
     }
 
     @Override
-    public void create(GroupDto toCreate) {
+    public UUID create(GroupDto toCreate) {
         throwIfExists(toCreate.getName());
         UUID id = UUID.randomUUID();
         GroupRecord record = Mapper.map(toCreate, id);
         addRecordToIndexes(record, id);
+        return id;
     }
 
     @Override
