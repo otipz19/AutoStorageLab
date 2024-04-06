@@ -20,6 +20,11 @@ public class ProductTable implements IProductTable {
     private final Map<UUID, List<ProductRecord>> groupIdIndex = new HashMap<>();
 
     @Override
+    public List<ProductRecord> getAll(){
+        return primaryKey.values().stream().toList();
+    }
+
+    @Override
     public ProductRecord get(UUID id) {
         throwIfDoesNotExist(id);
         return primaryKey.get(id);

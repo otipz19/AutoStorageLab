@@ -8,13 +8,16 @@ import main.model.exceptions.crud.GroupNameAlreadyExists;
 import main.model.exceptions.crud.GroupNotFoundException;
 import main.model.valueObjects.GroupName;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class GroupTable implements IGroupTable {
     private final Map<UUID, GroupRecord> primaryKey = new HashMap<>();
     private final Map<GroupName, GroupRecord> nameIndex = new HashMap<>();
+
+    @Override
+    public List<GroupRecord> getAll(){
+        return primaryKey.values().stream().toList();
+    }
 
     @Override
     public GroupRecord get(UUID id) {

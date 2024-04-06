@@ -4,9 +4,11 @@ import main.model.data.records.GroupRecord;
 import main.model.dto.GroupDto;
 import main.model.valueObjects.GroupName;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface IGroupTable {
+    List<GroupRecord> getAll();
     GroupRecord get(UUID id);
     GroupRecord get(GroupName name);
     void create(GroupDto toCreate);
