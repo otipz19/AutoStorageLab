@@ -123,8 +123,9 @@ public class ProductTable implements IProductTable {
         ProductRecord updatedRecord = Mapper.map(toUpdate, oldRecord.getId(), groupId);
         addRecordToPrimaryKey(updatedRecord);
         if (!updatedRecord.getName().equals(oldRecord.getName())) {
+            throwIfExists(updatedRecord.getName());
             removeRecordFromNameIndex(oldRecord);
-            addRecordToGroupIdIndex(updatedRecord);
+            addRecordToNameIndex(updatedRecord);
         }
         if (!oldGroup.getId().equals(groupId)){
             removeRecordFromGroupIdIndex(oldRecord);
