@@ -24,7 +24,16 @@ public class ProductRecord {
     //Foreign key to GroupTable
     private UUID groupId;
 
-    public ProductRecord copy(){
-        return new ProductRecord(id, name, description, manufacturer, amount, price, groupId);
+    @Override
+    public boolean equals(Object other){
+        if(other instanceof ProductRecord otherRecord){
+            return this.id.equals(otherRecord.id);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        return id.hashCode();
     }
 }

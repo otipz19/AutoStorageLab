@@ -15,7 +15,16 @@ public class GroupRecord {
     private GroupName name;
     private String description;
 
-    public GroupRecord copy(){
-        return new GroupRecord(id, name, description);
+    @Override
+    public boolean equals(Object other){
+        if(other instanceof GroupRecord otherRecord){
+            return this.id.equals(otherRecord.id);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        return id.hashCode();
     }
 }
