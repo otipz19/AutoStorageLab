@@ -36,21 +36,21 @@ public class ValidatableFieldPanel extends JPanel {
     }
 
     private void createLayout(String fieldValue) {
-        setLayout(new GridLayout(2, 1));
+        setLayout(new BorderLayout());
         addField(fieldValue);
         addErrorLabel();
     }
 
     private void addField(String fieldValue) {
         field = new JTextField(fieldValue);
-        add(field);
+        add(field, BorderLayout.CENTER);
     }
 
     private void addErrorLabel() {
         errorLabel = new JLabel("Invalid input!");
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
-        add(errorLabel);
+        add(errorLabel, BorderLayout.SOUTH);
     }
 
     private void setupValidation() {
