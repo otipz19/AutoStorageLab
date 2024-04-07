@@ -2,12 +2,14 @@ package main.model.valueObjects;
 
 import lombok.Getter;
 import main.model.exceptions.validation.InvalidRecordNameException;
+import main.model.guard.Guard;
 
 @Getter
 public abstract class Name {
     private final String value;
 
     public Name(String value){
+        Guard.againstNullOrBlank(value);
         validate(value);
         this.value = value;
     }

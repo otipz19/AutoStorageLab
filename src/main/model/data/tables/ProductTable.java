@@ -113,23 +113,22 @@ public class ProductTable implements IProductTable {
         updateRecord(toUpdate, oldRecord);
     }
 
-    //TODO: this method can be simplified by removing redundant if's
     private void updateRecord(ProductDto toUpdate, ProductRecord oldRecord) {
         GroupRecord oldGroup = DataContext.getInstance().getGroupTable().get(oldRecord.getGroupId());
         UUID groupId = oldGroup.getId();
         if(!toUpdate.getGroupName().equals(oldGroup.getName())){
             groupId = DataContext.getInstance().getGroupTable().get(toUpdate.getGroupName()).getId();
         }
-        ProductRecord updatedRecord = Mapper.map(toUpdate, oldRecord.getId(), groupId);
-        addRecordToPrimaryKey(updatedRecord);
-        if (!updatedRecord.getName().equals(oldRecord.getName())) {
-            throwIfExists(updatedRecord.getName());
+        ProductRecord recordToUpdate = Mapper.map(toUpdate, oldRecord.getId(), groupId);
+        addRecordToPrimaryKey(recordToUpdate);
+        if (!recordToUpdate.getName().equals(oldRecord.getName())) {
+            throwIfExists(recordToUpdate.getName());
             removeRecordFromNameIndex(oldRecord);
-            addRecordToNameIndex(updatedRecord);
+            addRecordToNameIndex(recordToUpdate);
         }
         if (!oldGroup.getId().equals(groupId)){
             removeRecordFromGroupIdIndex(oldRecord);
-            addRecordToGroupIdIndex(updatedRecord);
+            addRecordToGroupIdIndex(recordToUpdate);
         }
     }
 
@@ -171,8 +170,7 @@ public class ProductTable implements IProductTable {
     }
 
     private void removeRecordFromGroupIdIndex(ProductRecord record) {
-        var groupIndex = groupIdIndex.get(record.getGroupId());
-        groupIndex.remove(record);
+        groupIdIndex.get(record.getGroupId()).remove(record);
     }
 
     private void throwIfDoesNotExist(UUID id) {
