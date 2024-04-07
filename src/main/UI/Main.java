@@ -3,6 +3,8 @@ package main.UI;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,6 +17,9 @@ public class Main {
         frame.setLayout(null); // Set layout manager to null
 
         JButton groupButton = new RoundedButton("Groups");
+        groupButton.setContentAreaFilled(true);
+
+
         groupButton.setFont(new Font("Arial", Font.BOLD, 20));
         groupButton.setBounds(58, 58, 580, 50);
         groupButton.setEnabled(false);
@@ -50,6 +55,7 @@ public class Main {
         for (int i = 0; i < groupNames.length; i++) {
             for (int j = 0; j < groupNames[i].length; j++) {
                 JButton button = new RoundedButton(groupNames[i][j]);
+
                 button.setFont(new Font("Arial", Font.PLAIN, 20));
                 button.setBounds(groupButton.getX() + i * 200, groupButton.getY() + groupButton.getHeight() + j * 60 + 20, 200, 50);
                 button.setBackground(Color.WHITE);
@@ -59,11 +65,22 @@ public class Main {
                 button.setContentAreaFilled(false);
                 button.setHorizontalAlignment(SwingConstants.CENTER);
                 button.setVerticalAlignment(SwingConstants.CENTER);
-                button.setFocusPainted(false); // Prevent the focus border from being painted
+                button.setFocusPainted(false);
+
+                final int finalJ = j;
+                final int finalI = i;
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        frame.dispose(); // Close the current frame
+                        new GroupFrame(groupNames[finalI][finalJ], "Group Description"); // Open the new frame
+                    }
+                });
 
                 frame.add(button);
             }
         }
+
     }
 }
 
@@ -75,7 +92,7 @@ class RoundedButton extends JButton {
         setBorderPainted(false);
         setFocusable(false);
         setContentAreaFilled(false);
-        setBorder(new RoundedBorder(10)); // 10 is the radius of the border
+        setBorder(new RoundedBorder(10));
     }
 
     protected void paintComponent(Graphics g) {
