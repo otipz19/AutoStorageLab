@@ -1,4 +1,4 @@
-package main.model.exceptions;
+package main.model.exceptions.validation;
 
 public class InvalidRecordNameException extends ValidationException {
     public InvalidRecordNameException(String value) {

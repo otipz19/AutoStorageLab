@@ -1,7 +1,7 @@
 package main.model.valueObjects;
 
 import lombok.Getter;
-import main.model.exceptions.InvalidProductPriceException;
+import main.model.exceptions.validation.InvalidProductPriceException;
 
 @Getter
 public class ProductPrice {
@@ -12,8 +12,12 @@ public class ProductPrice {
         this.value = value;
     }
 
+    public static boolean isValid(double value){
+        return value >= 0;
+    }
+
     private void validate(double value) {
-        if(value < 0){
+        if(!isValid(value)){
             throw new InvalidProductPriceException(value);
         }
     }
