@@ -14,11 +14,18 @@ public abstract class Name {
         this.value = value;
     }
 
-    private static void validate(String value) {
+    public static boolean isValid(String value){
         for(int i = 0; i < value.length(); i++){
             if(!Character.isLetter(value.charAt(i))){
-                throw new InvalidRecordNameException(value);
+                return false;
             }
+        }
+        return true;
+    }
+
+    private static void validate(String value) {
+        if(!isValid(value)){
+            throw new InvalidRecordNameException(value);
         }
     }
 

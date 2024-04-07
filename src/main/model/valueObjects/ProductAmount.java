@@ -12,8 +12,12 @@ public class ProductAmount {
         this.value = value;
     }
 
+    public static boolean isValid(int value){
+        return value >= 0;
+    }
+
     private void validate(int value) {
-        if(value < 0){
+        if(!isValid(value)){
             throw new InvalidProductAmountException(value);
         }
     }
