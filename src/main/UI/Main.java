@@ -14,14 +14,12 @@ public class Main {
         frame.setVisible(true);
         frame.getContentPane().setBackground(new Color(0xe9f2fb));
         frame.setResizable(false);
-        frame.setLayout(null); // Set layout manager to null
+        frame.setLayout(null);
 
         JButton groupButton = new RoundedButton("Groups");
         groupButton.setContentAreaFilled(true);
-
-
         groupButton.setFont(new Font("Arial", Font.BOLD, 20));
-        groupButton.setBounds(58, 58, 580, 50);
+        groupButton.setBounds(58, 58, 600, 50);
         groupButton.setEnabled(false);
         groupButton.setBackground(Color.WHITE);
         groupButton.setForeground(new Color(0x203a54));
@@ -30,7 +28,6 @@ public class Main {
         groupButton.setContentAreaFilled(false);
         groupButton.setHorizontalAlignment(SwingConstants.CENTER);
         groupButton.setVerticalAlignment(SwingConstants.CENTER);
-
         frame.add(groupButton);
 
         String[] buttonNames = {"Find in storage", "Add group", "Delete group"};
@@ -45,17 +42,14 @@ public class Main {
             button.setContentAreaFilled(false);
             button.setHorizontalAlignment(SwingConstants.CENTER);
             button.setVerticalAlignment(SwingConstants.CENTER);
-            button.setFocusPainted(false); // Prevent the focus border from being painted
-
+            button.setFocusPainted(false);
             frame.add(button);
         }
 
-        // Create 3 columns of buttons with group names
         String[][] groupNames = {{"Group 1", "Group 2", "Group 3"}, {"Group 4", "Group 5", "Group 6"}, {"Group 7", "Group 8", "Group 9"}};
         for (int i = 0; i < groupNames.length; i++) {
             for (int j = 0; j < groupNames[i].length; j++) {
                 JButton button = new RoundedButton(groupNames[i][j]);
-
                 button.setFont(new Font("Arial", Font.PLAIN, 20));
                 button.setBounds(groupButton.getX() + i * 200, groupButton.getY() + groupButton.getHeight() + j * 60 + 20, 200, 50);
                 button.setBackground(Color.WHITE);
@@ -66,21 +60,21 @@ public class Main {
                 button.setHorizontalAlignment(SwingConstants.CENTER);
                 button.setVerticalAlignment(SwingConstants.CENTER);
                 button.setFocusPainted(false);
-
                 final int finalJ = j;
                 final int finalI = i;
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        frame.dispose(); // Close the current frame
-                        new GroupFrame(groupNames[finalI][finalJ], "Group Description"); // Open the new frame
+                        frame.dispose();
+                        new GroupFrame(groupNames[finalI][finalJ], "Group Description");
                     }
                 });
-
                 frame.add(button);
             }
         }
 
+        frame.revalidate();
+        frame.repaint();
     }
 }
 
