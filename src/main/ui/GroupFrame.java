@@ -1,5 +1,5 @@
 // GroupFrame.java
-package main.UI;
+package main.ui;
 
 import javax.swing.*;
 import java.awt.*;
