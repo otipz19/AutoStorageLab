@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import main.model.dto.GroupDto;
+import main.ui.forms.group.GroupCreateForm;
 
 public class Main {
     private static boolean deleteMode = false;
@@ -36,6 +37,9 @@ public class Main {
         frame.add(groupButton);
 
         String[] buttonNames = {"Find in storage", "Add group", "Delete group"};
+        List<GroupDto> groups = new ArrayList<>();
+        List<JButton> groupButtons = new ArrayList<>();
+
         for (int i = 0; i < buttonNames.length; i++) {
             JButton button = new RoundedButton(buttonNames[i]);
             button.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -48,6 +52,7 @@ public class Main {
             button.setHorizontalAlignment(SwingConstants.CENTER);
             button.setVerticalAlignment(SwingConstants.CENTER);
             button.setFocusPainted(false);
+
             if (buttonNames[i].equals("Delete group")) {
                 button.addActionListener(new ActionListener() {
                     @Override
@@ -60,55 +65,52 @@ public class Main {
                         }
                     }
                 });
-            }
-            frame.add(button);
-        }
-
-        List<GroupDto> groups = Arrays.asList(
-                new GroupDto("Groupa", "Description 1"),
-                new GroupDto("Groupaa", "Description 2"),
-                new GroupDto("Groupaaa", "Description 3"),
-                new GroupDto("Groupb", "Description 4"),
-                new GroupDto("Groupbb", "Description 5"),
-                new GroupDto("Groupbbb", "Description 6"),
-                new GroupDto("Groupc", "Description 7"),
-                new GroupDto("Groupcc", "Description 8"),
-                new GroupDto("Groupccc", "Description 9")
-        );
-
-        List<JButton> groupButtons = new ArrayList<>();
-        for (int i = 0; i < groups.size(); i++) {
-            JButton button = new RoundedButton(groups.get(i).getName().getValue());
-            button.setFont(new Font("Arial", Font.PLAIN, 20));
-            button.setBounds(groupButton.getX() + (i % 3) * 200, groupButton.getY() + groupButton.getHeight() + (i / 3) * 60 + 20, 200, 50);
-            button.setBackground(Color.WHITE);
-            button.setForeground(Color.BLACK);
-            button.setOpaque(false);
-            button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            button.setContentAreaFilled(false);
-            button.setHorizontalAlignment(SwingConstants.CENTER);
-            button.setVerticalAlignment(SwingConstants.CENTER);
-            button.setFocusPainted(false);
-            final int index = i;
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (deleteMode) {
-                        frame.remove(button);
-                        groupButtons.remove(button);
-                        for (int i = 0; i < groupButtons.size(); i++) {
-                            JButton remainingButton = groupButtons.get(i);
-                            remainingButton.setBounds(groupButton.getX() + (i % 3) * 200, groupButton.getY() + groupButton.getHeight() + (i / 3) * 60 + 20, 200, 50);
+            } else if (buttonNames[i].equals("Add group")) {
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        GroupDto newGroup = GroupCreateForm.createGroup();
+                        if (newGroup != null) {
+                            groups.add(newGroup);
+                            JButton newGroupButton = new RoundedButton(newGroup.getName().getValue());
+                            newGroupButton.setFont(new Font("Arial", Font.PLAIN, 20));
+                            newGroupButton.setBounds(groupButton.getX() + ((groups.size() - 1) % 3) * 200, groupButton.getY() + groupButton.getHeight() + ((groups.size() - 1) / 3) * 60 + 20, 200, 50);
+                            newGroupButton.setBackground(Color.WHITE);
+                            newGroupButton.setForeground(Color.BLACK);
+                            newGroupButton.setOpaque(false);
+                            newGroupButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                            newGroupButton.setContentAreaFilled(false);
+                            newGroupButton.setHorizontalAlignment(SwingConstants.CENTER);
+                            newGroupButton.setVerticalAlignment(SwingConstants.CENTER);
+                            newGroupButton.setFocusPainted(false);
+                            final int index = groups.size() - 1;
+                            newGroupButton.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    if (deleteMode) {
+                                        frame.remove(newGroupButton);
+                                        groupButtons.remove(newGroupButton);
+                                        for (int i = 0; i < groupButtons.size(); i++) {
+                                            JButton remainingButton = groupButtons.get(i);
+                                            remainingButton.setBounds(groupButton.getX() + (i % 3) * 200, groupButton.getY() + groupButton.getHeight() + (i / 3) * 60 + 20, 200, 50);
+                                        }
+                                        frame.revalidate();
+                                        frame.repaint();
+                                    } else {
+                                        frame.dispose();
+                                        new GroupFrame(groups.get(index).getName().getValue(), groups.get(index).getDescription());
+                                    }
+                                }
+                            });
+                            groupButtons.add(newGroupButton);
+                            frame.add(newGroupButton);
+                            frame.revalidate();
+                            frame.repaint();
                         }
-                        frame.revalidate();
-                        frame.repaint();
-                    } else {
-                        frame.dispose();
-                        new GroupFrame(groups.get(index).getName().getValue(), groups.get(index).getDescription());
                     }
-                }
-            });
-            groupButtons.add(button);
+                });
+            }
+
             frame.add(button);
         }
 
