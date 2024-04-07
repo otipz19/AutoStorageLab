@@ -1,4 +1,4 @@
-package main.ui.forms;
+package main.ui.forms.group;
 
 import javax.swing.*;
 

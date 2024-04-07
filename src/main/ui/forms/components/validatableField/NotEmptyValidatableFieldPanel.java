@@ -1,4 +1,4 @@
-package main.ui.components;
+package main.ui.forms.components.validatableField;
 
 public class NotEmptyValidatableFieldPanel extends ValidatableFieldPanel {
     public NotEmptyValidatableFieldPanel(Validator validator) {

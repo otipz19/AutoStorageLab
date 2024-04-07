@@ -1,8 +1,8 @@
-package main.ui.forms;
+package main.ui.forms.group;
 
 import main.model.dto.GroupDto;
 import main.model.valueObjects.GroupName;
-import main.ui.components.NotEmptyValidatableFieldPanel;
+import main.ui.forms.components.validatableField.NotEmptyValidatableFieldPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,7 +34,7 @@ public class GroupCreatePanel extends JPanel {
         JPanel panel = new JPanel(new GridLayout(1, 2));
         add(new JLabel("Description: "));
         description = new JTextArea(value);
-        add(description);
+        add(new JScrollPane(description));
         return panel;
     }
 

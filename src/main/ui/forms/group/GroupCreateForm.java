@@ -1,8 +1,9 @@
-package main.ui.forms;
+package main.ui.forms.group;
 
 import main.model.dto.GroupDto;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class GroupCreateForm {
     /**
@@ -10,6 +11,7 @@ public class GroupCreateForm {
      */
     public static GroupDto createGroup() {
         GroupCreatePanel panel = new GroupCreatePanel();
+        panel.setPreferredSize(new Dimension(450, 200));
         int result = JOptionPane.showConfirmDialog(
                 null,
                 panel,
