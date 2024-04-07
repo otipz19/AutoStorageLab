@@ -5,13 +5,18 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import main.model.dto.GroupDto;
 
 public class Main {
+    private static boolean deleteMode = false;
+
     public static void main(String[] args) {
         JFrame frame = new JFrame("Lab 2");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 750);
-        frame.setVisible(true);
         frame.getContentPane().setBackground(new Color(0xe9f2fb));
         frame.setResizable(false);
         frame.setLayout(null);
@@ -43,38 +48,71 @@ public class Main {
             button.setHorizontalAlignment(SwingConstants.CENTER);
             button.setVerticalAlignment(SwingConstants.CENTER);
             button.setFocusPainted(false);
-            frame.add(button);
-        }
-
-        String[][] groupNames = {{"Group 1", "Group 2", "Group 3"}, {"Group 4", "Group 5", "Group 6"}, {"Group 7", "Group 8", "Group 9"}};
-        for (int i = 0; i < groupNames.length; i++) {
-            for (int j = 0; j < groupNames[i].length; j++) {
-                JButton button = new RoundedButton(groupNames[i][j]);
-                button.setFont(new Font("Arial", Font.PLAIN, 20));
-                button.setBounds(groupButton.getX() + i * 200, groupButton.getY() + groupButton.getHeight() + j * 60 + 20, 200, 50);
-                button.setBackground(Color.WHITE);
-                button.setForeground(Color.BLACK);
-                button.setOpaque(false);
-                button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                button.setContentAreaFilled(false);
-                button.setHorizontalAlignment(SwingConstants.CENTER);
-                button.setVerticalAlignment(SwingConstants.CENTER);
-                button.setFocusPainted(false);
-                final int finalJ = j;
-                final int finalI = i;
+            if (buttonNames[i].equals("Delete group")) {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        frame.dispose();
-                        new GroupFrame(groupNames[finalI][finalJ], "Group Description");
+                        deleteMode = !deleteMode;
+                        if (deleteMode) {
+                            button.setBackground(Color.decode("#334E88"));
+                        } else {
+                            button.setBackground(Color.WHITE);
+                        }
                     }
                 });
-                frame.add(button);
             }
+            frame.add(button);
         }
 
-        frame.revalidate();
-        frame.repaint();
+        List<GroupDto> groups = Arrays.asList(
+                new GroupDto("Groupa", "Description 1"),
+                new GroupDto("Groupaa", "Description 2"),
+                new GroupDto("Groupaaa", "Description 3"),
+                new GroupDto("Groupb", "Description 4"),
+                new GroupDto("Groupbb", "Description 5"),
+                new GroupDto("Groupbbb", "Description 6"),
+                new GroupDto("Groupc", "Description 7"),
+                new GroupDto("Groupcc", "Description 8"),
+                new GroupDto("Groupccc", "Description 9")
+        );
+
+        List<JButton> groupButtons = new ArrayList<>();
+        for (int i = 0; i < groups.size(); i++) {
+            JButton button = new RoundedButton(groups.get(i).getName().getValue());
+            button.setFont(new Font("Arial", Font.PLAIN, 20));
+            button.setBounds(groupButton.getX() + (i % 3) * 200, groupButton.getY() + groupButton.getHeight() + (i / 3) * 60 + 20, 200, 50);
+            button.setBackground(Color.WHITE);
+            button.setForeground(Color.BLACK);
+            button.setOpaque(false);
+            button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            button.setContentAreaFilled(false);
+            button.setHorizontalAlignment(SwingConstants.CENTER);
+            button.setVerticalAlignment(SwingConstants.CENTER);
+            button.setFocusPainted(false);
+            final int index = i;
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (deleteMode) {
+                        frame.remove(button);
+                        groupButtons.remove(button);
+                        for (int i = 0; i < groupButtons.size(); i++) {
+                            JButton remainingButton = groupButtons.get(i);
+                            remainingButton.setBounds(groupButton.getX() + (i % 3) * 200, groupButton.getY() + groupButton.getHeight() + (i / 3) * 60 + 20, 200, 50);
+                        }
+                        frame.revalidate();
+                        frame.repaint();
+                    } else {
+                        frame.dispose();
+                        new GroupFrame(groups.get(index).getName().getValue(), groups.get(index).getDescription());
+                    }
+                }
+            });
+            groupButtons.add(button);
+            frame.add(button);
+        }
+
+        frame.setVisible(true);
     }
 }
 
