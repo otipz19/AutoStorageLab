@@ -1,7 +1,9 @@
 package main.ui.forms.group;
 
 import main.model.dto.GroupDto;
+import main.model.exceptions.DomainException;
 import main.model.valueObjects.GroupName;
+import main.ui.exceptions.InvalidFormInputException;
 import main.ui.forms.components.validatableField.NotEmptyValidatableFieldPanel;
 
 import javax.swing.*;
@@ -39,12 +41,13 @@ public class GroupCreatePanel extends JPanel {
     }
 
     /**
-     * @return null if input is invalid
+     * @throws InvalidFormInputException if input is invalid
      */
     public GroupDto getGroupDto(){
-        if(!name.isValid()){
-            return null;
+        try{
+            return new GroupDto(name.getText(), description.getText());
+        } catch (DomainException e){
+            throw new InvalidFormInputException(e);
         }
-        return new GroupDto(name.getText(), description.getText());
     }
 }

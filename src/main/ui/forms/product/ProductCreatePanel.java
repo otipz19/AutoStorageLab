@@ -1,17 +1,16 @@
 package main.ui.forms.product;
 
 import main.model.dto.ProductDto;
+import main.model.exceptions.DomainException;
 import main.model.valueObjects.ManufacturerName;
 import main.model.valueObjects.ProductAmount;
 import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
-import main.ui.forms.components.AmountSpinner;
+import main.ui.exceptions.InvalidFormInputException;
 import main.ui.forms.components.GroupsComboBox;
-import main.ui.forms.components.PriceTextField;
 import main.ui.forms.components.validatableField.NotEmptyValidatableFieldPanel;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class ProductCreatePanel extends JPanel {
@@ -82,16 +81,20 @@ public class ProductCreatePanel extends JPanel {
         }
     }
 
+    /**
+     * @throws InvalidFormInputException if input is invalid
+     */
     public ProductDto getProductDto(){
-        if(!name.isValid() || !manufacturer.isValid()){
-            return null;
+        try{
+            return new ProductDto(
+                    name.getText(),
+                    description.getText(),
+                    manufacturer.getText(),
+                    Integer.parseInt(amount.getText()),
+                    Double.parseDouble(price.getText()),
+                    (String)group.getSelectedItem());
+        } catch (DomainException e){
+            throw new InvalidFormInputException(e);
         }
-        return new ProductDto(
-                name.getText(),
-                description.getText(),
-                manufacturer.getText(),
-                Integer.parseInt(amount.getText()),
-                Double.parseDouble(price.getText()),
-                (String)group.getSelectedItem());
     }
 }
