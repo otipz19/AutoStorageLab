@@ -5,7 +5,7 @@ import main.model.data.DataContext;
 import main.model.dto.GroupDto;
 import main.model.dto.Mapper;
 import main.model.exceptions.DomainException;
-import main.ui.components.RoundedButton;
+import main.ui.components.buttons.RoundedButton;
 
 import javax.swing.*;
 import java.awt.*;

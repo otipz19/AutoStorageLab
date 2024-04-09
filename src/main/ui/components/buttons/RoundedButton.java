@@ -1,4 +1,6 @@
-package main.ui.components;
+package main.ui.components.buttons;
+
+import main.ui.components.RoundedBorder;
 
 import javax.swing.*;
 import java.awt.*;
