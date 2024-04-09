@@ -5,6 +5,7 @@ import main.model.data.DataContext;
 import main.model.dto.GroupDto;
 import main.model.dto.Mapper;
 import main.model.exceptions.DomainException;
+import main.ui.components.RoundedButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -52,7 +53,7 @@ public class GroupFrame extends JFrame {
         ImageIcon checkIcon = new ImageIcon("src/main/UI/checkmark.png");
 
         /// Add new square button next to group name
-        editNameBtn = new SquareButton("", 10);
+        editNameBtn = new RoundedButton("", 10);
         editNameBtn.setBounds(748, 58, 50, 50);
         editNameBtn.setBackground(Color.WHITE);
         editNameBtn.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH))); // Resize the pen icon
@@ -72,7 +73,7 @@ public class GroupFrame extends JFrame {
         add(editNameBtn);
 
         // Add new square button next to group description
-        editDescriptionBtn = new SquareButton("", 10);
+        editDescriptionBtn = new RoundedButton("", 10);
         editDescriptionBtn.setBounds(748, 108, 50, 50);
         editDescriptionBtn.setBackground(Color.WHITE);
         editDescriptionBtn.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
@@ -91,7 +92,7 @@ public class GroupFrame extends JFrame {
         });
         add(editDescriptionBtn);
 
-        createProductBtn = new SquareButton("", 10);
+        createProductBtn = new RoundedButton("", 10);
         createProductBtn.setBounds(748, 158, 50, 50);
         createProductBtn.setBackground(Color.WHITE);
         ImageIcon plusIcon = new ImageIcon("src/main/UI/plus.png");
@@ -126,24 +127,5 @@ public class GroupFrame extends JFrame {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-    }
-}
-
-class SquareButton extends JButton {
-    private int radius;
-
-    public SquareButton(String label, int radius) {
-        super(label);
-        this.radius = radius; // Initialize the radius
-        setBorderPainted(false);
-        setFocusable(false);
-        setContentAreaFilled(false);
-        setBorder(new RoundedBorder(radius));
-    }
-
-    protected void paintComponent(Graphics g) {
-        g.setColor(getBackground());
-        g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius); // Draw a rounded rectangle
-        super.paintComponent(g);
     }
 }

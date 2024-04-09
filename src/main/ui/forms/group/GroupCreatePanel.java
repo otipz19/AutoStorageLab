@@ -4,7 +4,7 @@ import main.model.dto.GroupDto;
 import main.model.exceptions.DomainException;
 import main.model.valueObjects.GroupName;
 import main.ui.exceptions.InvalidFormInputException;
-import main.ui.forms.components.validatableField.NotEmptyValidatableFieldPanel;
+import main.ui.components.validatableField.NotEmptyValidatableFieldPanel;
 
 import javax.swing.*;
 import java.awt.*;

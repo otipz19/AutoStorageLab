@@ -1,4 +1,4 @@
-package main.ui.forms.components.validatableField;
+package main.ui.components.validatableField;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

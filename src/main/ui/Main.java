@@ -1,17 +1,16 @@
 package main.ui;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import main.model.data.DataContext;
 import main.model.dto.GroupDto;
 import main.model.exceptions.DomainException;
+import main.ui.components.RoundedRectangleButton;
 import main.ui.exceptions.InvalidFormInputException;
 import main.ui.forms.group.GroupCreateForm;
 
@@ -26,7 +25,7 @@ public class Main {
         frame.setResizable(false);
         frame.setLayout(null);
 
-        JButton groupButton = new RoundedButton("Groups");
+        JButton groupButton = new RoundedRectangleButton("Groups");
         groupButton.setContentAreaFilled(true);
         groupButton.setFont(new Font("Arial", Font.BOLD, 20));
         groupButton.setBounds(58, 58, 600, 50);
@@ -45,7 +44,7 @@ public class Main {
         List<JButton> groupButtons = new ArrayList<>();
 
         for (int i = 0; i < buttonNames.length; i++) {
-            JButton button = new RoundedButton(buttonNames[i]);
+            JButton button = new RoundedRectangleButton(buttonNames[i]);
             button.setFont(new Font("Arial", Font.PLAIN, 20));
             button.setBounds(groupButton.getX() + groupButton.getWidth() + 80, ((frame.getHeight()/2)-90) + i * 60, 200, 50);
             button.setBackground(Color.WHITE);
@@ -78,7 +77,7 @@ public class Main {
                             if (newGroup != null) {
                                 DataContext.getInstance().getGroupTable().create(newGroup);
                                 groups.add(newGroup);
-                                JButton newGroupButton = new RoundedButton(newGroup.getName().getValue());
+                                JButton newGroupButton = new RoundedRectangleButton(newGroup.getName().getValue());
                                 newGroupButton.setFont(new Font("Arial", Font.PLAIN, 20));
                                 newGroupButton.setBounds(groupButton.getX() + ((groups.size() - 1) % 3) * 200, groupButton.getY() + groupButton.getHeight() + ((groups.size() - 1) / 3) * 60 + 20, 200, 50);
                                 newGroupButton.setBackground(Color.WHITE);
@@ -128,43 +127,5 @@ public class Main {
         }
 
         frame.setVisible(true);
-    }
-}
-
-class RoundedButton extends JButton {
-    private Shape shape;
-
-    public RoundedButton(String label) {
-        super(label);
-        setBorderPainted(false);
-        setFocusable(false);
-        setContentAreaFilled(false);
-        setBorder(new RoundedBorder(10));
-    }
-
-    protected void paintComponent(Graphics g) {
-        g.setColor(getBackground());
-        g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, 20, 20);
-        super.paintComponent(g);
-    }
-}
-
-class RoundedBorder implements Border {
-    private int radius;
-
-    RoundedBorder(int radius) {
-        this.radius = radius;
-    }
-
-    public Insets getBorderInsets(Component c) {
-        return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
-    }
-
-    public boolean isBorderOpaque() {
-        return true;
-    }
-
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        g.drawRoundRect(x, y, width-1, height-1, radius, radius);
     }
 }
