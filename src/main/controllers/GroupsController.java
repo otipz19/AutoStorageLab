@@ -1,5 +1,6 @@
 package main.controllers;
 
+import lombok.Getter;
 import main.model.data.DataContext;
 import main.model.dto.GroupDto;
 import main.model.exceptions.DomainException;
@@ -11,6 +12,13 @@ import javax.swing.*;
 import java.util.UUID;
 
 public class GroupsController {
+    @Getter
+    private static boolean isGroupDeleteModeOn;
+
+    public static void switchGroupDeleteMode(){
+        isGroupDeleteModeOn = !isGroupDeleteModeOn;
+    }
+
     public static void createGroup(){
         try{
             GroupDto newGroup = GroupCreateForm.createGroup();

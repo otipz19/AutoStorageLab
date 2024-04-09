@@ -1,6 +1,6 @@
 package main.ui.panels.allGroupsPanel.components;
 
-import main.ui.GlobalStateManager;
+import main.controllers.GroupsController;
 import main.ui.components.buttons.StyledButton;
 
 import java.awt.*;
@@ -13,8 +13,8 @@ public class DeleteGroupButton extends StyledButton {
     }
 
     private void onClick(ActionEvent e){
-        GlobalStateManager.switchGroupDeleteMode();
-        if (GlobalStateManager.isGroupDeleteModeOn()) {
+        GroupsController.switchGroupDeleteMode();
+        if (GroupsController.isGroupDeleteModeOn()) {
             setBackground(Color.decode("#334E88"));
         } else {
             setBackground(Color.WHITE);

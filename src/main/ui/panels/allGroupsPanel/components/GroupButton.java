@@ -4,7 +4,6 @@ import lombok.Getter;
 import main.controllers.GroupsController;
 import main.model.dto.GroupDto;
 import main.ui.App;
-import main.ui.GlobalStateManager;
 import main.ui.components.buttons.StyledButton;
 
 import javax.swing.*;
@@ -24,7 +23,7 @@ public class GroupButton extends StyledButton {
     }
 
     private void onClick(ActionEvent e){
-        if (GlobalStateManager.isGroupDeleteModeOn()) {
+        if (GroupsController.isGroupDeleteModeOn()) {
             GroupsController.deleteGroup(groupDto);
         } else {
             App.goToConcreteGroupPanel(groupDto);
