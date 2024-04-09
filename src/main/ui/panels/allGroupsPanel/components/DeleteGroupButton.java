@@ -1,6 +1,7 @@
-package main.ui.components.buttons;
+package main.ui.panels.allGroupsPanel.components;
 
 import main.ui.GlobalStateManager;
+import main.ui.components.buttons.StyledButton;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;

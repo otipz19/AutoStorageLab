@@ -1,10 +1,11 @@
-package main.ui.components.buttons;
+package main.ui.panels.allGroupsPanel.components;
 
 import lombok.Getter;
 import main.controllers.GroupsController;
 import main.model.dto.GroupDto;
+import main.ui.App;
 import main.ui.GlobalStateManager;
-import main.ui.GroupFrame;
+import main.ui.components.buttons.StyledButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class GroupButton extends StyledButton {
         if (GlobalStateManager.isGroupDeleteModeOn()) {
             GroupsController.deleteGroup(groupDto);
         } else {
-            new GroupFrame(groupDto);
+            App.goToConcreteGroupPanel(groupDto);
         }
     }
 }

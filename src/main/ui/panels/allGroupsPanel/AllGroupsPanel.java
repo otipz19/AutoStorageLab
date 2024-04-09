@@ -1,17 +1,18 @@
-package main.ui.panels;
+package main.ui.panels.allGroupsPanel;
 
 import main.model.dto.GroupDto;
-import main.ui.AppFrame;
-import main.ui.components.buttons.*;
+import main.ui.App;
+import main.ui.panels.allGroupsPanel.components.*;
 
 import javax.swing.*;
 import java.util.*;
 
-public class GroupsPanel extends JPanel {
+public class AllGroupsPanel extends JPanel {
     private final List<GroupButton> groupButtons = new LinkedList<>();
     private final GroupsLabelButton groupsLabelButton;
 
-    public GroupsPanel() {
+    public AllGroupsPanel() {
+        App.getInstance().setTitle("All Groups");
         setLayout(null);
         groupsLabelButton = new GroupsLabelButton();
         groupsLabelButton.setBounds(58, 58, 600, 50);
@@ -29,7 +30,7 @@ public class GroupsPanel extends JPanel {
         );
         for (int i = 0; i < actionBtns.size(); i++) {
             JButton button = actionBtns.get(i);
-            button.setBounds(groupsLabelButton.getX() + groupsLabelButton.getWidth() + 80, ((AppFrame.getInstance().getHeight() / 2) - 90) + i * 60, 200, 50);
+            button.setBounds(groupsLabelButton.getX() + groupsLabelButton.getWidth() + 80, ((App.getInstance().getHeight() / 2) - 90) + i * 60, 200, 50);
             add(button);
         }
     }

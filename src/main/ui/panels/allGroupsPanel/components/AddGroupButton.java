@@ -1,6 +1,7 @@
-package main.ui.components.buttons;
+package main.ui.panels.allGroupsPanel.components;
 
 import main.controllers.GroupsController;
+import main.ui.components.buttons.StyledButton;
 
 import java.awt.event.ActionEvent;
 
