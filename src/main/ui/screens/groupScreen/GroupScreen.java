@@ -1,14 +1,14 @@
-package main.ui.panels.concreteGroupPanel;
+package main.ui.screens.groupScreen;
 
 import lombok.Getter;
 import main.model.dto.GroupDto;
 import main.ui.App;
-import main.ui.panels.concreteGroupPanel.components.*;
+import main.ui.screens.groupScreen.components.*;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ConcreteGroupPanel extends JPanel {
+public class GroupScreen extends JPanel {
     @Getter
     private GroupDto group;
 
@@ -22,7 +22,7 @@ public class ConcreteGroupPanel extends JPanel {
     private EditGroupDescriptionButton editDescriptionBtn;
     private JButton createProductBtn;
 
-    public ConcreteGroupPanel() {
+    public GroupScreen() {
         App.getInstance().setTitle("Group Details");
         setLayout(null);
         setBackground(new Color(0xe9f2fb));

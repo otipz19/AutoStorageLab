@@ -1,4 +1,4 @@
-package main.ui.panels.concreteGroupPanel.components;
+package main.ui.screens.groupScreen.components;
 
 import main.Icons;
 import main.controllers.GroupsController;
@@ -17,7 +17,7 @@ public class EditGroupNameButton extends RoundedButton {
     }
 
     private void onClick(ActionEvent e){
-        var groupNameField = App.getConcreteGroupPanel().getGroupNameField();
+        var groupNameField = App.getGroupScreen().getGroupNameField();
         if (groupNameField.isEditable()) {
             setIcon(Icons.buildPenIcon(20, 20));
             groupNameField.setEditable(false);

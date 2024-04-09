@@ -1,4 +1,4 @@
-package main.ui.panels.concreteGroupPanel.components;
+package main.ui.screens.groupScreen.components;
 
 import javax.swing.*;
 

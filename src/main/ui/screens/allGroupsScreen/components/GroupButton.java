@@ -1,4 +1,4 @@
-package main.ui.panels.allGroupsPanel.components;
+package main.ui.screens.allGroupsScreen.components;
 
 import lombok.Getter;
 import main.controllers.GroupsController;
@@ -26,7 +26,7 @@ public class GroupButton extends StyledButton {
         if (GroupsController.isGroupDeleteModeOn()) {
             GroupsController.deleteGroup(groupDto);
         } else {
-            App.goToConcreteGroupPanel(groupDto);
+            App.goToGroupScreen(groupDto);
         }
     }
 }

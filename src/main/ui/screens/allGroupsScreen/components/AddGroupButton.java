@@ -1,4 +1,4 @@
-package main.ui.panels.allGroupsPanel.components;
+package main.ui.screens.allGroupsScreen.components;
 
 import main.controllers.GroupsController;
 import main.ui.components.buttons.StyledButton;

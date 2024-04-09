@@ -2,8 +2,8 @@ package main.ui;
 
 import lombok.Getter;
 import main.model.dto.GroupDto;
-import main.ui.panels.allGroupsPanel.AllGroupsPanel;
-import main.ui.panels.concreteGroupPanel.ConcreteGroupPanel;
+import main.ui.screens.allGroupsScreen.AllGroupsScreen;
+import main.ui.screens.groupScreen.GroupScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,36 +12,36 @@ public class App extends JFrame {
     @Getter
     private static App instance;
 
-    private final AllGroupsPanel allGroupsPanel;
-    private final ConcreteGroupPanel concreteGroupPanel;
+    private final AllGroupsScreen allGroupsScreen;
+    private final GroupScreen groupScreen;
 
     public App(){
         instance = this;
         configApp();
-        allGroupsPanel = new AllGroupsPanel();
-        add(allGroupsPanel);
-        concreteGroupPanel = new ConcreteGroupPanel();
+        allGroupsScreen = new AllGroupsScreen();
+        add(allGroupsScreen);
+        groupScreen = new GroupScreen();
     }
 
-    public static AllGroupsPanel getAllGroupsPanel(){
-        return instance.allGroupsPanel;
+    public static AllGroupsScreen getAllGroupsScreen(){
+        return instance.allGroupsScreen;
     }
 
-    public static ConcreteGroupPanel getConcreteGroupPanel(){
-        return instance.concreteGroupPanel;
+    public static GroupScreen getGroupScreen(){
+        return instance.groupScreen;
     }
 
-    public static void goToConcreteGroupPanel(GroupDto groupDto){
-        instance.remove(instance.allGroupsPanel);
-        instance.concreteGroupPanel.setGroup(groupDto);
-        instance.add(instance.concreteGroupPanel);
+    public static void goToGroupScreen(GroupDto groupDto){
+        instance.remove(instance.allGroupsScreen);
+        instance.groupScreen.setGroup(groupDto);
+        instance.add(instance.groupScreen);
         instance.revalidate();
         instance.repaint();
     }
 
-    public static void goToAllGroupsPanel(){
-        instance.remove(instance.concreteGroupPanel);
-        instance.add(instance.allGroupsPanel);
+    public static void goToAllGroupsScreen(){
+        instance.remove(instance.groupScreen);
+        instance.add(instance.allGroupsScreen);
         instance.revalidate();
         instance.repaint();
     }

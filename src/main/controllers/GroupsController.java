@@ -24,7 +24,7 @@ public class GroupsController {
             GroupDto newGroup = GroupCreateForm.createGroup();
             if (newGroup != null) {
                 DataContext.getInstance().getGroupTable().create(newGroup);
-                App.getAllGroupsPanel().addGroup(newGroup);
+                App.getAllGroupsScreen().addGroup(newGroup);
             }
         } catch (DomainException | InvalidFormInputException ex){
             showExceptionMessage(ex);
@@ -34,7 +34,7 @@ public class GroupsController {
     public static void deleteGroup(GroupDto groupDto){
         try{
             DataContext.getInstance().getGroupTable().delete(groupDto.getName());
-            App.getAllGroupsPanel().deleteGroup(groupDto);
+            App.getAllGroupsScreen().deleteGroup(groupDto);
         } catch (DomainException ex){
             showExceptionMessage(ex);
         }
@@ -42,7 +42,7 @@ public class GroupsController {
 
     public static void updateGroup(){
         try {
-            var groupPanel = App.getConcreteGroupPanel();
+            var groupPanel = App.getGroupScreen();
             var groupTable = DataContext.getInstance().getGroupTable();
             GroupDto oldGroup = groupPanel.getGroup();
             GroupDto toUpdate = groupPanel.getGroupToUpdate();

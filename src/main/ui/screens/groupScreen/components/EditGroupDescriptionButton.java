@@ -1,4 +1,4 @@
-package main.ui.panels.concreteGroupPanel.components;
+package main.ui.screens.groupScreen.components;
 
 import main.Icons;
 import main.controllers.GroupsController;
@@ -17,7 +17,7 @@ public class EditGroupDescriptionButton extends RoundedButton {
     }
 
     private void onClick(ActionEvent e){
-        var descriptionArea = App.getConcreteGroupPanel().getDescriptionArea();
+        var descriptionArea = App.getGroupScreen().getDescriptionArea();
         if (descriptionArea.isEditable()) {
             setIcon(Icons.buildCheckmarkIcon(20, 20));
             descriptionArea.setEditable(false);

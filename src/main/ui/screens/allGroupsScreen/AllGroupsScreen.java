@@ -1,17 +1,17 @@
-package main.ui.panels.allGroupsPanel;
+package main.ui.screens.allGroupsScreen;
 
 import main.model.dto.GroupDto;
 import main.ui.App;
-import main.ui.panels.allGroupsPanel.components.*;
+import main.ui.screens.allGroupsScreen.components.*;
 
 import javax.swing.*;
 import java.util.*;
 
-public class AllGroupsPanel extends JPanel {
+public class AllGroupsScreen extends JPanel {
     private final List<GroupButton> groupButtons = new LinkedList<>();
     private final GroupsLabelButton groupsLabelButton;
 
-    public AllGroupsPanel() {
+    public AllGroupsScreen() {
         App.getInstance().setTitle("All Groups");
         setLayout(null);
         groupsLabelButton = new GroupsLabelButton();
