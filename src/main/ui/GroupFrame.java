@@ -1,28 +1,36 @@
 // GroupFrame.java
 package main.ui;
 
+import main.model.data.DataContext;
+import main.model.dto.GroupDto;
+import main.model.dto.Mapper;
+import main.model.exceptions.DomainException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.UUID;
 
 public class GroupFrame extends JFrame {
+    private GroupDto group;
+
     private JTextField searchField;
     private JTextField groupNameField;
     private JTextArea descriptionArea;
-    private JButton groupNameButton;
     private JPanel searchResultsPanel;
-    private JButton squareButton1;
-    private JButton squareButton2;
-    private JButton squareButton3;
+    private JButton editNameBtn;
+    private JButton editDescriptionBtn;
+    private JButton createProductBtn;
 
-    public GroupFrame(String groupName, String groupDescription) {
+    public GroupFrame(GroupDto group) {
+        this.group = group;
         setTitle("Group Details");
         setSize(1000, 750);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null); // Set layout manager to null
 
-        groupNameField = new JTextField(groupName);
+        groupNameField = new JTextField(group.getName().getValue());
         groupNameField.setBounds(158, 58, 580, 50); // Adjusted x-coordinate
         groupNameField.setBackground(Color.WHITE);
         groupNameField.setForeground(new Color(0x203a54));
@@ -31,7 +39,7 @@ public class GroupFrame extends JFrame {
         groupNameField.setEditable(false);
         add(groupNameField);
 
-        descriptionArea = new JTextArea(groupDescription);
+        descriptionArea = new JTextArea(group.getDescription());
         descriptionArea.setBounds(158, 108, 580, 50); // Adjusted x-coordinate
         descriptionArea.setEditable(false);
         add(descriptionArea);
@@ -44,49 +52,51 @@ public class GroupFrame extends JFrame {
         ImageIcon checkIcon = new ImageIcon("src/main/UI/checkmark.png");
 
         /// Add new square button next to group name
-        squareButton1 = new SquareButton("", 10);
-        squareButton1.setBounds(748, 58, 50, 50);
-        squareButton1.setBackground(Color.WHITE);
-        squareButton1.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH))); // Resize the pen icon
-        squareButton1.addActionListener(new ActionListener() {
+        editNameBtn = new SquareButton("", 10);
+        editNameBtn.setBounds(748, 58, 50, 50);
+        editNameBtn.setBackground(Color.WHITE);
+        editNameBtn.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH))); // Resize the pen icon
+        editNameBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (groupNameField.isEditable()) {
                     groupNameField.setEditable(false);
-                    squareButton1.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                    editNameBtn.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                    updateGroup();
                 } else {
                     groupNameField.setEditable(true);
-                    squareButton1.setIcon(new ImageIcon(checkIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                    editNameBtn.setIcon(new ImageIcon(checkIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
                 }
             }
         });
-        add(squareButton1);
+        add(editNameBtn);
 
         // Add new square button next to group description
-        squareButton2 = new SquareButton("", 10);
-        squareButton2.setBounds(748, 108, 50, 50);
-        squareButton2.setBackground(Color.WHITE);
-        squareButton2.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
-        squareButton2.addActionListener(new ActionListener() {
+        editDescriptionBtn = new SquareButton("", 10);
+        editDescriptionBtn.setBounds(748, 108, 50, 50);
+        editDescriptionBtn.setBackground(Color.WHITE);
+        editDescriptionBtn.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+        editDescriptionBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (descriptionArea.isEditable()) {
                     descriptionArea.setEditable(false);
-                    squareButton2.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                    editDescriptionBtn.setIcon(new ImageIcon(penIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                    updateGroup();
                 } else {
                     descriptionArea.setEditable(true);
-                    squareButton2.setIcon(new ImageIcon(checkIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
+                    editDescriptionBtn.setIcon(new ImageIcon(checkIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH)));
                 }
             }
         });
-        add(squareButton2);
+        add(editDescriptionBtn);
 
-        squareButton3 = new SquareButton("", 10);
-        squareButton3.setBounds(748, 158, 50, 50);
-        squareButton3.setBackground(Color.WHITE);
+        createProductBtn = new SquareButton("", 10);
+        createProductBtn.setBounds(748, 158, 50, 50);
+        createProductBtn.setBackground(Color.WHITE);
         ImageIcon plusIcon = new ImageIcon("src/main/UI/plus.png");
-        squareButton3.setIcon(new ImageIcon(plusIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH))); // Resize the plus icon
-        add(squareButton3);
+        createProductBtn.setIcon(new ImageIcon(plusIcon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH))); // Resize the plus icon
+        add(createProductBtn);
 
         searchResultsPanel = new JPanel();
         searchResultsPanel.setBounds(158, 208, 580, 500);
@@ -100,6 +110,22 @@ public class GroupFrame extends JFrame {
         getContentPane().setBackground(new Color(0xe9f2fb));
 
         setVisible(true);
+    }
+
+    private void updateGroup() {
+        try {
+            UUID groupId = DataContext.getInstance().getGroupTable().get(group.getName()).getId();
+            GroupDto toUpdate = new GroupDto(groupNameField.getText(), descriptionArea.getText());
+            DataContext.getInstance().getGroupTable().update(groupId, toUpdate);
+            group = Mapper.map(DataContext.getInstance().getGroupTable().get(groupId));
+        } catch (DomainException ex) {
+            JOptionPane.showMessageDialog(
+                    null,
+                    ex.getMessage(),
+                    "ERROR",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
 }
 
@@ -117,7 +143,7 @@ class SquareButton extends JButton {
 
     protected void paintComponent(Graphics g) {
         g.setColor(getBackground());
-        g.fillRoundRect(0, 0, getWidth()-1, getHeight()-1, radius, radius); // Draw a rounded rectangle
+        g.fillRoundRect(0, 0, getWidth() - 1, getHeight() - 1, radius, radius); // Draw a rounded rectangle
         super.paintComponent(g);
     }
 }

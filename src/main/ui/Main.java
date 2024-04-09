@@ -8,7 +8,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import main.model.data.DataContext;
 import main.model.dto.GroupDto;
+import main.model.exceptions.DomainException;
+import main.ui.exceptions.InvalidFormInputException;
 import main.ui.forms.group.GroupCreateForm;
 
 public class Main {
@@ -69,43 +73,52 @@ public class Main {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        GroupDto newGroup = GroupCreateForm.createGroup();
-                        if (newGroup != null) {
-                            groups.add(newGroup);
-                            JButton newGroupButton = new RoundedButton(newGroup.getName().getValue());
-                            newGroupButton.setFont(new Font("Arial", Font.PLAIN, 20));
-                            newGroupButton.setBounds(groupButton.getX() + ((groups.size() - 1) % 3) * 200, groupButton.getY() + groupButton.getHeight() + ((groups.size() - 1) / 3) * 60 + 20, 200, 50);
-                            newGroupButton.setBackground(Color.WHITE);
-                            newGroupButton.setForeground(Color.BLACK);
-                            newGroupButton.setOpaque(false);
-                            newGroupButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                            newGroupButton.setContentAreaFilled(false);
-                            newGroupButton.setHorizontalAlignment(SwingConstants.CENTER);
-                            newGroupButton.setVerticalAlignment(SwingConstants.CENTER);
-                            newGroupButton.setFocusPainted(false);
-                            final int index = groups.size() - 1;
-                            newGroupButton.addActionListener(new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    if (deleteMode) {
-                                        frame.remove(newGroupButton);
-                                        groupButtons.remove(newGroupButton);
-                                        for (int i = 0; i < groupButtons.size(); i++) {
-                                            JButton remainingButton = groupButtons.get(i);
-                                            remainingButton.setBounds(groupButton.getX() + (i % 3) * 200, groupButton.getY() + groupButton.getHeight() + (i / 3) * 60 + 20, 200, 50);
+                        try{
+                            GroupDto newGroup = GroupCreateForm.createGroup();
+                            if (newGroup != null) {
+                                DataContext.getInstance().getGroupTable().create(newGroup);
+                                groups.add(newGroup);
+                                JButton newGroupButton = new RoundedButton(newGroup.getName().getValue());
+                                newGroupButton.setFont(new Font("Arial", Font.PLAIN, 20));
+                                newGroupButton.setBounds(groupButton.getX() + ((groups.size() - 1) % 3) * 200, groupButton.getY() + groupButton.getHeight() + ((groups.size() - 1) / 3) * 60 + 20, 200, 50);
+                                newGroupButton.setBackground(Color.WHITE);
+                                newGroupButton.setForeground(Color.BLACK);
+                                newGroupButton.setOpaque(false);
+                                newGroupButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+                                newGroupButton.setContentAreaFilled(false);
+                                newGroupButton.setHorizontalAlignment(SwingConstants.CENTER);
+                                newGroupButton.setVerticalAlignment(SwingConstants.CENTER);
+                                newGroupButton.setFocusPainted(false);
+                                final int index = groups.size() - 1;
+                                newGroupButton.addActionListener(new ActionListener() {
+                                    @Override
+                                    public void actionPerformed(ActionEvent e) {
+                                        if (deleteMode) {
+                                            frame.remove(newGroupButton);
+                                            groupButtons.remove(newGroupButton);
+                                            for (int i = 0; i < groupButtons.size(); i++) {
+                                                JButton remainingButton = groupButtons.get(i);
+                                                remainingButton.setBounds(groupButton.getX() + (i % 3) * 200, groupButton.getY() + groupButton.getHeight() + (i / 3) * 60 + 20, 200, 50);
+                                            }
+                                            frame.revalidate();
+                                            frame.repaint();
+                                        } else {
+                                            frame.dispose();
+                                            new GroupFrame(groups.get(index));
                                         }
-                                        frame.revalidate();
-                                        frame.repaint();
-                                    } else {
-                                        frame.dispose();
-                                        new GroupFrame(groups.get(index).getName().getValue(), groups.get(index).getDescription());
                                     }
-                                }
-                            });
-                            groupButtons.add(newGroupButton);
-                            frame.add(newGroupButton);
-                            frame.revalidate();
-                            frame.repaint();
+                                });
+                                groupButtons.add(newGroupButton);
+                                frame.add(newGroupButton);
+                                frame.revalidate();
+                                frame.repaint();
+                            }
+                        } catch (DomainException | InvalidFormInputException ex){
+                            JOptionPane.showMessageDialog(
+                                    null,
+                                    ex.getMessage(),
+                                    "ERROR",
+                                    JOptionPane.ERROR_MESSAGE);
                         }
                     }
                 });
