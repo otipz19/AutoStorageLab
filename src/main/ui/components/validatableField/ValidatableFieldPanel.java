@@ -10,8 +10,6 @@ public class ValidatableFieldPanel extends JPanel {
         boolean isValid(String str);
     }
 
-    private boolean firstRender = true;
-
     protected final Validator validator;
     protected JTextField field;
     protected JLabel errorLabel;
@@ -29,7 +27,7 @@ public class ValidatableFieldPanel extends JPanel {
         //setValidationState();
     }
 
-    public boolean isValid() {
+    public boolean isValidText() {
         return isValid;
     }
 
@@ -41,12 +39,12 @@ public class ValidatableFieldPanel extends JPanel {
         field.setText(text);
     }
 
-    public void setEditable(boolean isEditable) {
-        field.setEditable(isEditable);
-    }
-
     public boolean isEditable() {
         return field.isEditable();
+    }
+
+    public void setEditable(boolean isEditable) {
+        field.setEditable(isEditable);
     }
 
     private void createLayout(String fieldValue) {
@@ -63,6 +61,7 @@ public class ValidatableFieldPanel extends JPanel {
     private void addErrorLabel() {
         errorLabel = new JLabel("");
         errorLabel.setForeground(Color.RED);
+        errorLabel.setVisible(false);
         add(errorLabel, BorderLayout.SOUTH);
     }
 
@@ -70,12 +69,7 @@ public class ValidatableFieldPanel extends JPanel {
         field.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                //For the God's sake, I don't know how, but it works!
-                if (firstRender) {
-                    firstRender = false;
-                } else {
-                    setValidationState();
-                }
+                setValidationState();
             }
 
             @Override
@@ -90,12 +84,9 @@ public class ValidatableFieldPanel extends JPanel {
         });
     }
 
-    public void setValidationState() {
-        isValid = validator.isValid(field.getText());
-        if (isValid) {
-            errorLabel.setText("");
-        } else {
-            errorLabel.setText("Invalid input!");
-        }
+    protected void setValidationState() {
+        this.isValid = validator.isValid(field.getText());
+        errorLabel.setText("Invalid input!");
+        errorLabel.setVisible(!isValid);
     }
 }

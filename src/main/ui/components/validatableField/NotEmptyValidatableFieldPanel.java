@@ -11,13 +11,12 @@ public class NotEmptyValidatableFieldPanel extends ValidatableFieldPanel {
     }
 
     @Override
-    public void setValidationState() {
-        boolean isBlank = field.getText().isBlank();
-        isValid = validator.isValid(field.getText()) && !isBlank;
-        if (!isValid) {
-            errorLabel.setText(isBlank ? "Required field!" : "Invalid input!");
-        } else {
-            errorLabel.setText("");
+    protected void setValidationState(){
+        super.setValidationState();
+        if(field.getText().isBlank()){
+            isValid = false;
+            errorLabel.setText("Required field!");
         }
+        errorLabel.setVisible(!isValid);
     }
 }

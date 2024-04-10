@@ -9,11 +9,11 @@ import java.awt.*;
 public class GroupNameField extends NotEmptyValidatableFieldPanel {
     public GroupNameField(){
         super(GroupName::isValid);
+        setBackground(new Color(0xe9f2fb));
         field.setBackground(Color.WHITE);
         field.setForeground(new Color(0x203a54));
         field.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         field.setHorizontalAlignment(SwingConstants.CENTER);
         field.setEditable(false);
-        setBackground(new Color(0xe9f2fb));
     }
 }
