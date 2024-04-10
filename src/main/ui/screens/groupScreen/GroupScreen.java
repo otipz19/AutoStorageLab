@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import java.util.regex.Pattern;
 
 public class GroupScreen extends JPanel {
     @Getter
@@ -47,31 +47,43 @@ public class GroupScreen extends JPanel {
         searchField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                performSearch();
+                performSearch();
             }
         });
     }
 
 
-//    private void performSearch() {
-//        String searchText = searchField.getText().toLowerCase();
-//        List<ProductDto> matchingProducts = products.stream()
-//                .filter(product -> searchText.isEmpty() || product.getName().getValue().toLowerCase().contains(searchText))
-//                .collect(Collectors.toList());
-//
-//        searchResultsPanel.removeAll();
-//        if (matchingProducts.isEmpty()) {
-//            JLabel noProductsLabel = new JLabel("No products found.");
-//            searchResultsPanel.add(noProductsLabel);
-//        } else {
-//            for (ProductDto product : matchingProducts) {
-//                JLabel productLabel = new JLabel(product.getName().getValue());
-//                searchResultsPanel.add(productLabel);
-//            }
-//        }
-//        searchResultsPanel.revalidate();
-//        searchResultsPanel.repaint();
-//    }
+    private void performSearch() {
+        List<ProductDto> matchingProducts = getMatchingProducts();
+        productsPanel.removeAll();
+        if (matchingProducts.isEmpty()) {
+            JLabel noProductsLabel = new JLabel("No products found.");
+            productsPanel.add(noProductsLabel);
+        } else {
+            drawProductTitles(matchingProducts);
+        }
+        productsPanel.revalidate();
+        productsPanel.repaint();
+    }
+
+    private List<ProductDto> getMatchingProducts(){
+        String searchText = searchField.getText().toLowerCase();
+        if(searchText.isEmpty()){
+            return products;
+        }
+        Pattern pattern = buildRegexPatternFromSearchText(searchText);
+        return products.stream()
+                .filter(product -> pattern.matcher(product.getName().getValue().toLowerCase()).matches())
+                .toList();
+    }
+
+    private static Pattern buildRegexPatternFromSearchText(String searchText) {
+        searchText = searchText.replaceAll("\\?", ".{1}");
+        searchText = searchText.replaceAll("\\*", ".*");
+        Pattern pattern = Pattern.compile(searchText);
+        return pattern;
+    }
+
     private JPanel createActionsPanel(){
         JPanel actionsPanel = new JPanel(new GridLayout(3, 1));
         actionsPanel.add(createGroupNamePanel());
@@ -134,10 +146,10 @@ public class GroupScreen extends JPanel {
                 .stream()
                 .map(r -> Mapper.map(r, groupDto.getName()))
                 .toList();
-        drawProductPanels();
+        drawProductTitles(products);
     }
 
-    private void drawProductPanels(){
+    private void drawProductTitles(List<ProductDto> products){
         for(ProductDto productDto: products){
             ProductTitleButton productTitleButton = new ProductTitleButton(productDto);
             productsPanel.add(productTitleButton);
