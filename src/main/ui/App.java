@@ -13,20 +13,41 @@ import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Main class of the application.
+ * This class is responsible for managing the application's screens and navigation between them.
+ */
 public class App extends JFrame {
+    /**
+     * Singleton instance of the App class.
+     */
     @Getter
     private static App instance;
 
-
-    private class ScreensMap extends HashMap<String, JPanel>{
-        public void addScreen(JPanel screen){
+    /**
+     * Map of screens.
+     * This map stores all the screens used in the application, with the screen's class name as the key.
+     */
+    private class ScreensMap extends HashMap<String, JPanel> {
+        /**
+         * Adds a screen to the map.
+         * @param screen The screen to add.
+         */
+        public void addScreen(JPanel screen) {
             put(screen.getClass().getName(), screen);
         }
     }
 
+    /**
+     * The map of screens.
+     */
     private final ScreensMap screens = new ScreensMap();
 
-    public App(){
+    /**
+     * Constructor.
+     * Initializes the application and adds the initial screens.
+     */
+    public App() {
         instance = this;
         configApp();
         screens.addScreen(new AllGroupsScreen());
@@ -35,15 +56,27 @@ public class App extends JFrame {
         screens.addScreen(new AllGroupsSearchScreen());
     }
 
-    public static AllGroupsScreen getAllGroupsScreen(){
+    /**
+     * Returns the AllGroupsScreen.
+     * @return The AllGroupsScreen.
+     */
+    public static AllGroupsScreen getAllGroupsScreen() {
         return (AllGroupsScreen) instance.screens.get(AllGroupsScreen.class.getName());
     }
 
-    public static GroupScreen getGroupScreen(){
+    /**
+     * Returns the GroupScreen.
+     * @return The GroupScreen.
+     */
+    public static GroupScreen getGroupScreen() {
         return (GroupScreen) instance.screens.get(GroupScreen.class.getName());
     }
 
-    public static void goToGroupScreen(GroupDto groupDto){
+    /**
+     * Navigates to the GroupScreen for a specific group.
+     * @param groupDto The group to display in the GroupScreen.
+     */
+    public static void goToGroupScreen(GroupDto groupDto) {
         instance.removeAllScreens();
         GroupScreen groupScreen = (GroupScreen) instance.screens.get(GroupScreen.class.getName());
         groupScreen.setGroup(groupDto);
@@ -52,7 +85,10 @@ public class App extends JFrame {
         instance.repaint();
     }
 
-    public static void goToAllGroupsScreen(){
+    /**
+     * Navigates to the AllGroupsScreen.
+     */
+    public static void goToAllGroupsScreen() {
         instance.removeAllScreens();
         AllGroupsScreen allGroupsScreen = (AllGroupsScreen) instance.screens.get(AllGroupsScreen.class.getName());
         instance.add(allGroupsScreen);
@@ -60,14 +96,21 @@ public class App extends JFrame {
         instance.repaint();
     }
 
-    public static void goToAllGroupsSearchScreen(){
-    instance.removeAllScreens();
-    AllGroupsSearchScreen allGroupsSearchScreen = (AllGroupsSearchScreen) instance.screens.get(AllGroupsSearchScreen.class.getName());
-    instance.add(allGroupsSearchScreen);
-    instance.revalidate();
-    instance.repaint();
-}
-    public static void goToGroupCreateScreen(){
+    /**
+     * Navigates to the AllGroupsSearchScreen.
+     */
+    public static void goToAllGroupsSearchScreen() {
+        instance.removeAllScreens();
+        AllGroupsSearchScreen allGroupsSearchScreen = (AllGroupsSearchScreen) instance.screens.get(AllGroupsSearchScreen.class.getName());
+        instance.add(allGroupsSearchScreen);
+        instance.revalidate();
+        instance.repaint();
+    }
+
+    /**
+     * Navigates to the GroupCreateScreen.
+     */
+    public static void goToGroupCreateScreen() {
         instance.removeAllScreens();
         GroupCreateScreen groupCreateScreen = new GroupCreateScreen();
         instance.screens.addScreen(groupCreateScreen);
@@ -76,7 +119,11 @@ public class App extends JFrame {
         instance.repaint();
     }
 
-    public static void goToProductCreateScreen(GroupDto groupDto){
+    /**
+     * Navigates to the ProductCreateScreen for a specific group.
+     * @param groupDto The group for which to create a product.
+     */
+    public static void goToProductCreateScreen(GroupDto groupDto) {
         instance.removeAllScreens();
         ProductCreateScreen productCreateScreen = new ProductCreateScreen(groupDto);
         instance.screens.addScreen(productCreateScreen);
@@ -85,18 +132,23 @@ public class App extends JFrame {
         instance.repaint();
     }
 
-    private void removeAllScreens(){
-        for(JPanel screen : screens.values()){
+    /**
+     * Removes all screens from the JFrame.
+     */
+    private void removeAllScreens() {
+        for (JPanel screen : screens.values()) {
             remove(screen);
         }
     }
 
+    /**
+     * Configures the application's settings.
+     */
     private void configApp() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Auto Storage Labe");
         setSize(1000, 750);
         getContentPane().setBackground(new Color(0xe9f2fb));
-//        setResizable(false);
         setLocationRelativeTo(null);
     }
 }

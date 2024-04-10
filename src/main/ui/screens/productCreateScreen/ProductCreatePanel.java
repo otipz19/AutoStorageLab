@@ -15,15 +15,29 @@ import main.ui.screens.ICreationPanel;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Panel for creating a new product.
+ * This panel contains fields for the product's name, description, manufacturer, amount, and price.
+ * It validates the input and enables the confirmation button when the input is valid.
+ */
 public class ProductCreatePanel extends JPanel implements ICreationPanel {
+    /**
+     * The screen that this panel is part of.
+     */
     private final ProductCreateScreen productCreateScreen;
 
+    /**
+     * The fields for the product's name, description, manufacturer, amount, and price.
+     */
     private ValidatableNotifierField name;
     private JTextArea description;
     private ValidatableNotifierField manufacturer;
     private ValidatableNotifierField amount;
     private ValidatableNotifierField price;
-
+    /**
+     * Constructs a new ProductCreatePanel.
+     * @param productCreateScreen The screen that this panel is part of.
+     */
     public ProductCreatePanel(ProductCreateScreen productCreateScreen) {
         this.productCreateScreen = productCreateScreen;
         setLayout(new GridLayout(5, 1, 5, 5));
@@ -72,6 +86,10 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
         return new GridedPanel("Price: ", price);
     }
 
+    /**
+     * Creates a new product with the input from the fields.
+     * If the input is invalid, it shows an error message and does not create the product.
+     */
     @Override
     public void create() {
         try {
@@ -82,6 +100,7 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
         }
     }
 
+
     private static class GridedPanel extends JPanel {
         public GridedPanel(String labelText, JComponent component) {
             setLayout(new GridLayout(1, 2));
@@ -91,7 +110,9 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
     }
 
     /**
-     * @throws InvalidFormInputException if input is invalid
+     * Returns a ProductDto with the input from the fields.
+     * @return A ProductDto with the input from the fields.
+     * @throws InvalidFormInputException If the input is invalid.
      */
     public ProductDto getProductDto() {
         try {
@@ -107,6 +128,11 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
         }
     }
 
+
+    /**
+     * Called when the input in a field changes.
+     * Checks if the input in all fields is valid and enables or disables the confirmation button accordingly.
+     */
     public void onInputChange() {
         boolean isValid = name.isInputValid() && manufacturer.isInputValid() && amount.isInputValid() && price.isInputValid();
         productCreateScreen.getConfirmationPanel().getConfirmBtn().setEnabled(isValid);

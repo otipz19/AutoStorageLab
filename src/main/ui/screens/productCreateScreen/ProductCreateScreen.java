@@ -16,6 +16,10 @@ public class ProductCreateScreen extends JPanel {
     @Getter
     private ConfirmationPanel confirmationPanel;
 
+    /**
+     * Constructs a new ProductCreateScreen.
+     * @param group The group that the product belongs to.
+     */
     public ProductCreateScreen(GroupDto group) {
         this.group = group;
         App.getInstance().setTitle("Create new Product");
