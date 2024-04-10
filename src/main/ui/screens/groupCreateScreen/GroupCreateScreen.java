@@ -2,6 +2,8 @@ package main.ui.screens.groupCreateScreen;
 
 import lombok.Getter;
 import main.ui.App;
+import main.ui.components.ConfirmationPanel;
+import main.ui.screens.groupCreateScreen.components.GroupCreatePanel;
 
 import javax.swing.*;
 import java.awt.*;

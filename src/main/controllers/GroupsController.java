@@ -9,25 +9,13 @@ import main.ui.App;
 import javax.swing.*;
 import java.util.UUID;
 
-public class GroupsController {
+public class GroupsController extends BaseController {
     @Getter
     private static boolean isGroupDeleteModeOn;
 
     public static void switchGroupDeleteMode() {
         isGroupDeleteModeOn = !isGroupDeleteModeOn;
     }
-
-//    public static void createGroup(){
-//        try{
-//            GroupDto newGroup = GroupCreateForm.createGroup();
-//            if (newGroup != null) {
-//                DataContext.getInstance().getGroupTable().create(newGroup);
-//                App.getAllGroupsScreen().addGroup(newGroup);
-//            }
-//        } catch (DomainException | InvalidFormInputException ex){
-//            showExceptionMessage(ex);
-//        }
-//    }
 
     public static void createGroup(GroupDto groupDto) {
         try {
@@ -64,13 +52,5 @@ public class GroupsController {
                     JOptionPane.ERROR_MESSAGE
             );
         }
-    }
-
-    private static void showExceptionMessage(RuntimeException ex) {
-        JOptionPane.showMessageDialog(
-                null,
-                ex.getMessage(),
-                "ERROR",
-                JOptionPane.ERROR_MESSAGE);
     }
 }

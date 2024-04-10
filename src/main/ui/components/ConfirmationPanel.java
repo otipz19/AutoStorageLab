@@ -1,4 +1,4 @@
-package main.ui.screens.groupCreateScreen;
+package main.ui.components;
 
 import lombok.Getter;
 import main.ui.App;

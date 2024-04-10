@@ -1,11 +1,13 @@
-package main.ui.screens.groupCreateScreen;
+package main.ui.screens.groupCreateScreen.components;
 
+import main.controllers.BaseController;
 import main.controllers.GroupsController;
 import main.model.dto.GroupDto;
 import main.model.exceptions.DomainException;
 import main.ui.App;
 import main.ui.exceptions.InvalidFormInputException;
 import main.ui.screens.ICreationPanel;
+import main.ui.screens.groupCreateScreen.GroupCreateScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,20 +30,24 @@ public class GroupCreatePanel extends JPanel implements ICreationPanel {
     }
 
     /**
-     * @throws InvalidFormInputException if input is invalid
+     * @throws DomainException if input is invalid
      */
     public GroupDto getGroupDto() {
         try {
             return new GroupDto(name.getText(), description.getText());
-        } catch (DomainException e) {
-            throw new InvalidFormInputException(e);
+        } catch (Exception ex) {
+            throw new InvalidFormInputException(ex);
         }
     }
 
     @Override
     public void create() {
-        GroupsController.createGroup(getGroupDto());
-        App.goToAllGroupsScreen();
+        try {
+            GroupsController.createGroup(getGroupDto());
+            App.goToAllGroupsScreen();
+        } catch (InvalidFormInputException ex) {
+            BaseController.showExceptionMessage(ex);
+        }
     }
 
     public void onInputChange(boolean isValid) {

@@ -1,16 +1,23 @@
 package main.ui.screens.groupScreen;
 
 import lombok.Getter;
+import main.model.data.DataContext;
 import main.model.dto.GroupDto;
+import main.model.dto.Mapper;
+import main.model.dto.ProductDto;
 import main.ui.App;
 import main.ui.screens.groupScreen.components.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.UUID;
 
 public class GroupScreen extends JPanel {
     @Getter
     private GroupDto group;
+
+    private List<ProductDto> products;
 
     private GroupProductsSearchField searchField;
     @Getter
@@ -85,6 +92,11 @@ public class GroupScreen extends JPanel {
         this.group = groupDto;
         groupNameField.setText(groupDto.getName().getValue());
         descriptionArea.setText(groupDto.getDescription());
+        UUID groupId = DataContext.getInstance().getGroupTable().get(groupDto.getName()).getId();
+        products = DataContext.getInstance().getProductTable().getByGroupId(groupId)
+                .stream()
+                .map(r -> Mapper.map(r, groupDto.getName()))
+                .toList();
     }
 
     public GroupDto getGroupToUpdate() {

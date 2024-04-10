@@ -1,12 +1,9 @@
-package main.ui.screens.groupCreateScreen;
+package main.ui.screens.groupCreateScreen.components;
 
 import main.model.valueObjects.GroupName;
-import main.ui.App;
 import main.ui.components.validatableField.NotEmptyValidatableFieldPanel;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class GroupNameField extends NotEmptyValidatableFieldPanel {
