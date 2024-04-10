@@ -1,6 +1,7 @@
 package main.ui.screens.groupScreen.components;
 
 import main.Icons;
+import main.ui.App;
 import main.ui.components.buttons.RoundedButton;
 
 import java.awt.*;
@@ -15,6 +16,6 @@ public class CreateProductButton extends RoundedButton {
     }
 
     private void onClick(ActionEvent e){
-        //TODO: to be implemented
+        App.goToProductCreateScreen(App.getGroupScreen().getGroup());
     }
 }
