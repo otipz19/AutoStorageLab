@@ -1,4 +1,4 @@
-package main.ui.components;
+package main.ui.components.panels;
 
 import lombok.Getter;
 import main.ui.App;
