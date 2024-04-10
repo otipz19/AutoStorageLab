@@ -10,29 +10,43 @@ public class ValidatableFieldPanel extends JPanel {
         boolean isValid(String str);
     }
 
-    private final Validator validator;
-    private JTextField field;
-    private JLabel errorLabel;
+    private boolean firstRender = true;
 
-    private boolean isValid;
+    protected final Validator validator;
+    protected JTextField field;
+    protected JLabel errorLabel;
+
+    protected boolean isValid;
 
     public ValidatableFieldPanel(Validator validator) {
         this(validator, "");
     }
 
-    public ValidatableFieldPanel(Validator validator, String fieldValue){
+    public ValidatableFieldPanel(Validator validator, String fieldValue) {
         this.validator = validator;
         createLayout(fieldValue);
         setupValidation();
-        setValidationState();
+        //setValidationState();
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
         return isValid;
     }
 
-    public String getText(){
+    public String getText() {
         return field.getText();
+    }
+
+    public void setText(String text) {
+        field.setText(text);
+    }
+
+    public void setEditable(boolean isEditable) {
+        field.setEditable(isEditable);
+    }
+
+    public boolean isEditable() {
+        return field.isEditable();
     }
 
     private void createLayout(String fieldValue) {
@@ -47,9 +61,8 @@ public class ValidatableFieldPanel extends JPanel {
     }
 
     private void addErrorLabel() {
-        errorLabel = new JLabel("Invalid input!");
+        errorLabel = new JLabel("");
         errorLabel.setForeground(Color.RED);
-        errorLabel.setVisible(false);
         add(errorLabel, BorderLayout.SOUTH);
     }
 
@@ -57,7 +70,12 @@ public class ValidatableFieldPanel extends JPanel {
         field.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                setValidationState();
+                //For the God's sake, I don't know how, but it works!
+                if (firstRender) {
+                    firstRender = false;
+                } else {
+                    setValidationState();
+                }
             }
 
             @Override
@@ -72,8 +90,12 @@ public class ValidatableFieldPanel extends JPanel {
         });
     }
 
-    private void setValidationState(){
-        this.isValid = validator.isValid(field.getText());
-        errorLabel.setVisible(!isValid);
+    public void setValidationState() {
+        isValid = validator.isValid(field.getText());
+        if (isValid) {
+            errorLabel.setText("");
+        } else {
+            errorLabel.setText("Invalid input!");
+        }
     }
 }

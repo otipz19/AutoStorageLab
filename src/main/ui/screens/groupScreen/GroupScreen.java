@@ -2,7 +2,10 @@ package main.ui.screens.groupScreen;
 
 import lombok.Getter;
 import main.model.dto.GroupDto;
+import main.model.valueObjects.GroupName;
 import main.ui.App;
+import main.ui.components.validatableField.NotEmptyValidatableFieldPanel;
+import main.ui.components.validatableField.ValidatableFieldPanel;
 import main.ui.screens.groupScreen.components.*;
 
 import javax.swing.*;
@@ -14,7 +17,7 @@ public class GroupScreen extends JPanel {
 
     private GroupProductsSearchField searchField;
     @Getter
-    private GroupNameField groupNameField;
+    private ValidatableFieldPanel groupNameField;
     @Getter
     private GroupDescriptionArea descriptionArea;
     private JPanel searchResultsPanel;
@@ -27,7 +30,7 @@ public class GroupScreen extends JPanel {
         setLayout(null);
         setBackground(new Color(0xe9f2fb));
 
-        groupNameField = new GroupNameField();
+        groupNameField = new NotEmptyValidatableFieldPanel(GroupName::isValid);
         groupNameField.setBounds(158, 58, 580, 50);
         add(groupNameField);
 
@@ -64,5 +67,9 @@ public class GroupScreen extends JPanel {
 
     public GroupDto getGroupToUpdate(){
         return new GroupDto(groupNameField.getText(), descriptionArea.getText());
+    }
+
+    public void setValidationState(){
+        groupNameField.setValidationState();
     }
 }
