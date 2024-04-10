@@ -47,33 +47,31 @@ public class GroupScreen extends JPanel {
         searchField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                performSearch();
+//                performSearch();
             }
         });
-
-
     }
 
 
-    private void performSearch() {
-        String searchText = searchField.getText().toLowerCase();
-        List<ProductDto> matchingProducts = products.stream()
-                .filter(product -> searchText.isEmpty() || product.getName().getValue().toLowerCase().contains(searchText))
-                .collect(Collectors.toList());
-
-        searchResultsPanel.removeAll();
-        if (matchingProducts.isEmpty()) {
-            JLabel noProductsLabel = new JLabel("No products found.");
-            searchResultsPanel.add(noProductsLabel);
-        } else {
-            for (ProductDto product : matchingProducts) {
-                JLabel productLabel = new JLabel(product.getName().getValue());
-                searchResultsPanel.add(productLabel);
-            }
-        }
-        searchResultsPanel.revalidate();
-        searchResultsPanel.repaint();
-    }
+//    private void performSearch() {
+//        String searchText = searchField.getText().toLowerCase();
+//        List<ProductDto> matchingProducts = products.stream()
+//                .filter(product -> searchText.isEmpty() || product.getName().getValue().toLowerCase().contains(searchText))
+//                .collect(Collectors.toList());
+//
+//        searchResultsPanel.removeAll();
+//        if (matchingProducts.isEmpty()) {
+//            JLabel noProductsLabel = new JLabel("No products found.");
+//            searchResultsPanel.add(noProductsLabel);
+//        } else {
+//            for (ProductDto product : matchingProducts) {
+//                JLabel productLabel = new JLabel(product.getName().getValue());
+//                searchResultsPanel.add(productLabel);
+//            }
+//        }
+//        searchResultsPanel.revalidate();
+//        searchResultsPanel.repaint();
+//    }
     private JPanel createActionsPanel(){
         JPanel actionsPanel = new JPanel(new GridLayout(3, 1));
         actionsPanel.add(createGroupNamePanel());
@@ -142,7 +140,6 @@ public class GroupScreen extends JPanel {
     private void drawProductPanels(){
         for(ProductDto productDto: products){
             ProductTitleButton productTitleButton = new ProductTitleButton(productDto);
-//            productTitleButton.setPreferredSize(new Dimension(productsPanel.getWidth(), productTitleButton.getHeight()));
             productsPanel.add(productTitleButton);
         }
     }

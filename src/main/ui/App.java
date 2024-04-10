@@ -4,6 +4,7 @@ import lombok.Getter;
 import main.model.dto.GroupDto;
 import main.model.dto.ProductDto;
 import main.ui.screens.allGroupsScreen.AllGroupsScreen;
+import main.ui.screens.allGroupsSearchScreen.AllGroupsSearchScreen;
 import main.ui.screens.groupCreateScreen.GroupCreateScreen;
 import main.ui.screens.groupScreen.GroupScreen;
 import main.ui.screens.productCreateScreen.ProductCreateScreen;
@@ -79,7 +80,6 @@ public class App extends JFrame {
      */
     public static void goToGroupScreen(GroupDto groupDto) {
         instance.removeAllScreens();
-//        GroupScreen groupScreen = (GroupScreen) instance.screens.get(GroupScreen.class.getName());
         GroupScreen groupScreen = new GroupScreen();
         groupScreen.setGroup(groupDto);
         goToScreen(groupScreen);
@@ -90,7 +90,6 @@ public class App extends JFrame {
      */
     public static void goToAllGroupsScreen() {
         instance.removeAllScreens();
-//        AllGroupsScreen allGroupsScreen = (AllGroupsScreen) instance.screens.get(AllGroupsScreen.class.getName());
         AllGroupsScreen allGroupsScreen = new AllGroupsScreen();
         goToScreen(allGroupsScreen);
     }
