@@ -20,7 +20,6 @@ public class GroupsController extends BaseController {
     public static void createGroup(GroupDto groupDto) {
         try {
             DataContext.getInstance().getGroupTable().create(groupDto);
-            App.getAllGroupsScreen().addGroup(groupDto);
         } catch (DomainException ex) {
             showExceptionMessage(ex);
         }

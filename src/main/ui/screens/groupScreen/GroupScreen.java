@@ -6,7 +6,9 @@ import main.model.dto.GroupDto;
 import main.model.dto.Mapper;
 import main.model.dto.ProductDto;
 import main.ui.App;
+import main.ui.components.editableField.DescriptionArea;
 import main.ui.screens.groupScreen.components.*;
+import main.ui.screens.productPanel.ProductTitleButton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,11 +29,10 @@ public class GroupScreen extends JPanel {
     @Getter
     private EditGroupNameField groupNameField;
     @Getter
-    private GroupDescriptionArea descriptionArea;
-    private JPanel searchResultsPanel;
-    @Getter
-    private EditGroupNameButton editNameBtn;
-    private EditGroupDescriptionButton editDescriptionBtn;
+    private DescriptionArea descriptionArea;
+    private JPanel productsPanel;
+    private EditGroupButton editNameBtn;
+    private EditGroupButton editDescriptionBtn;
     private JButton createProductBtn;
 
     public GroupScreen() {
@@ -41,7 +42,7 @@ public class GroupScreen extends JPanel {
         mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
         mainPanel.setBackground(new Color(0xe9f2fb));
         mainPanel.add(createActionsPanel(), BorderLayout.NORTH);
-        mainPanel.add(createSearchResultPanel(), BorderLayout.CENTER);
+        mainPanel.add(new JScrollPane(createProductsPanel()), BorderLayout.CENTER);
         add(mainPanel, BorderLayout.CENTER);
         searchField.addActionListener(new ActionListener() {
             @Override
@@ -86,18 +87,19 @@ public class GroupScreen extends JPanel {
         groupNameField = new EditGroupNameField();
         groupNameField.setSize(580, 50);
         groupNamePanel.add(groupNameField, BorderLayout.CENTER);
-        editNameBtn = new EditGroupNameButton();
+        editNameBtn = new EditGroupButton(groupNameField);
         editNameBtn.setSize(50, 50);
+        groupNameField.setConnectedBtn(editNameBtn);
         groupNamePanel.add(editNameBtn, BorderLayout.EAST);
         return groupNamePanel;
     }
 
     private JPanel createDescriptionPanel() {
         JPanel descriptionPanel = new JPanel(new BorderLayout());
-        descriptionArea = new GroupDescriptionArea();
+        descriptionArea = new DescriptionArea();
         descriptionArea.setSize(580, 50);
         descriptionPanel.add(descriptionArea, BorderLayout.CENTER);
-        editDescriptionBtn = new EditGroupDescriptionButton();
+        editDescriptionBtn = new EditGroupButton(descriptionArea);
         editDescriptionBtn.setSize(50, 50);
         descriptionPanel.add(editDescriptionBtn, BorderLayout.EAST);
         return descriptionPanel;
@@ -114,24 +116,35 @@ public class GroupScreen extends JPanel {
         return searchPanel;
     }
 
-   private JPanel createSearchResultPanel() {
-    searchResultsPanel = new JPanel();
-    searchResultsPanel.setLayout(new BoxLayout(searchResultsPanel, BoxLayout.PAGE_AXIS));
-    searchResultsPanel.setSize(580, 500);
-    return searchResultsPanel;
-}
-
+    private JPanel createProductsPanel() {
+        productsPanel = new JPanel();
+        productsPanel.setLayout(new GridLayout(10, 1));
+        productsPanel.setSize(580, 500);
+        return productsPanel;
+    }
 
     public void setGroup(GroupDto groupDto) {
         this.group = groupDto;
         groupNameField.setText(groupDto.getName().getValue());
         descriptionArea.setText(groupDto.getDescription());
+        loadProducts(groupDto);
+    }
+
+    private void loadProducts(GroupDto groupDto) {
         UUID groupId = DataContext.getInstance().getGroupTable().get(groupDto.getName()).getId();
         products = DataContext.getInstance().getProductTable().getByGroupId(groupId)
                 .stream()
                 .map(r -> Mapper.map(r, groupDto.getName()))
                 .toList();
-        performSearch();
+        drawProductPanels();
+    }
+
+    private void drawProductPanels(){
+        for(ProductDto productDto: products){
+            ProductTitleButton productTitleButton = new ProductTitleButton(productDto);
+//            productTitleButton.setPreferredSize(new Dimension(productsPanel.getWidth(), productTitleButton.getHeight()));
+            productsPanel.add(productTitleButton);
+        }
     }
 
     public GroupDto getGroupToUpdate() {

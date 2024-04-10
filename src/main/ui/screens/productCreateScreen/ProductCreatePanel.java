@@ -3,12 +3,12 @@ package main.ui.screens.productCreateScreen;
 import main.controllers.BaseController;
 import main.controllers.ProductsController;
 import main.model.dto.ProductDto;
-import main.model.exceptions.DomainException;
 import main.model.valueObjects.ManufacturerName;
 import main.model.valueObjects.ProductAmount;
 import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
 import main.ui.App;
+import main.ui.components.panels.GridedPanel;
 import main.ui.exceptions.InvalidFormInputException;
 import main.ui.screens.ICreationPanel;
 
@@ -65,24 +65,12 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
     }
 
     private JPanel createAmountPanel() {
-        amount = new ValidatableNotifierField(str -> {
-            try {
-                return ProductAmount.isValid(Integer.valueOf(str));
-            } catch (NumberFormatException ex) {
-                return false;
-            }
-        }, this);
+        amount = new ValidatableNotifierField(ProductAmount::isValid, this);
         return new GridedPanel("Amount: ", amount);
     }
 
     private JPanel createPricePanel() {
-        price = new ValidatableNotifierField(str -> {
-            try {
-                return ProductPrice.isValid(Double.valueOf(str));
-            } catch (NumberFormatException ex) {
-                return false;
-            }
-        }, this);
+        price = new ValidatableNotifierField(ProductPrice::isValid, this);
         return new GridedPanel("Price: ", price);
     }
 
@@ -97,15 +85,6 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
             App.goToAllGroupsScreen();
         } catch (InvalidFormInputException ex) {
             BaseController.showExceptionMessage(ex);
-        }
-    }
-
-
-    private static class GridedPanel extends JPanel {
-        public GridedPanel(String labelText, JComponent component) {
-            setLayout(new GridLayout(1, 2));
-            add(new JLabel(labelText));
-            add(component);
         }
     }
 

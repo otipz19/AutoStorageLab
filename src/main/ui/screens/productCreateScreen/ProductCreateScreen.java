@@ -3,7 +3,7 @@ package main.ui.screens.productCreateScreen;
 import lombok.Getter;
 import main.model.dto.GroupDto;
 import main.ui.App;
-import main.ui.components.ConfirmationPanel;
+import main.ui.components.panels.ConfirmationPanel;
 
 import javax.swing.*;
 import java.awt.*;

@@ -16,6 +16,14 @@ public class ProductPrice {
         return value >= 0;
     }
 
+    public static boolean isValid(String str){
+        try {
+            return isValid(Double.valueOf(str));
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
     private void validate(double value) {
         if(!isValid(value)){
             throw new InvalidProductPriceException(value);
