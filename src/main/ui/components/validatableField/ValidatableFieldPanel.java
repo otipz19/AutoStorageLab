@@ -65,7 +65,7 @@ public class ValidatableFieldPanel extends JPanel {
         add(errorLabel, BorderLayout.SOUTH);
     }
 
-    private void setupValidation() {
+    protected void setupValidation() {
         field.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {

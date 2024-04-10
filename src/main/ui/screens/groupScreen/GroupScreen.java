@@ -21,6 +21,7 @@ public class GroupScreen extends JPanel {
     @Getter
     private GroupDescriptionArea descriptionArea;
     private JPanel searchResultsPanel;
+    @Getter
     private EditGroupNameButton editNameBtn;
     private EditGroupDescriptionButton editDescriptionBtn;
     private JButton createProductBtn;

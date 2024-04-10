@@ -7,6 +7,7 @@ public class Icons {
     private static final String PEN_IMAGE_PATH = "images/pen.png";
     private static final String CHECKMARK_IMAGE_PATH = "images/checkmark.png";
     private static final String PLUS_IMAGE_PATH = "images/plus.png";
+    private static final String CROSS_IMAGE_PATH = "images/cross.png";
 
     public static ImageIcon buildPenIcon(int width, int height){
         return buildIcon(PEN_IMAGE_PATH, width, height);
@@ -18,6 +19,10 @@ public class Icons {
 
     public static ImageIcon buildPlusIcon(int width, int height){
         return buildIcon(PLUS_IMAGE_PATH, width, height);
+    }
+
+    public static ImageIcon buildCrossIcon(int width, int height){
+        return buildIcon(CROSS_IMAGE_PATH, width, height);
     }
 
     private static ImageIcon buildIcon(String name, int width, int height){

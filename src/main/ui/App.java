@@ -12,8 +12,8 @@ public class App extends JFrame {
     @Getter
     private static App instance;
 
-    private final AllGroupsScreen allGroupsScreen;
-    private final GroupScreen groupScreen;
+    private AllGroupsScreen allGroupsScreen;
+    private GroupScreen groupScreen;
 
     public App(){
         instance = this;

@@ -16,6 +16,19 @@ public class EditGroupNameButton extends RoundedButton {
         addActionListener(this::onClick);
     }
 
+    public void onInputChange(boolean isValid){
+        var groupNameField = App.getGroupScreen().getGroupNameField();
+        if(groupNameField.isEditable()){
+            if(!isValid){
+                setIcon(Icons.buildCrossIcon(20, 20));
+                setEnabled(false);
+            } else{
+                setIcon(Icons.buildCheckmarkIcon(20, 20));
+                setEnabled(true);
+            }
+        }
+    }
+
     private void onClick(ActionEvent e){
         var groupNameField = App.getGroupScreen().getGroupNameField();
         if (groupNameField.isEditable()) {
