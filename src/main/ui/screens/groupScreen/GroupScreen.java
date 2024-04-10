@@ -17,7 +17,7 @@ public class GroupScreen extends JPanel {
 
     private GroupProductsSearchField searchField;
     @Getter
-    private ValidatableFieldPanel groupNameField;
+    private GroupNameField groupNameField;
     @Getter
     private GroupDescriptionArea descriptionArea;
     private JPanel searchResultsPanel;
@@ -30,7 +30,7 @@ public class GroupScreen extends JPanel {
         setLayout(null);
         setBackground(new Color(0xe9f2fb));
 
-        groupNameField = new NotEmptyValidatableFieldPanel(GroupName::isValid);
+        groupNameField = new GroupNameField();
         groupNameField.setBounds(158, 58, 580, 50);
         add(groupNameField);
 
