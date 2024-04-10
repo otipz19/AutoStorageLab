@@ -19,4 +19,9 @@ public class NotEmptyValidatableFieldPanel extends ValidatableFieldPanel {
         }
         errorLabel.setVisible(!isValid);
     }
+
+    @Override
+    protected void afterValidation() {
+        //blank intentionally
+    }
 }

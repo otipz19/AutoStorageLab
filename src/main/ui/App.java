@@ -3,6 +3,8 @@ package main.ui;
 import lombok.Getter;
 import main.model.dto.GroupDto;
 import main.ui.screens.allGroupsScreen.AllGroupsScreen;
+import main.ui.screens.groupCreateScreen.GroupCreatePanel;
+import main.ui.screens.groupCreateScreen.GroupCreateScreen;
 import main.ui.screens.groupScreen.GroupScreen;
 
 import javax.swing.*;
@@ -14,6 +16,7 @@ public class App extends JFrame {
 
     private AllGroupsScreen allGroupsScreen;
     private GroupScreen groupScreen;
+    private GroupCreateScreen groupCreateScreen;
 
     public App(){
         instance = this;
@@ -41,7 +44,16 @@ public class App extends JFrame {
 
     public static void goToAllGroupsScreen(){
         instance.remove(instance.groupScreen);
+        instance.remove(instance.groupCreateScreen);
         instance.add(instance.allGroupsScreen);
+        instance.revalidate();
+        instance.repaint();
+    }
+
+    public static void goToGroupCreateScreen(){
+        instance.remove(instance.allGroupsScreen);
+        instance.groupCreateScreen = new GroupCreateScreen();
+        instance.add(instance.groupCreateScreen);
         instance.revalidate();
         instance.repaint();
     }

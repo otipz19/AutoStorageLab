@@ -5,7 +5,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 
-public class ValidatableFieldPanel extends JPanel {
+public abstract class ValidatableFieldPanel extends JPanel {
     public interface Validator {
         boolean isValid(String str);
     }
@@ -27,7 +27,7 @@ public class ValidatableFieldPanel extends JPanel {
         setValidationState();
     }
 
-    public boolean isValidText() {
+    public boolean isInputValid() {
         return isValid;
     }
 
@@ -65,22 +65,22 @@ public class ValidatableFieldPanel extends JPanel {
         add(errorLabel, BorderLayout.SOUTH);
     }
 
-    protected void setupValidation() {
+    private void setupValidation() {
         field.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 setValidationState();
+                afterValidation();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
                 setValidationState();
+                afterValidation();
             }
 
             @Override
-            public void changedUpdate(DocumentEvent e) {
-                setValidationState();
-            }
+            public void changedUpdate(DocumentEvent e) {}
         });
     }
 
@@ -89,4 +89,6 @@ public class ValidatableFieldPanel extends JPanel {
         errorLabel.setText("Invalid input!");
         errorLabel.setVisible(!isValid);
     }
+
+    protected abstract void afterValidation();
 }

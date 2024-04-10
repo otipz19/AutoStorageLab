@@ -1,4 +1,4 @@
-package main.ui.screens.groupScreen.components;
+package main.ui.screens.groupCreateScreen;
 
 import main.model.valueObjects.GroupName;
 import main.ui.App;
@@ -10,8 +10,11 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class GroupNameField extends NotEmptyValidatableFieldPanel {
-    public GroupNameField(){
+    private GroupCreatePanel groupCreatePanel;
+
+    public GroupNameField(GroupCreatePanel groupCreatePanel) {
         super(GroupName::isValid);
+        this.groupCreatePanel = groupCreatePanel;
         setBackground(new Color(0xe9f2fb));
         configInputField();
     }
@@ -21,26 +24,10 @@ public class GroupNameField extends NotEmptyValidatableFieldPanel {
         field.setForeground(new Color(0x203a54));
         field.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         field.setHorizontalAlignment(SwingConstants.CENTER);
-        field.setEditable(false);
     }
 
     @Override
-    protected void setupValidation(){
-        field.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                setValidationState();
-                App.getGroupScreen().getEditNameBtn().onInputChange(isValid);
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                setValidationState();
-                App.getGroupScreen().getEditNameBtn().onInputChange(isValid);
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {}
-        });
+    protected void afterValidation() {
+        groupCreatePanel.onInputChange(isValid);
     }
 }

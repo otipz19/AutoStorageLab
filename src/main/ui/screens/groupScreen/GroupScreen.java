@@ -2,10 +2,7 @@ package main.ui.screens.groupScreen;
 
 import lombok.Getter;
 import main.model.dto.GroupDto;
-import main.model.valueObjects.GroupName;
 import main.ui.App;
-import main.ui.components.validatableField.NotEmptyValidatableFieldPanel;
-import main.ui.components.validatableField.ValidatableFieldPanel;
 import main.ui.screens.groupScreen.components.*;
 
 import javax.swing.*;
@@ -17,7 +14,7 @@ public class GroupScreen extends JPanel {
 
     private GroupProductsSearchField searchField;
     @Getter
-    private GroupNameField groupNameField;
+    private EditGroupNameField groupNameField;
     @Getter
     private GroupDescriptionArea descriptionArea;
     private JPanel searchResultsPanel;
@@ -29,13 +26,11 @@ public class GroupScreen extends JPanel {
     public GroupScreen() {
         App.getInstance().setTitle("Group Details");
         setLayout(new BorderLayout());
-
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
         mainPanel.setBackground(new Color(0xe9f2fb));
         mainPanel.add(createActionsPanel(), BorderLayout.NORTH);
         mainPanel.add(createSearchResultPanel(), BorderLayout.CENTER);
-
         add(mainPanel, BorderLayout.CENTER);
     }
 
@@ -49,7 +44,7 @@ public class GroupScreen extends JPanel {
 
     private JPanel createGroupNamePanel() {
         JPanel groupNamePanel = new JPanel(new BorderLayout());
-        groupNameField = new GroupNameField();
+        groupNameField = new EditGroupNameField();
         groupNameField.setSize(580, 50);
         groupNamePanel.add(groupNameField, BorderLayout.CENTER);
         editNameBtn = new EditGroupNameButton();
