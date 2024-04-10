@@ -10,8 +10,11 @@ import main.ui.screens.groupScreen.components.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class GroupScreen extends JPanel {
     @Getter
@@ -19,6 +22,7 @@ public class GroupScreen extends JPanel {
 
     private List<ProductDto> products;
 
+    private JButton backButton;
     private GroupProductsSearchField searchField;
     @Getter
     private EditGroupNameField groupNameField;
@@ -39,8 +43,36 @@ public class GroupScreen extends JPanel {
         mainPanel.add(createActionsPanel(), BorderLayout.NORTH);
         mainPanel.add(createSearchResultPanel(), BorderLayout.CENTER);
         add(mainPanel, BorderLayout.CENTER);
+        searchField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performSearch();
+            }
+        });
+
+
     }
 
+
+    private void performSearch() {
+        String searchText = searchField.getText().toLowerCase();
+        List<ProductDto> matchingProducts = products.stream()
+                .filter(product -> searchText.isEmpty() || product.getName().getValue().toLowerCase().contains(searchText))
+                .collect(Collectors.toList());
+
+        searchResultsPanel.removeAll();
+        if (matchingProducts.isEmpty()) {
+            JLabel noProductsLabel = new JLabel("No products found.");
+            searchResultsPanel.add(noProductsLabel);
+        } else {
+            for (ProductDto product : matchingProducts) {
+                JLabel productLabel = new JLabel(product.getName().getValue());
+                searchResultsPanel.add(productLabel);
+            }
+        }
+        searchResultsPanel.revalidate();
+        searchResultsPanel.repaint();
+    }
     private JPanel createActionsPanel(){
         JPanel actionsPanel = new JPanel(new GridLayout(3, 1));
         actionsPanel.add(createGroupNamePanel());
@@ -82,11 +114,13 @@ public class GroupScreen extends JPanel {
         return searchPanel;
     }
 
-    private JPanel createSearchResultPanel() {
-        searchResultsPanel = new JPanel();
-        searchResultsPanel.setSize(580, 500);
-        return searchResultsPanel;
-    }
+   private JPanel createSearchResultPanel() {
+    searchResultsPanel = new JPanel();
+    searchResultsPanel.setLayout(new BoxLayout(searchResultsPanel, BoxLayout.PAGE_AXIS));
+    searchResultsPanel.setSize(580, 500);
+    return searchResultsPanel;
+}
+
 
     public void setGroup(GroupDto groupDto) {
         this.group = groupDto;
@@ -97,6 +131,7 @@ public class GroupScreen extends JPanel {
                 .stream()
                 .map(r -> Mapper.map(r, groupDto.getName()))
                 .toList();
+        performSearch();
     }
 
     public GroupDto getGroupToUpdate() {

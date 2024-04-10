@@ -1,8 +1,4 @@
-package main;
-
-import javax.swing.*;
-
-import main.ui.App;
+package main.ui;
 
 public class Main {
     public static void main(String[] args) {
