@@ -94,8 +94,4 @@ public class GroupScreen extends JPanel {
     public GroupDto getGroupToUpdate() {
         return new GroupDto(groupNameField.getText(), descriptionArea.getText());
     }
-
-    public void setValidationState(){
-        groupNameField.setValidationState();
-    }
 }

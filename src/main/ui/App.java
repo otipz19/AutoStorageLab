@@ -37,7 +37,6 @@ public class App extends JFrame {
         instance.add(instance.groupScreen);
         instance.revalidate();
         instance.repaint();
-        instance.groupScreen.setValidationState();
     }
 
     public static void goToAllGroupsScreen(){

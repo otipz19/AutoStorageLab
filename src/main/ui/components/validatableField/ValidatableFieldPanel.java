@@ -24,7 +24,7 @@ public class ValidatableFieldPanel extends JPanel {
         this.validator = validator;
         createLayout(fieldValue);
         setupValidation();
-        //setValidationState();
+        setValidationState();
     }
 
     public boolean isValidText() {
