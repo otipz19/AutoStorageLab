@@ -10,29 +10,41 @@ public class ValidatableFieldPanel extends JPanel {
         boolean isValid(String str);
     }
 
-    private final Validator validator;
-    private JTextField field;
-    private JLabel errorLabel;
+    protected final Validator validator;
+    protected JTextField field;
+    protected JLabel errorLabel;
 
-    private boolean isValid;
+    protected boolean isValid;
 
     public ValidatableFieldPanel(Validator validator) {
         this(validator, "");
     }
 
-    public ValidatableFieldPanel(Validator validator, String fieldValue){
+    public ValidatableFieldPanel(Validator validator, String fieldValue) {
         this.validator = validator;
         createLayout(fieldValue);
         setupValidation();
         setValidationState();
     }
 
-    public boolean isValid(){
+    public boolean isValidText() {
         return isValid;
     }
 
-    public String getText(){
+    public String getText() {
         return field.getText();
+    }
+
+    public void setText(String text) {
+        field.setText(text);
+    }
+
+    public boolean isEditable() {
+        return field.isEditable();
+    }
+
+    public void setEditable(boolean isEditable) {
+        field.setEditable(isEditable);
     }
 
     private void createLayout(String fieldValue) {
@@ -72,8 +84,9 @@ public class ValidatableFieldPanel extends JPanel {
         });
     }
 
-    private void setValidationState(){
+    protected void setValidationState() {
         this.isValid = validator.isValid(field.getText());
+        errorLabel.setText("Invalid input!");
         errorLabel.setVisible(!isValid);
     }
 }

@@ -1,15 +1,22 @@
 package main.ui.components.validatableField;
 
 public class NotEmptyValidatableFieldPanel extends ValidatableFieldPanel {
+
     public NotEmptyValidatableFieldPanel(Validator validator) {
-        super(adjustValidator(validator));
+        super(validator);
     }
 
     public NotEmptyValidatableFieldPanel(Validator validator, String fieldValue) {
-        super(adjustValidator(validator), fieldValue);
+        super(validator, fieldValue);
     }
 
-    private static Validator adjustValidator(Validator validator){
-        return str -> !str.isBlank() && validator.isValid(str);
+    @Override
+    protected void setValidationState(){
+        super.setValidationState();
+        if(field.getText().isBlank()){
+            isValid = false;
+            errorLabel.setText("Required field!");
+        }
+        errorLabel.setVisible(!isValid);
     }
 }

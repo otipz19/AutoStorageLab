@@ -1,14 +1,19 @@
 package main.ui.screens.groupScreen.components;
 
+import main.model.valueObjects.GroupName;
+import main.ui.components.validatableField.NotEmptyValidatableFieldPanel;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class GroupNameField extends JTextField {
+public class GroupNameField extends NotEmptyValidatableFieldPanel {
     public GroupNameField(){
-        setBackground(Color.WHITE);
-        setForeground(new Color(0x203a54));
-        setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        setHorizontalAlignment(SwingConstants.CENTER);
-        setEditable(false);
+        super(GroupName::isValid);
+        setBackground(new Color(0xe9f2fb));
+        field.setBackground(Color.WHITE);
+        field.setForeground(new Color(0x203a54));
+        field.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        field.setHorizontalAlignment(SwingConstants.CENTER);
+        field.setEditable(false);
     }
 }
