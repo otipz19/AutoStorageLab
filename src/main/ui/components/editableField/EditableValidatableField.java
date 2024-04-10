@@ -1,17 +1,18 @@
 package main.ui.components.editableField;
 
 import main.ui.components.validatableField.NotEmptyValidatableFieldPanel;
-import main.ui.screens.groupScreen.components.EditGroupButton;
 
 public class EditableValidatableField extends NotEmptyValidatableFieldPanel implements IEditableConnectedField{
     private EditableFieldButton connectedBtn;
 
     public EditableValidatableField(Validator validator) {
         super(validator);
+        field.setEditable(false);
     }
 
     public EditableValidatableField(Validator validator, String fieldValue) {
         super(validator, fieldValue);
+        field.setEditable(false);
     }
 
     @Override

@@ -16,7 +16,6 @@ import java.awt.*;
 public class ProductUpdatePanel extends JPanel {
     @Getter
     private ProductDto productDto;
-    private ProductTitleButton productTitleButton;
 
     private EditableValidatableField nameField;
     private DescriptionArea description;
@@ -24,11 +23,8 @@ public class ProductUpdatePanel extends JPanel {
     private EditableValidatableField amount;
     private EditableValidatableField price;
 
-    public ProductUpdatePanel(ProductDto productDto, ProductTitleButton productTitleButton) {
-        this.productTitleButton = productTitleButton;
-        productTitleButton.setProductUpdatePanel(this);
+    public ProductUpdatePanel(ProductDto productDto) {
         setLayout(new GridLayout(5, 1, 5, 5));
-        //setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         add(createNamePanel());
         add(createDescriptionPanel());
         add(createManufacturerPanel());
@@ -49,7 +45,6 @@ public class ProductUpdatePanel extends JPanel {
 
     public void setProductDto(ProductDto productDto){
         this.productDto = productDto;
-        productTitleButton.setProductDto(productDto);
         nameField.setText(productDto.getName().getValue());
         description.setText(productDto.getDescription());
         manufacturer.setText(productDto.getManufacturer().getValue());

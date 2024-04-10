@@ -1,6 +1,8 @@
 package main.ui.screens.allGroupsScreen;
 
+import main.model.data.DataContext;
 import main.model.dto.GroupDto;
+import main.model.dto.Mapper;
 import main.ui.App;
 import main.ui.screens.allGroupsScreen.components.*;
 
@@ -18,6 +20,7 @@ public class AllGroupsScreen extends JPanel {
         groupsLabelButton.setBounds(58, 58, 600, 50);
         add(groupsLabelButton);
         drawActionBtns();
+        loadGroups();
     }
 
     private void drawActionBtns() {
@@ -33,6 +36,13 @@ public class AllGroupsScreen extends JPanel {
             button.setBounds(groupsLabelButton.getX() + groupsLabelButton.getWidth() + 80, ((App.getInstance().getHeight() / 2) - 90) + i * 60, 200, 50);
             add(button);
         }
+    }
+
+    private void loadGroups(){
+        DataContext.getInstance().getGroupTable().getAll()
+                .stream()
+                .map(Mapper::map)
+                .forEach(this::addGroup);
     }
 
     public void addGroup(GroupDto groupDto){

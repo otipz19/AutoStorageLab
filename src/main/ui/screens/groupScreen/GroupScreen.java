@@ -9,7 +9,6 @@ import main.ui.App;
 import main.ui.components.editableField.DescriptionArea;
 import main.ui.screens.groupScreen.components.*;
 import main.ui.screens.productPanel.ProductTitleButton;
-import main.ui.screens.productPanel.ProductUpdatePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -87,7 +86,7 @@ public class GroupScreen extends JPanel {
 
     private JPanel createProductsPanel() {
         productsPanel = new JPanel();
-        productsPanel.setLayout(new BoxLayout(productsPanel, BoxLayout.Y_AXIS));
+        productsPanel.setLayout(new GridLayout(10, 1));
         productsPanel.setSize(580, 500);
         return productsPanel;
     }
@@ -111,12 +110,8 @@ public class GroupScreen extends JPanel {
     private void drawProductPanels(){
         for(ProductDto productDto: products){
             ProductTitleButton productTitleButton = new ProductTitleButton(productDto);
-            productTitleButton.setPreferredSize(new Dimension(productsPanel.getWidth(), productTitleButton.getHeight()));
+//            productTitleButton.setPreferredSize(new Dimension(productsPanel.getWidth(), productTitleButton.getHeight()));
             productsPanel.add(productTitleButton);
-            ProductUpdatePanel productUpdatePanel = new ProductUpdatePanel(productDto, productTitleButton);
-            productUpdatePanel.setVisible(false);
-            productTitleButton.setPreferredSize(new Dimension(productsPanel.getWidth(), productUpdatePanel.getHeight()));
-            productsPanel.add(productUpdatePanel);
         }
     }
 

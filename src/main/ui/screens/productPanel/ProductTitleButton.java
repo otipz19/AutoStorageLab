@@ -2,6 +2,7 @@ package main.ui.screens.productPanel;
 
 import main.model.dto.ProductDto;
 import main.ui.components.buttons.StyledButton;
+import main.ui.App;
 
 import java.awt.event.ActionEvent;
 
@@ -25,6 +26,6 @@ public class ProductTitleButton extends StyledButton {
     }
 
     private void onClick(ActionEvent e) {
-        productUpdatePanel.setVisible(!productUpdatePanel.isVisible());
+        App.goToProductUpdateScreen(productDto);
     }
 }

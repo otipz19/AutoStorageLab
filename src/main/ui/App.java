@@ -2,10 +2,12 @@ package main.ui;
 
 import lombok.Getter;
 import main.model.dto.GroupDto;
+import main.model.dto.ProductDto;
 import main.ui.screens.allGroupsScreen.AllGroupsScreen;
 import main.ui.screens.groupCreateScreen.GroupCreateScreen;
 import main.ui.screens.groupScreen.GroupScreen;
 import main.ui.screens.productCreateScreen.ProductCreateScreen;
+import main.ui.screens.productPanel.ProductUpdatePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,8 +18,7 @@ public class App extends JFrame {
     @Getter
     private static App instance;
 
-
-    private class ScreensMap extends HashMap<String, JPanel>{
+    private static class ScreensMap extends HashMap<String, JPanel>{
         public void addScreen(JPanel screen){
             put(screen.getClass().getName(), screen);
         }
@@ -43,35 +44,40 @@ public class App extends JFrame {
 
     public static void goToGroupScreen(GroupDto groupDto){
         instance.removeAllScreens();
-        GroupScreen groupScreen = (GroupScreen) instance.screens.get(GroupScreen.class.getName());
+//        GroupScreen groupScreen = (GroupScreen) instance.screens.get(GroupScreen.class.getName());
+        GroupScreen groupScreen = new GroupScreen();
         groupScreen.setGroup(groupDto);
-        instance.add(groupScreen);
-        instance.revalidate();
-        instance.repaint();
+        goToScreen(groupScreen);
     }
 
     public static void goToAllGroupsScreen(){
         instance.removeAllScreens();
-        AllGroupsScreen allGroupsScreen = (AllGroupsScreen) instance.screens.get(AllGroupsScreen.class.getName());
-        instance.add(allGroupsScreen);
-        instance.revalidate();
-        instance.repaint();
+//        AllGroupsScreen allGroupsScreen = (AllGroupsScreen) instance.screens.get(AllGroupsScreen.class.getName());
+        AllGroupsScreen allGroupsScreen = new AllGroupsScreen();
+        goToScreen(allGroupsScreen);
     }
 
     public static void goToGroupCreateScreen(){
         instance.removeAllScreens();
         GroupCreateScreen groupCreateScreen = new GroupCreateScreen();
-        instance.screens.addScreen(groupCreateScreen);
-        instance.add(groupCreateScreen);
-        instance.revalidate();
-        instance.repaint();
+        goToScreen(groupCreateScreen);
     }
 
     public static void goToProductCreateScreen(GroupDto groupDto){
         instance.removeAllScreens();
         ProductCreateScreen productCreateScreen = new ProductCreateScreen(groupDto);
-        instance.screens.addScreen(productCreateScreen);
-        instance.add(productCreateScreen);
+        goToScreen(productCreateScreen);
+    }
+
+    public static void goToProductUpdateScreen(ProductDto productDto){
+        instance.removeAllScreens();
+        ProductUpdatePanel productUpdatePanel = new ProductUpdatePanel(productDto);
+        goToScreen(productUpdatePanel);
+    }
+
+    private static void goToScreen(JPanel panel){
+        instance.screens.addScreen(panel);
+        instance.add(panel);
         instance.revalidate();
         instance.repaint();
     }
@@ -84,7 +90,7 @@ public class App extends JFrame {
 
     private void configApp() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("Auto Storage Labe");
+        setTitle("Auto Storage Lab");
         setSize(1000, 750);
         getContentPane().setBackground(new Color(0xe9f2fb));
 //        setResizable(false);
