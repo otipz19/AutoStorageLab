@@ -1,4 +1,4 @@
-package main.ui.forms.components;
+package main.ui.components.productCreation;
 
 import javax.swing.*;
 import javax.swing.text.NumberFormatter;

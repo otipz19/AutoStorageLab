@@ -7,8 +7,8 @@ import main.model.valueObjects.ProductAmount;
 import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
 import main.ui.exceptions.InvalidFormInputException;
-import main.ui.forms.components.GroupsComboBox;
-import main.ui.forms.components.validatableField.NotEmptyValidatableFieldPanel;
+import main.ui.components.productCreation.GroupsComboBox;
+import main.ui.components.validatableField.NotEmptyValidatableFieldPanel;
 
 import javax.swing.*;
 import java.awt.*;

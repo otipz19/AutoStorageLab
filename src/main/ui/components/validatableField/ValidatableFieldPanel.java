@@ -1,38 +1,50 @@
-package main.ui.forms.components.validatableField;
+package main.ui.components.validatableField;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 
-public class ValidatableFieldPanel extends JPanel {
+public abstract class ValidatableFieldPanel extends JPanel {
     public interface Validator {
         boolean isValid(String str);
     }
 
-    private final Validator validator;
-    private JTextField field;
-    private JLabel errorLabel;
+    protected final Validator validator;
+    protected JTextField field;
+    protected JLabel errorLabel;
 
-    private boolean isValid;
+    protected boolean isValid;
 
     public ValidatableFieldPanel(Validator validator) {
         this(validator, "");
     }
 
-    public ValidatableFieldPanel(Validator validator, String fieldValue){
+    public ValidatableFieldPanel(Validator validator, String fieldValue) {
         this.validator = validator;
         createLayout(fieldValue);
         setupValidation();
         setValidationState();
     }
 
-    public boolean isValid(){
+    public boolean isInputValid() {
         return isValid;
     }
 
-    public String getText(){
+    public String getText() {
         return field.getText();
+    }
+
+    public void setText(String text) {
+        field.setText(text);
+    }
+
+    public boolean isEditable() {
+        return field.isEditable();
+    }
+
+    public void setEditable(boolean isEditable) {
+        field.setEditable(isEditable);
     }
 
     private void createLayout(String fieldValue) {
@@ -47,7 +59,7 @@ public class ValidatableFieldPanel extends JPanel {
     }
 
     private void addErrorLabel() {
-        errorLabel = new JLabel("Invalid input!");
+        errorLabel = new JLabel("");
         errorLabel.setForeground(Color.RED);
         errorLabel.setVisible(false);
         add(errorLabel, BorderLayout.SOUTH);
@@ -58,22 +70,25 @@ public class ValidatableFieldPanel extends JPanel {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 setValidationState();
+                afterValidation();
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
                 setValidationState();
+                afterValidation();
             }
 
             @Override
-            public void changedUpdate(DocumentEvent e) {
-                setValidationState();
-            }
+            public void changedUpdate(DocumentEvent e) {}
         });
     }
 
-    private void setValidationState(){
+    protected void setValidationState() {
         this.isValid = validator.isValid(field.getText());
+        errorLabel.setText("Invalid input!");
         errorLabel.setVisible(!isValid);
     }
+
+    protected abstract void afterValidation();
 }
