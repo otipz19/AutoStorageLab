@@ -59,6 +59,18 @@ public class AllGroupsSearchScreen extends JPanel {
                 .stream()
                 .map(r -> Mapper.map(r, null))
                 .toList();
+        JPanel returnButtonPanel = new JPanel();
+        returnButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> App.goToAllGroupsScreen());
+        returnButtonPanel.add(returnButton);
+
+        JPanel northPanel = new JPanel();
+        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+        northPanel.add(returnButtonPanel);
+        northPanel.add(createSearchPanel());
+
+        mainPanel.add(northPanel, BorderLayout.NORTH);
     }
 
     /**
