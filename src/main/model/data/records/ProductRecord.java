@@ -7,11 +7,12 @@ import main.model.valueObjects.ProductAmount;
 import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class ProductRecord {
+public class ProductRecord implements Serializable {
     //Primary key
     private UUID id;
 

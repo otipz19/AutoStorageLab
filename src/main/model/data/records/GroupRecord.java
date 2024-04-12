@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import main.model.valueObjects.GroupName;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-public class GroupRecord {
+public class GroupRecord implements Serializable {
     //Primary key
     private UUID id;
 

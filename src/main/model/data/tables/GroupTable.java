@@ -15,13 +15,20 @@ public class GroupTable implements IGroupTable {
     private final Map<GroupName, GroupRecord> nameIndex = new HashMap<>();
 
     @Override
-    public void resetData(){
+    public void resetData() {
         primaryKey.clear();
         nameIndex.clear();
     }
 
     @Override
-    public List<GroupRecord> getAll(){
+    public void bulkInsert(List<GroupRecord> groupRecords) {
+        for (var record : groupRecords) {
+            addRecordToIndexes(record);
+        }
+    }
+
+    @Override
+    public List<GroupRecord> getAll() {
         return primaryKey.values().stream().toList();
     }
 
@@ -42,7 +49,7 @@ public class GroupTable implements IGroupTable {
         throwIfExists(toCreate.getName());
         UUID id = UUID.randomUUID();
         GroupRecord record = Mapper.map(toCreate, id);
-        addRecordToIndexes(record, id);
+        addRecordToIndexes(record);
         return record;
     }
 
@@ -114,8 +121,8 @@ public class GroupTable implements IGroupTable {
         }
     }
 
-    private void addRecordToIndexes(GroupRecord record, UUID id) {
-        primaryKey.put(id, record);
+    private void addRecordToIndexes(GroupRecord record) {
+        primaryKey.put(record.getId(), record);
         nameIndex.put(record.getName(), record);
     }
 }
