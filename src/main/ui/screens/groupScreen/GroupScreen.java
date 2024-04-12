@@ -36,8 +36,6 @@ public class GroupScreen extends JPanel {
     private EditGroupButton editDescriptionBtn;
     private JButton createProductBtn;
     private JLabel groupTotalPriceLabel;
-    private UUID groupId;
-
 
 
     public GroupScreen() {
@@ -67,7 +65,7 @@ public class GroupScreen extends JPanel {
 
         mainPanel.add(northPanel, BorderLayout.NORTH);
 
-        groupTotalPriceLabel = new JLabel();
+        groupTotalPriceLabel = new JLabel("test");
         groupTotalPriceLabel.setBounds(58, 640, 600, 50);
         northPanel.add(groupTotalPriceLabel);
     }
@@ -157,6 +155,7 @@ public class GroupScreen extends JPanel {
         groupNameField.setText(groupDto.getName().getValue());
         descriptionArea.setText(groupDto.getDescription());
         loadProducts(groupDto);
+        updateGroupTotalPriceLabel();
     }
 
     private void loadProducts(GroupDto groupDto) {
@@ -180,14 +179,7 @@ public class GroupScreen extends JPanel {
     }
 
     public void updateGroupTotalPriceLabel() {
-        if (groupId != null) {
-            double groupTotalPrice = GroupsController.calculateTotalPriceByGroup(groupId);
-            groupTotalPriceLabel.setText("Total price of products in group: " + String.format("%.2f", groupTotalPrice));
-        }
-    }
-
-    public void setGroup(UUID groupId) {
-        this.groupId = groupId;
-        updateGroupTotalPriceLabel();
+        double groupTotalPrice = GroupsController.calculateTotalPriceByGroup(group);
+        groupTotalPriceLabel.setText("Total price of products in group: " + String.format("%.2f", groupTotalPrice));
     }
 }

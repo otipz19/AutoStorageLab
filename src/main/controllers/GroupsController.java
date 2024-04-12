@@ -59,8 +59,9 @@ public class GroupsController extends BaseController {
         return DataContext.getInstance().getProductTable().calculateTotalPrice();
     }
 
-    public static double calculateTotalPriceByGroup(UUID groupId) {
-        List<ProductRecord> records = DataContext.getInstance().getProductTable().getByGroupId(groupId);
+    public static double calculateTotalPriceByGroup(GroupDto group) {
+        UUID id = DataContext.getInstance().getGroupTable().get(group.getName()).getId();
+        List<ProductRecord> records = DataContext.getInstance().getProductTable().getByGroupId(id);
         return records.stream()
                 .mapToDouble(record -> record.getPrice().getValue() * record.getAmount().getValue())
                 .sum();
