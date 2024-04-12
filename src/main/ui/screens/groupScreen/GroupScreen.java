@@ -80,8 +80,7 @@ public class GroupScreen extends JPanel {
     private static Pattern buildRegexPatternFromSearchText(String searchText) {
         searchText = searchText.replaceAll("\\?", ".{1}");
         searchText = searchText.replaceAll("\\*", ".*");
-        Pattern pattern = Pattern.compile(searchText);
-        return pattern;
+        return Pattern.compile(searchText);
     }
 
     private JPanel createActionsPanel(){
