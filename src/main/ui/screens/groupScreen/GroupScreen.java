@@ -50,6 +50,18 @@ public class GroupScreen extends JPanel {
                 performSearch();
             }
         });
+        JPanel returnButtonPanel = new JPanel();
+        returnButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> App.goToAllGroupsScreen());
+        returnButtonPanel.add(returnButton);
+
+        JPanel northPanel = new JPanel();
+        northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
+        northPanel.add(returnButtonPanel);
+        northPanel.add(createActionsPanel());
+
+        mainPanel.add(northPanel, BorderLayout.NORTH);
     }
 
 
