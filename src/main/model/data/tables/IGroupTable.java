@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface IGroupTable {
     void resetData();
+    void bulkInsert(List<GroupRecord> groupRecords);
     List<GroupRecord> getAll();
     GroupRecord get(UUID id);
     GroupRecord get(GroupName name);

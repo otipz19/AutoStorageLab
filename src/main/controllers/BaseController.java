@@ -3,7 +3,7 @@ package main.controllers;
 import javax.swing.*;
 
 public class BaseController {
-    public static void showExceptionMessage(RuntimeException ex) {
+    public static void showExceptionMessage(Exception ex) {
         JOptionPane.showMessageDialog(
                 null,
                 ex.getMessage(),

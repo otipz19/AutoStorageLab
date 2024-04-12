@@ -3,8 +3,10 @@ package main.model.valueObjects;
 import lombok.Getter;
 import main.model.exceptions.validation.InvalidProductAmountException;
 
+import java.io.Serializable;
+
 @Getter
-public class ProductAmount {
+public class ProductAmount implements Serializable {
     private final int value;
 
     public ProductAmount(int value) {

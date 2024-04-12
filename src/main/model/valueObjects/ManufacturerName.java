@@ -1,6 +1,8 @@
 package main.model.valueObjects;
 
-public class ManufacturerName extends Name {
+import java.io.Serializable;
+
+public class ManufacturerName extends Name implements Serializable {
     public ManufacturerName(String value) {
         super(value);
     }

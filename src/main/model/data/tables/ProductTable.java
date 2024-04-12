@@ -25,6 +25,13 @@ public class ProductTable implements IProductTable {
     }
 
     @Override
+    public void bulkInsert(List<ProductRecord> productRecords){
+        for(var record: productRecords){
+            addRecordToIndexes(record);
+        }
+    }
+
+    @Override
     public List<ProductRecord> getAll(){
         return primaryKey.values().stream().toList();
     }

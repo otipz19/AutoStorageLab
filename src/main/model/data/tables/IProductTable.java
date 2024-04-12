@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public interface IProductTable {
     void resetData();
+    void bulkInsert(List<ProductRecord> productRecords);
     List<ProductRecord> getAll();
     ProductRecord get(UUID id);
     ProductRecord get(ProductName name);
