@@ -8,7 +8,17 @@ import main.ui.screens.productPanel.ProductUpdatePanel;
 
 import java.util.UUID;
 
+/**
+ * The ProductsController class provides methods for managing products in the application.
+ * It extends the BaseController class to inherit common controller functionalities.
+ */
 public class ProductsController extends BaseController {
+
+    /**
+     * Creates a new product.
+     *
+     * @param productDto the data transfer object representing the product to be created
+     */
     public static void createProduct(ProductDto productDto) {
         try {
             DataContext.getInstance().getProductTable().create(productDto);
@@ -17,6 +27,11 @@ public class ProductsController extends BaseController {
         }
     }
 
+    /**
+     * Updates a product.
+     *
+     * @param productUpdatePanel the panel containing the product details to be updated
+     */
     public static void updateProduct(ProductUpdatePanel productUpdatePanel) {
         try {
             ProductName oldName = productUpdatePanel.getProductDto().getName();

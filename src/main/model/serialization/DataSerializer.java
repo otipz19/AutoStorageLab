@@ -13,6 +13,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
+/**
+ * The DataSerializer class provides static methods for saving and loading data.
+ */
 public class DataSerializer {
     public static final OnClosingSerializationListener ON_CLOSING_SERIALIZATION_LISTENER = new OnClosingSerializationListener();
 
@@ -20,21 +23,36 @@ public class DataSerializer {
     private static final String GROUPS_FILE_NAME = "groups.dat";
     private static final String PRODUCTS_FILE_NAME = "products.dat";
 
+    /**
+     * Saves the current state of the application.
+     */
     public static void save() {
         saveGroups();
         saveProducts();
     }
 
+    /**
+     * Saves the current state of the groups.
+     */
     private static void saveGroups() {
         List<GroupRecord> groups = DataContext.getInstance().getGroupTable().getAll();
         saveList(groups, GROUPS_FILE_NAME);
     }
 
+    /**
+     * Saves the current state of the products.
+     */
     private static void saveProducts() {
         List<ProductRecord> products = DataContext.getInstance().getProductTable().getAll();
         saveList(products, PRODUCTS_FILE_NAME);
     }
 
+    /**
+     * Saves a list to a file.
+     *
+     * @param listToSave the list to save
+     * @param fileName the name of the file
+     */
     private static <T> void saveList(List<T> listToSave, String fileName) {
         File fileToSave = BASE_DIR.resolve(fileName).toFile();
         try (var stream = new ObjectOutputStream(new FileOutputStream(fileToSave))) {
@@ -45,6 +63,9 @@ public class DataSerializer {
         }
     }
 
+    /**
+     * Loads the saved state of the application.
+     */
     public static void load() {
         try {
             loadGroups();
@@ -61,16 +82,29 @@ public class DataSerializer {
         }
     }
 
+    /**
+     * Loads the saved state of the groups.
+     */
     private static void loadGroups() throws FileNotFoundException, DomainException {
         List<GroupRecord> groupRecords = readList(GROUPS_FILE_NAME);
         DataContext.getInstance().getGroupTable().bulkInsert(groupRecords);
     }
 
+    /**
+     * Loads the saved state of the products.
+     */
     private static void loadProducts() throws FileNotFoundException, DomainException {
         List<ProductRecord> productRecords = readList(PRODUCTS_FILE_NAME);
         DataContext.getInstance().getProductTable().bulkInsert(productRecords);
     }
 
+    /**
+     * Reads a list from a file.
+     *
+     * @param fileName the name of the file
+     * @return the list read from the file
+     * @throws FileNotFoundException if the file does not exist
+     */
     private static <T> List<T> readList(String fileName) throws FileNotFoundException {
         File loadFile = BASE_DIR.resolve(fileName).toFile();
         try (var stream = new ObjectInputStream(new FileInputStream(loadFile))) {

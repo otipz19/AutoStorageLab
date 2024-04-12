@@ -11,14 +11,26 @@ import javax.swing.*;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * The GroupsController class provides methods for managing groups in the application.
+ * It extends the BaseController class to inherit common controller functionalities.
+ */
 public class GroupsController extends BaseController {
     @Getter
     private static boolean isGroupDeleteModeOn;
 
+    /**
+     * Toggles the group delete mode on and off.
+     */
     public static void switchGroupDeleteMode() {
         isGroupDeleteModeOn = !isGroupDeleteModeOn;
     }
 
+    /**
+     * Creates a new group.
+     *
+     * @param groupDto the data transfer object representing the group to be created
+     */
     public static void createGroup(GroupDto groupDto) {
         try {
             DataContext.getInstance().getGroupTable().create(groupDto);
@@ -27,6 +39,11 @@ public class GroupsController extends BaseController {
         }
     }
 
+    /**
+     * Deletes a group.
+     *
+     * @param groupDto the data transfer object representing the group to be deleted
+     */
     public static void deleteGroup(GroupDto groupDto) {
         try {
             DataContext.getInstance().getGroupTable().delete(groupDto.getName());
@@ -36,6 +53,9 @@ public class GroupsController extends BaseController {
         }
     }
 
+    /**
+     * Updates a group.
+     */
     public static void updateGroup() {
         try {
             var groupPanel = App.getGroupScreen();
@@ -55,10 +75,21 @@ public class GroupsController extends BaseController {
         }
     }
 
+    /**
+     * Calculates the total price of all products.
+     *
+     * @return the total price of all products
+     */
     public static double getTotalPrice() {
         return DataContext.getInstance().getProductTable().calculateTotalPrice();
     }
 
+    /**
+     * Calculates the total price of all products in a group.
+     *
+     * @param group the group for which the total price is to be calculated
+     * @return the total price of all products in the group
+     */
     public static double calculateTotalPriceByGroup(GroupDto group) {
         UUID id = DataContext.getInstance().getGroupTable().get(group.getName()).getId();
         List<ProductRecord> records = DataContext.getInstance().getProductTable().getByGroupId(id);

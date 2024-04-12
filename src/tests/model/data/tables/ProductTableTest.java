@@ -18,16 +18,25 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The ProductTableTest class provides unit tests for the ProductTable class.
+ */
 public class ProductTableTest {
     private static GroupRecord FIRST_GROUP;
     private static GroupRecord SECOND_GROUP;
 
+    /**
+     * Sets up the test environment before each test method.
+     */
     @BeforeEach
     public void setUp() {
         DataContext.resetData();
         initGroup();
     }
 
+    /**
+     * Initializes the group for the tests.
+     */
     private static void initGroup() {
         GroupDto firstDto = new GroupDto("firstgroup", "desc");
         GroupDto secondDto = new GroupDto("secondgroup", "desc");

@@ -10,6 +10,10 @@ import main.model.valueObjects.ProductPrice;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * The ProductRecord class represents a record of a product in the application.
+ * It implements the Serializable interface to allow its instances to be written to an output stream.
+ */
 @Getter
 @AllArgsConstructor
 public class ProductRecord implements Serializable {
@@ -25,6 +29,13 @@ public class ProductRecord implements Serializable {
     //Foreign key to GroupTable
     private UUID groupId;
 
+    /**
+     * Checks if this ProductRecord is equal to another object.
+     * Two ProductRecords are equal if their IDs are equal.
+     *
+     * @param other the object to compare with this ProductRecord
+     * @return true if the other object is a ProductRecord and its ID is equal to this ProductRecord's ID, false otherwise
+     */
     @Override
     public boolean equals(Object other){
         if(other instanceof ProductRecord otherRecord){
@@ -33,6 +44,13 @@ public class ProductRecord implements Serializable {
         return false;
     }
 
+
+    /**
+     * Returns a hash code value for this ProductRecord.
+     * The hash code is based on the ID of the ProductRecord.
+     *
+     * @return a hash code value for this ProductRecord
+     */
     @Override
     public int hashCode(){
         return id.hashCode();
