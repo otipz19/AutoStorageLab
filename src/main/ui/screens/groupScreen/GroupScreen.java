@@ -44,17 +44,16 @@ public class GroupScreen extends JPanel {
         mainPanel.add(createActionsPanel(), BorderLayout.NORTH);
         mainPanel.add(new JScrollPane(createProductsPanel()), BorderLayout.CENTER);
         add(mainPanel, BorderLayout.CENTER);
-        searchField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performSearch();
-            }
-        });
+
         JPanel returnButtonPanel = new JPanel();
         returnButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         JButton returnButton = new JButton("Return");
         returnButton.addActionListener(e -> App.goToAllGroupsScreen());
         returnButtonPanel.add(returnButton);
+
+        JButton searchBtn = new JButton("Search");
+        searchBtn.addActionListener(e -> performSearch());
+        returnButtonPanel.add(searchBtn);
 
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
