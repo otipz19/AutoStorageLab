@@ -14,6 +14,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public class DataSerializer {
+    public static final OnClosingSerializationListener ON_CLOSING_SERIALIZATION_LISTENER = new OnClosingSerializationListener();
+
     private static final Path BASE_DIR = Paths.get(System.getProperty("user.dir"));
     private static final String GROUPS_FILE_NAME = "groups.dat";
     private static final String PRODUCTS_FILE_NAME = "products.dat";

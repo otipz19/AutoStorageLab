@@ -4,8 +4,10 @@ import lombok.Getter;
 import main.model.exceptions.validation.InvalidRecordNameException;
 import main.model.guard.Guard;
 
+import java.io.Serializable;
+
 @Getter
-public abstract class Name {
+public abstract class Name implements Serializable {
     private final String value;
 
     public Name(String value){
