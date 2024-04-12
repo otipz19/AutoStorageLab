@@ -52,4 +52,8 @@ public class GroupsController extends BaseController {
             );
         }
     }
+
+    public static double getTotalPrice() {
+        return DataContext.getInstance().getProductTable().calculateTotalPrice();
+    }
 }

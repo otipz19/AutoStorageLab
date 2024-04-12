@@ -1,5 +1,6 @@
 package main.ui.screens.allGroupsScreen;
 
+import main.controllers.GroupsController;
 import main.model.data.DataContext;
 import main.model.dto.GroupDto;
 import main.model.dto.Mapper;
@@ -15,6 +16,7 @@ import java.util.*;
 public class AllGroupsScreen extends JPanel {
     private final List<GroupButton> groupButtons = new LinkedList<>();
     private final GroupsLabelButton groupsLabelButton;
+    private JLabel totalPriceLabel;
 
     public AllGroupsScreen() {
         App.getInstance().setTitle("All Groups");
@@ -24,6 +26,11 @@ public class AllGroupsScreen extends JPanel {
         add(groupsLabelButton);
         drawActionBtns();
         loadGroups();
+
+        totalPriceLabel = new JLabel();
+        totalPriceLabel.setBounds(58, 640, 600, 50); // Set bounds for totalPriceLabel
+        add(totalPriceLabel);
+        updateTotalPriceLabel();
     }
 
     private void drawActionBtns() {
@@ -71,5 +78,10 @@ public class AllGroupsScreen extends JPanel {
         }
         revalidate();
         repaint();
+    }
+
+    public void updateTotalPriceLabel() {
+        double totalPrice = GroupsController.getTotalPrice();
+        totalPriceLabel.setText("Total price of all products: " + totalPrice);
     }
 }

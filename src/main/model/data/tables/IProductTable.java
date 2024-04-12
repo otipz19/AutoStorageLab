@@ -26,4 +26,5 @@ public interface IProductTable {
     void deleteByGroupId(UUID groupId);
     void update(UUID id, ProductDto toUpdate);
     void update(ProductName name, ProductDto toUpdate);
+    double calculateTotalPrice();
 }

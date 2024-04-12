@@ -194,4 +194,10 @@ public class ProductTable implements IProductTable {
             throw new ProductNameAlreadyExists(name);
         }
     }
+
+    public double calculateTotalPrice() {
+        return primaryKey.values().stream()
+                .mapToDouble(record -> record.getPrice().getValue() * record.getAmount().getValue())
+                .sum();
+    }
 }
