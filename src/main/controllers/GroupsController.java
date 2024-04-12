@@ -2,11 +2,13 @@ package main.controllers;
 
 import lombok.Getter;
 import main.model.data.DataContext;
+import main.model.data.records.ProductRecord;
 import main.model.dto.GroupDto;
 import main.model.exceptions.DomainException;
 import main.ui.App;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.UUID;
 
 public class GroupsController extends BaseController {
@@ -56,4 +58,13 @@ public class GroupsController extends BaseController {
     public static double getTotalPrice() {
         return DataContext.getInstance().getProductTable().calculateTotalPrice();
     }
+
+    public static double calculateTotalPriceByGroup(UUID groupId) {
+        List<ProductRecord> records = DataContext.getInstance().getProductTable().getByGroupId(groupId);
+        return records.stream()
+                .mapToDouble(record -> record.getPrice().getValue() * record.getAmount().getValue())
+                .sum();
+    }
+
+
 }

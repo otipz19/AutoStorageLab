@@ -17,4 +17,5 @@ public interface IGroupTable {
     void delete(GroupName name);
     void update(UUID id, GroupDto toUpdate);
     void update(GroupName name, GroupDto toUpdate);
+    double calculateTotalPriceByGroup(UUID groupId);
 }

@@ -9,6 +9,7 @@ import main.ui.App;
 import main.ui.components.editableField.DescriptionArea;
 import main.ui.screens.groupScreen.components.*;
 import main.ui.screens.productPanel.ProductTitleButton;
+import main.controllers.GroupsController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,6 +35,10 @@ public class GroupScreen extends JPanel {
     private EditGroupButton editNameBtn;
     private EditGroupButton editDescriptionBtn;
     private JButton createProductBtn;
+    private JLabel groupTotalPriceLabel;
+    private UUID groupId;
+
+
 
     public GroupScreen() {
         App.getInstance().setTitle("Group Details");
@@ -61,6 +66,10 @@ public class GroupScreen extends JPanel {
         northPanel.add(createActionsPanel());
 
         mainPanel.add(northPanel, BorderLayout.NORTH);
+
+        groupTotalPriceLabel = new JLabel();
+        groupTotalPriceLabel.setBounds(58, 640, 600, 50);
+        northPanel.add(groupTotalPriceLabel);
     }
 
 
@@ -168,5 +177,17 @@ public class GroupScreen extends JPanel {
 
     public GroupDto getGroupToUpdate() {
         return new GroupDto(groupNameField.getText(), descriptionArea.getText());
+    }
+
+    public void updateGroupTotalPriceLabel() {
+        if (groupId != null) {
+            double groupTotalPrice = GroupsController.calculateTotalPriceByGroup(groupId);
+            groupTotalPriceLabel.setText("Total price of products in group: " + String.format("%.2f", groupTotalPrice));
+        }
+    }
+
+    public void setGroup(UUID groupId) {
+        this.groupId = groupId;
+        updateGroupTotalPriceLabel();
     }
 }

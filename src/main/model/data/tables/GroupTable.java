@@ -2,6 +2,7 @@ package main.model.data.tables;
 
 import main.model.data.DataContext;
 import main.model.data.records.GroupRecord;
+import main.model.data.records.ProductRecord;
 import main.model.dto.GroupDto;
 import main.model.dto.Mapper;
 import main.model.exceptions.crud.GroupNameAlreadyExists;
@@ -117,5 +118,12 @@ public class GroupTable implements IGroupTable {
     private void addRecordToIndexes(GroupRecord record, UUID id) {
         primaryKey.put(id, record);
         nameIndex.put(record.getName(), record);
+    }
+
+    public double calculateTotalPriceByGroup(UUID groupId) {
+        List<ProductRecord> records = DataContext.getInstance().getProductTable().getByGroupId(groupId);
+        return records.stream()
+                .mapToDouble(record -> record.getPrice().getValue() * record.getAmount().getValue())
+                .sum();
     }
 }
