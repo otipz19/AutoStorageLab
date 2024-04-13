@@ -6,6 +6,7 @@ import main.model.valueObjects.ManufacturerName;
 import main.model.valueObjects.ProductAmount;
 import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
+import main.ui.App;
 import main.ui.components.editableField.DescriptionArea;
 import main.ui.components.editableField.EditableValidatableField;
 import main.ui.screens.productPanel.components.EditProductBtn;
@@ -24,13 +25,22 @@ public class ProductUpdatePanel extends JPanel {
     private EditableValidatableField price;
 
     public ProductUpdatePanel(ProductDto productDto) {
-        setLayout(new GridLayout(5, 1, 5, 5));
-        add(createNamePanel());
-        add(createDescriptionPanel());
-        add(createManufacturerPanel());
-        add(createAmountPanel());
-        add(createPricePanel());
+        setLayout(new BorderLayout());
+
+        JPanel fieldsPanel = new JPanel(new GridLayout(5, 1, 5, 5));
+        fieldsPanel.add(createNamePanel());
+        fieldsPanel.add(createDescriptionPanel());
+        fieldsPanel.add(createManufacturerPanel());
+        fieldsPanel.add(createAmountPanel());
+        fieldsPanel.add(createPricePanel());
+
+        add(fieldsPanel, BorderLayout.CENTER);
+
         setProductDto(productDto);
+
+        JButton returnButton = new JButton("Return");
+        returnButton.addActionListener(e -> App.goToGroupScreen());
+        add(returnButton, BorderLayout.NORTH);
     }
 
     public ProductDto getProductToUpdate() {
