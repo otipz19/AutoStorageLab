@@ -25,6 +25,8 @@ public class App extends JFrame {
      */
     @Getter
     private static App instance;
+    private GroupDto lastViewedGroup;
+
 
     /**
      * Map of screens.
@@ -76,13 +78,22 @@ public class App extends JFrame {
 
     /**
      * Navigates to the GroupScreen for a specific group.
-     * @param groupDto The group to display in the GroupScreen.
+     *
+     */
+    public static void goToGroupScreen() {
+        instance.removeAllScreens();
+        GroupScreen groupScreen = getGroupScreen();
+        groupScreen.setGroup(instance.lastViewedGroup);
+        goToScreen(groupScreen);
+    }
+
+    /**
+     * Navigates to the GroupScreen for a specific group.
+     * @param groupDto The group to navigate to.
      */
     public static void goToGroupScreen(GroupDto groupDto) {
-        instance.removeAllScreens();
-        GroupScreen groupScreen = new GroupScreen();
-        groupScreen.setGroup(groupDto);
-        goToScreen(groupScreen);
+        instance.lastViewedGroup = groupDto;
+        goToGroupScreen();
     }
 
     /**
