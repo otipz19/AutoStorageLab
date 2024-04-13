@@ -101,12 +101,9 @@ public class GroupScreen extends JPanel {
      */
     private List<ProductDto> getMatchingProducts(){
         String searchText = searchField.getText().toLowerCase();
-        if(searchText.isEmpty()){
-            return products;
-        }
         Pattern pattern = buildRegexPatternFromSearchText(searchText);
         return products.stream()
-                .filter(product -> pattern.matcher(product.getName().getValue().toLowerCase()).matches())
+                .filter(product -> pattern.matcher(product.getName().getValue().toLowerCase()).find())
                 .toList();
     }
 
