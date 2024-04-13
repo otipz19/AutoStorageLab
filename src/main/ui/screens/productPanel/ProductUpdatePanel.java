@@ -14,6 +14,12 @@ import main.ui.screens.productPanel.components.EditProductBtn;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class represents the panel for updating a product.
+ * It extends JPanel and contains fields for product details.
+ * It also contains methods for creating panels for each field,
+ * setting the product DTO, and getting the updated product DTO.
+ */
 public class ProductUpdatePanel extends JPanel {
     @Getter
     private ProductDto productDto;
@@ -24,6 +30,11 @@ public class ProductUpdatePanel extends JPanel {
     private EditableValidatableField amount;
     private EditableValidatableField price;
 
+    /**
+     * Constructor for ProductUpdatePanel.
+     * Initializes the layout, adds fields and return button.
+     * @param productDto the product DTO to be updated
+     */
     public ProductUpdatePanel(ProductDto productDto) {
         setLayout(new BorderLayout());
 
@@ -43,6 +54,10 @@ public class ProductUpdatePanel extends JPanel {
         add(returnButton, BorderLayout.NORTH);
     }
 
+    /**
+     * Returns the updated product DTO.
+     * @return the updated product DTO
+     */
     public ProductDto getProductToUpdate() {
         return new ProductDto(
                 nameField.getText(),
@@ -53,6 +68,10 @@ public class ProductUpdatePanel extends JPanel {
                 productDto.getGroupName().getValue());
     }
 
+    /**
+     * Sets the product DTO and updates the fields.
+     * @param productDto the product DTO to be set
+     */
     public void setProductDto(ProductDto productDto){
         this.productDto = productDto;
         nameField.setText(productDto.getName().getValue());
@@ -62,6 +81,10 @@ public class ProductUpdatePanel extends JPanel {
         price.setText(Double.toString(productDto.getPrice().getValue()));
     }
 
+    /**
+     * Creates and returns the name panel.
+     * @return the name panel
+     */
     private JPanel createNamePanel() {
         nameField = new EditableValidatableField(ProductName::isValid);
         EditProductBtn nameEditBtn = new EditProductBtn(nameField, this);
@@ -69,12 +92,20 @@ public class ProductUpdatePanel extends JPanel {
         return formPanel("Name:", nameField, nameEditBtn);
     }
 
+    /**
+     * Creates and returns the description panel.
+     * @return the description panel
+     */
     private JPanel createDescriptionPanel() {
         description = new DescriptionArea();
         EditProductBtn descriptionEditBtn = new EditProductBtn(description, this);
         return formPanel("Description: ", new JScrollPane(description), descriptionEditBtn);
     }
 
+    /**
+     * Creates and returns the manufacturer panel.
+     * @return the manufacturer panel
+     */
     private JPanel createManufacturerPanel() {
         manufacturer = new EditableValidatableField(ManufacturerName::isValid);
         EditProductBtn btn = new EditProductBtn(manufacturer, this);
@@ -82,6 +113,10 @@ public class ProductUpdatePanel extends JPanel {
         return formPanel("Manufacturer: ", manufacturer, btn);
     }
 
+    /**
+     * Creates and returns the amount panel.
+     * @return the amount panel
+     */
     private JPanel createAmountPanel() {
         amount = new EditableValidatableField(ProductAmount::isValid);
         EditProductBtn btn = new EditProductBtn(amount, this);
@@ -89,6 +124,10 @@ public class ProductUpdatePanel extends JPanel {
         return formPanel("Amount: ", amount, btn);
     }
 
+    /**
+     * Creates and returns the price panel.
+     * @return the price panel
+     */
     private JPanel createPricePanel() {
         price = new EditableValidatableField(ProductPrice::isValid);
         var btn = new EditProductBtn(price, this);
@@ -96,6 +135,13 @@ public class ProductUpdatePanel extends JPanel {
         return formPanel("Price: ", price, btn);
     }
 
+    /**
+     * Creates and returns a form panel with a label, field, and button.
+     * @param label the label for the field
+     * @param field the field for input
+     * @param btn the button for actions
+     * @return the form panel
+     */
     private JPanel formPanel(String label, JComponent field, JComponent btn) {
         JPanel panel = new JPanel(new GridLayout(2, 2));
         panel.add(new JLabel(label));
