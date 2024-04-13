@@ -15,7 +15,7 @@ import java.util.*;
 public class ProductTable implements IProductTable {
     private final Map<UUID, ProductRecord> primaryKey = new HashMap<>();
     private final Map<ProductName, ProductRecord> nameIndex = new HashMap<>();
-    private final Map<UUID, List<ProductRecord>> groupIdIndex = new HashMap<>();
+    private final Map<UUID, Set<ProductRecord>> groupIdIndex = new HashMap<>();
 
     @Override
     public void resetData(){
@@ -56,7 +56,7 @@ public class ProductTable implements IProductTable {
     @Override
     public List<ProductRecord> getByGroupId(UUID groupId) {
         throwIfGroupDoesNotExist(groupId);
-        List<ProductRecord> related = groupIdIndex.get(groupId);
+        Set<ProductRecord> related = groupIdIndex.get(groupId);
         if(related == null){
             return new ArrayList<>();
         }
@@ -96,7 +96,7 @@ public class ProductTable implements IProductTable {
     @Override
     public void deleteByGroupId(UUID groupId) {
         throwIfGroupDoesNotExist(groupId);
-        List<ProductRecord> records = groupIdIndex.get(groupId);
+        Set<ProductRecord> records = groupIdIndex.get(groupId);
         //records would be null if group exists, but no related products present
         if(records != null){
             for (ProductRecord record : records) {
@@ -131,12 +131,10 @@ public class ProductTable implements IProductTable {
         if (!recordToUpdate.getName().equals(oldRecord.getName())) {
             throwIfExists(recordToUpdate.getName());
             removeRecordFromNameIndex(oldRecord);
-            addRecordToNameIndex(recordToUpdate);
         }
-        if (!oldGroup.getId().equals(groupId)){
-            removeRecordFromGroupIdIndex(oldRecord);
-            addRecordToGroupIdIndex(recordToUpdate);
-        }
+        addRecordToNameIndex(recordToUpdate);
+        removeRecordFromGroupIdIndex(oldRecord);
+        addRecordToGroupIdIndex(recordToUpdate);
     }
 
     private void addRecordToIndexes(ProductRecord record) {
@@ -156,7 +154,7 @@ public class ProductTable implements IProductTable {
     private void addRecordToGroupIdIndex(ProductRecord record) {
         var groupIndex = groupIdIndex.get(record.getGroupId());
         if (groupIndex == null) {
-            groupIndex = new ArrayList<ProductRecord>();
+            groupIndex = new HashSet<ProductRecord>();
             groupIdIndex.put(record.getGroupId(), groupIndex);
         }
         groupIndex.add(record);

@@ -1,6 +1,8 @@
 package main.ui;
 
 import lombok.Getter;
+import main.model.data.DataContext;
+import main.model.data.records.ProductRecord;
 import main.model.dto.GroupDto;
 import main.model.dto.ProductDto;
 import main.ui.screens.allGroupsScreen.AllGroupsScreen;
@@ -14,6 +16,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Main class of the application.

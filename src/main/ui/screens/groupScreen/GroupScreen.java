@@ -220,6 +220,7 @@ public class GroupScreen extends JPanel {
      * @param products the products
      */
     private void drawProductTitles(List<ProductDto> products){
+        productsPanel.removeAll();
         for(ProductDto productDto: products){
             ProductTitleButton productTitleButton = new ProductTitleButton(productDto);
             productsPanel.add(productTitleButton);
