@@ -31,7 +31,7 @@ public class ConfirmationPanel extends JPanel {
 
     private JPanel createCancelBtn() {
         cancelBtn = new StyledButton("Cancel");
-        cancelBtn.addActionListener(e -> App.goToAllGroupsScreen());
+        cancelBtn.addActionListener(e -> creationPanel.cancel());
         return putBtnInPanel(cancelBtn);
     }
 

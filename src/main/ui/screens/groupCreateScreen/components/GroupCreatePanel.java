@@ -50,6 +50,11 @@ public class GroupCreatePanel extends JPanel implements ICreationPanel {
         }
     }
 
+    @Override
+    public void cancel() {
+        App.goToAllGroupsScreen();
+    }
+
     public void onInputChange(boolean isValid) {
         parent.getConfirmationPanel().getConfirmBtn().setEnabled(isValid);
     }

@@ -88,6 +88,11 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
         }
     }
 
+    @Override
+    public void cancel() {
+        App.goToGroupScreen(productCreateScreen.getGroup());
+    }
+
     /**
      * Returns a ProductDto with the input from the fields.
      * @return A ProductDto with the input from the fields.
