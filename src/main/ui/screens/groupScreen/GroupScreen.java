@@ -13,8 +13,6 @@ import main.controllers.GroupsController;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -30,7 +28,6 @@ public class GroupScreen extends JPanel {
 
     private List<ProductDto> products;
 
-    private JButton backButton;
     private GroupProductsSearchField searchField;
     @Getter
     private EditGroupNameField groupNameField;
@@ -63,9 +60,10 @@ public class GroupScreen extends JPanel {
         returnButton.addActionListener(e -> App.goToAllGroupsScreen());
         returnButtonPanel.add(returnButton);
 
-        JButton searchBtn = new JButton("Search");
-        searchBtn.addActionListener(e -> performSearch());
-        returnButtonPanel.add(searchBtn);
+
+        createProductBtn = new CreateProductButton();
+        createProductBtn.setSize(50, 50);
+        returnButtonPanel.add(createProductBtn);
 
         JPanel northPanel = new JPanel();
         northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.Y_AXIS));
@@ -74,8 +72,7 @@ public class GroupScreen extends JPanel {
 
         mainPanel.add(northPanel, BorderLayout.NORTH);
 
-        groupTotalPriceLabel = new JLabel("test");
-        groupTotalPriceLabel.setBounds(58, 640, 600, 50);
+        groupTotalPriceLabel = new JLabel();
         northPanel.add(groupTotalPriceLabel);
     }
 
@@ -170,9 +167,9 @@ public class GroupScreen extends JPanel {
         searchField = new GroupProductsSearchField();
         searchField.setSize(580, 50);
         searchPanel.add(searchField, BorderLayout.CENTER);
-        createProductBtn = new CreateProductButton();
-        createProductBtn.setSize(50, 50);
-        searchPanel.add(createProductBtn, BorderLayout.EAST);
+        JButton searchBtn = new JButton("Search");
+        searchBtn.addActionListener(e -> performSearch());
+        searchPanel.add(searchBtn, BorderLayout.EAST);
         return searchPanel;
     }
 
