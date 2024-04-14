@@ -36,6 +36,7 @@ public class AmountChangeListener implements ActionListener {
             ProductAmount newAmount = new ProductAmount(shouldAdd ? oldAmount + toAdd : oldAmount - toAdd);
             productUpdatePanel.getAmount().setText(newAmount.toString());
             ProductsController.updateProduct(productUpdatePanel);
+            productUpdatePanel.recalculateTotalPrice();
         } catch (NumberFormatException ex) {
             showInputErrorMsg("Only numbers are allowed");
         } catch (InvalidFormInputException | DomainException ex) {

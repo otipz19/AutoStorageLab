@@ -1,17 +1,13 @@
 package main.ui.screens.productPanel;
 
 import lombok.Getter;
-import main.controllers.ProductsController;
 import main.model.dto.ProductDto;
-import main.model.exceptions.DomainException;
 import main.model.valueObjects.ManufacturerName;
-import main.model.valueObjects.ProductAmount;
 import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
 import main.ui.App;
 import main.ui.components.editableField.DescriptionArea;
 import main.ui.components.editableField.EditableValidatableField;
-import main.ui.exceptions.InvalidFormInputException;
 import main.ui.screens.productPanel.components.AmountChangeListener;
 import main.ui.screens.productPanel.components.EditProductBtn;
 
@@ -35,6 +31,8 @@ public class ProductUpdatePanel extends JPanel {
     @Getter
     private JLabel amount;
     private EditableValidatableField price;
+    @Getter
+    private JLabel totalPrice;
 
     /**
      * Constructor for ProductUpdatePanel.
@@ -43,16 +41,19 @@ public class ProductUpdatePanel extends JPanel {
      * @param productDto the product DTO to be updated
      */
     public ProductUpdatePanel(ProductDto productDto) {
+        this.productDto = productDto;
+
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
         setBackground(new Color(0xe9f2fb));
 
-        JPanel fieldsPanel = new JPanel(new GridLayout(5, 1, 5, 5));
+        JPanel fieldsPanel = new JPanel(new GridLayout(6, 1, 5, 5));
         fieldsPanel.add(createNamePanel());
         fieldsPanel.add(createDescriptionPanel());
         fieldsPanel.add(createManufacturerPanel());
         fieldsPanel.add(createAmountPanel());
         fieldsPanel.add(createPricePanel());
+        fieldsPanel.add(createTotalPricePanel());
         fieldsPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         add(fieldsPanel, BorderLayout.CENTER);
@@ -172,5 +173,19 @@ public class ProductUpdatePanel extends JPanel {
         panel.add(field);
         panel.add(btn);
         return panel;
+    }
+
+    private JPanel createTotalPricePanel(){
+        JPanel panel = new JPanel(new GridLayout(1, 2));
+        panel.add(new JLabel("Total price: "));
+        totalPrice = new JLabel();
+        recalculateTotalPrice();
+        panel.add(totalPrice);
+        return panel;
+    }
+
+    public void recalculateTotalPrice(){
+        double total = productDto.getPrice().getValue() * productDto.getAmount().getValue();
+        totalPrice.setText(Double.toString(total));
     }
 }

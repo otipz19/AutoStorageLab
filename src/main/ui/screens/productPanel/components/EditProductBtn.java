@@ -16,5 +16,6 @@ public class EditProductBtn extends EditableFieldButton {
     @Override
     protected void afterClick() {
         ProductsController.updateProduct(productUpdatePanel);
+        productUpdatePanel.recalculateTotalPrice();
     }
 }
