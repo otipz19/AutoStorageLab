@@ -1,9 +1,11 @@
 package main.model.dto;
 
+import main.model.data.DataContext;
 import main.model.data.records.GroupRecord;
 import main.model.data.records.ProductRecord;
 import main.model.valueObjects.GroupName;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -16,30 +18,30 @@ public class Mapper {
      * @param record the GroupRecord to map
      * @return a GroupDto that represents the given GroupRecord
      */
-    public static GroupDto map(GroupRecord record){
+    public static GroupDto map(GroupRecord record) {
         return new GroupDto(record.getName(), record.getDescription());
     }
 
     /**
      * Maps a GroupDto to a GroupRecord.
      *
-     * @param dto the GroupDto to map
+     * @param dto     the GroupDto to map
      * @param groupId the UUID of the group
      * @return a GroupRecord that represents the given GroupDto
      */
-    public static GroupRecord map(GroupDto dto, UUID groupId){
+    public static GroupRecord map(GroupDto dto, UUID groupId) {
         return new GroupRecord(groupId, dto.getName(), dto.getDescription());
     }
 
     /**
      * Maps a ProductDto to a ProductRecord.
      *
-     * @param dto the ProductDto to map
+     * @param dto       the ProductDto to map
      * @param productId the UUID of the product
-     * @param groupId the UUID of the group that the product belongs to
+     * @param groupId   the UUID of the group that the product belongs to
      * @return a ProductRecord that represents the given ProductDto
      */
-    public static ProductRecord map(ProductDto dto, UUID productId, UUID groupId){
+    public static ProductRecord map(ProductDto dto, UUID productId, UUID groupId) {
         return new ProductRecord(
                 productId,
                 dto.getName(),
@@ -53,11 +55,11 @@ public class Mapper {
     /**
      * Maps a ProductRecord to a ProductDto.
      *
-     * @param record the ProductRecord to map
+     * @param record    the ProductRecord to map
      * @param groupName the name of the group that the product belongs to
      * @return a ProductDto that represents the given ProductRecord
      */
-    public static ProductDto map(ProductRecord record, GroupName groupName){
+    public static ProductDto map(ProductRecord record, GroupName groupName) {
         return new ProductDto(
                 record.getName(),
                 record.getDescription(),
@@ -65,5 +67,11 @@ public class Mapper {
                 record.getAmount(),
                 record.getPrice(),
                 groupName);
+    }
+
+    public static List<ProductDto> map(List<ProductRecord> records) {
+        return records.stream()
+                .map(r -> Mapper.map(r, DataContext.getInstance().getGroupTable().get(r.getGroupId()).getName()))
+                .toList();
     }
 }
