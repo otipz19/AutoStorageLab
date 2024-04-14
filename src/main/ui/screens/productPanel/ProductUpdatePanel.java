@@ -6,6 +6,7 @@ import main.model.valueObjects.ManufacturerName;
 import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
 import main.ui.App;
+import main.ui.components.buttons.ReturnButton;
 import main.ui.components.editableField.DescriptionArea;
 import main.ui.components.editableField.EditableValidatableField;
 import main.ui.screens.productPanel.components.AmountChangeListener;
@@ -60,8 +61,7 @@ public class ProductUpdatePanel extends JPanel {
 
         setProductDto(productDto);
 
-        JButton returnButton = new JButton("Return");
-        returnButton.addActionListener(e -> App.goToGroupScreen());
+        JButton returnButton = new ReturnButton();
         add(returnButton, BorderLayout.NORTH);
     }
 

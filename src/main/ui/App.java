@@ -13,6 +13,7 @@ import main.ui.screens.productPanel.ProductUpdatePanel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
+import java.util.Stack;
 
 /**
  * Main class of the application.
@@ -24,8 +25,6 @@ public class App extends JFrame {
      */
     @Getter
     private static App instance;
-    private GroupDto lastViewedGroup;
-
 
     /**
      * Map of screens.
@@ -46,6 +45,8 @@ public class App extends JFrame {
      */
     private final ScreensMap screens = new ScreensMap();
 
+    private final Stack<JPanel> navigationStack = new Stack<>();
+
     /**
      * Constructor.
      * Initializes the application and adds the initial screens.
@@ -53,36 +54,7 @@ public class App extends JFrame {
     public App() {
         instance = this;
         configApp();
-        screens.addScreen(new AllGroupsScreen());
-        add(screens.get(AllGroupsScreen.class.getName()));
-        screens.addScreen(new GroupScreen());
-    }
-
-    /**
-     * Returns the AllGroupsScreen.
-     * @return The AllGroupsScreen.
-     */
-    public static AllGroupsScreen getAllGroupsScreen() {
-        return (AllGroupsScreen) instance.screens.get(AllGroupsScreen.class.getName());
-    }
-
-    /**
-     * Returns the GroupScreen.
-     * @return The GroupScreen.
-     */
-    public static GroupScreen getGroupScreen() {
-        return (GroupScreen) instance.screens.get(GroupScreen.class.getName());
-    }
-
-    /**
-     * Navigates to the GroupScreen for a specific group.
-     *
-     */
-    public static void goToGroupScreen() {
-        instance.removeAllScreens();
-        GroupScreen groupScreen = getGroupScreen();
-        groupScreen.setGroup(instance.lastViewedGroup);
-        goToScreen(groupScreen);
+        goToScreen(new AllGroupsScreen());
     }
 
     /**
@@ -90,38 +62,28 @@ public class App extends JFrame {
      * @param groupDto The group to navigate to.
      */
     public static void goToGroupScreen(GroupDto groupDto) {
-        instance.lastViewedGroup = groupDto;
-        goToGroupScreen();
+        goToScreen(new GroupScreen(groupDto));
     }
 
     /**
      * Navigates to the AllGroupsScreen.
      */
     public static void goToAllGroupsScreen() {
-        instance.removeAllScreens();
-        AllGroupsScreen allGroupsScreen = new AllGroupsScreen();
-        goToScreen(allGroupsScreen);
+        goToScreen(new AllGroupsScreen());
     }
 
     /**
      * Navigates to the AllGroupsSearchScreen.
      */
     public static void goToAllGroupsSearchScreen() {
-        instance.removeAllScreens();
-        var screen = new AllGroupsSearchScreen();
-        instance.screens.addScreen(screen);
-        instance.add(screen);
-        instance.revalidate();
-        instance.repaint();
+        goToScreen(new AllGroupsSearchScreen());
     }
 
     /**
      * Navigates to the GroupCreateScreen.
      */
     public static void goToGroupCreateScreen() {
-        instance.removeAllScreens();
-        GroupCreateScreen groupCreateScreen = new GroupCreateScreen();
-        goToScreen(groupCreateScreen);
+        goToScreen(new GroupCreateScreen());
     }
 
     /**
@@ -129,18 +91,26 @@ public class App extends JFrame {
      * @param groupDto The group for which to create a product.
      */
     public static void goToProductCreateScreen(GroupDto groupDto) {
-        instance.removeAllScreens();
-        ProductCreateScreen productCreateScreen = new ProductCreateScreen(groupDto);
-        goToScreen(productCreateScreen);
+        goToScreen(new ProductCreateScreen(groupDto));
     }
 
     public static void goToProductUpdateScreen(ProductDto productDto){
-        instance.removeAllScreens();
-        ProductUpdatePanel productUpdatePanel = new ProductUpdatePanel(productDto);
-        goToScreen(productUpdatePanel);
+        goToScreen(new ProductUpdatePanel(productDto));
+    }
+
+    public static void returnToPreviousScreen(){
+        JPanel panel = new AllGroupsScreen();
+        if(instance.navigationStack.size() > 1){
+            instance.navigationStack.pop();
+            panel = instance.navigationStack.peek();
+        }
+        goToScreen(panel);
+        instance.navigationStack.pop();
     }
 
     private static void goToScreen(JPanel panel){
+        instance.navigationStack.push(panel);
+        instance.removeAllScreens();
         instance.screens.addScreen(panel);
         instance.add(panel);
         instance.revalidate();

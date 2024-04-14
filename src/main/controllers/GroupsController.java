@@ -7,6 +7,8 @@ import main.model.dto.GroupDto;
 import main.model.dto.ProductDto;
 import main.model.exceptions.DomainException;
 import main.ui.App;
+import main.ui.screens.allGroupsScreen.AllGroupsScreen;
+import main.ui.screens.groupScreen.GroupScreen;
 
 import javax.swing.*;
 import java.util.List;
@@ -45,10 +47,10 @@ public class GroupsController extends BaseController {
      *
      * @param groupDto the data transfer object representing the group to be deleted
      */
-    public static void deleteGroup(GroupDto groupDto) {
+    public static void deleteGroup(GroupDto groupDto, AllGroupsScreen allGroupsScreen) {
         try {
             DataContext.getInstance().getGroupTable().delete(groupDto.getName());
-            App.getAllGroupsScreen().deleteGroup(groupDto);
+            allGroupsScreen.deleteGroup(groupDto);
         } catch (DomainException ex) {
             showExceptionMessage(ex);
         }
@@ -57,15 +59,14 @@ public class GroupsController extends BaseController {
     /**
      * Updates a group.
      */
-    public static void updateGroup() {
+    public static void updateGroup(GroupScreen groupScreen) {
         try {
-            var groupPanel = App.getGroupScreen();
             var groupTable = DataContext.getInstance().getGroupTable();
-            GroupDto oldGroup = groupPanel.getGroup();
-            GroupDto toUpdate = groupPanel.getGroupToUpdate();
+            GroupDto oldGroup = groupScreen.getGroup();
+            GroupDto toUpdate = groupScreen.getGroupToUpdate();
             UUID groupId = groupTable.get(oldGroup.getName()).getId();
             groupTable.update(groupId, toUpdate);
-            groupPanel.setGroup(toUpdate);
+            groupScreen.setGroup(toUpdate);
         } catch (DomainException ex) {
             JOptionPane.showMessageDialog(
                     null,

@@ -1,6 +1,7 @@
 package main.ui.screens.allGroupsSearchScreen;
 
 import main.ui.App;
+import main.ui.components.buttons.ReturnButton;
 import main.ui.screens.searchProductsPanel.ProductsListPanel;
 
 import javax.swing.*;
@@ -28,8 +29,7 @@ public class AllGroupsSearchScreen extends JPanel {
 
     private JPanel createReturnBtnPanel() {
         JPanel returnBtnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JButton returnBtn = new JButton("Return");
-        returnBtn.addActionListener(e -> App.goToAllGroupsScreen());
+        JButton returnBtn = new ReturnButton();
         returnBtnPanel.add(returnBtn);
         return returnBtnPanel;
     }

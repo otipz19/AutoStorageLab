@@ -58,7 +58,7 @@ public class AllGroupsScreen extends JPanel {
     }
 
     public void addGroup(GroupDto groupDto){
-        GroupButton newGroupButton = new GroupButton(groupDto);
+        GroupButton newGroupButton = new GroupButton(groupDto, this);
         groupButtons.add(newGroupButton);
         add(newGroupButton);
         newGroupButton.setBounds(groupsLabelButton.getX() + ((groupButtons.size() - 1) % 3) * 200, groupsLabelButton.getY() + groupsLabelButton.getHeight() + ((groupButtons.size() - 1) / 3) * 60 + 20, 200, 50);
