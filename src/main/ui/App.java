@@ -1,8 +1,6 @@
 package main.ui;
 
 import lombok.Getter;
-import main.model.data.DataContext;
-import main.model.data.records.ProductRecord;
 import main.model.dto.GroupDto;
 import main.model.dto.ProductDto;
 import main.ui.screens.allGroupsScreen.AllGroupsScreen;
@@ -15,9 +13,6 @@ import main.ui.screens.productPanel.ProductUpdatePanel;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.UUID;
 
 /**
  * Main class of the application.
@@ -61,7 +56,6 @@ public class App extends JFrame {
         screens.addScreen(new AllGroupsScreen());
         add(screens.get(AllGroupsScreen.class.getName()));
         screens.addScreen(new GroupScreen());
-        screens.addScreen(new AllGroupsSearchScreen());
     }
 
     /**
@@ -114,8 +108,9 @@ public class App extends JFrame {
      */
     public static void goToAllGroupsSearchScreen() {
         instance.removeAllScreens();
-        AllGroupsSearchScreen allGroupsSearchScreen = (AllGroupsSearchScreen) instance.screens.get(AllGroupsSearchScreen.class.getName());
-        instance.add(allGroupsSearchScreen);
+        var screen = new AllGroupsSearchScreen();
+        instance.screens.addScreen(screen);
+        instance.add(screen);
         instance.revalidate();
         instance.repaint();
     }
