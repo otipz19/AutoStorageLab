@@ -24,10 +24,13 @@ public class AmountChangeListener implements ActionListener {
         try {
             String input = JOptionPane.showInputDialog(
                     null,
-                    "Input how many product to add",
-                    "Add product amount",
+                    "Input how many product to " + (shouldAdd ? "add" : "remove"),
+                    (shouldAdd? "Add" : "Remove") + " product amount",
                     JOptionPane.QUESTION_MESSAGE
             );
+            if(input == null){
+                return;
+            }
             int toAdd = Integer.parseInt(input);
             if (toAdd <= 0) {
                 throw new InvalidFormInputException("Only positive values are allowed");
