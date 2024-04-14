@@ -4,4 +4,8 @@ public class InvalidFormInputException extends RuntimeException {
     public InvalidFormInputException(Exception inner){
         super("Invalid form input! " + inner.getMessage());
     }
+
+    public InvalidFormInputException(String msg){
+        super(msg);
+    }
 }
