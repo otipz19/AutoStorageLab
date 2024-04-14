@@ -1,8 +1,9 @@
-package main.ui.screens.productPanel;
+package main.ui.screens.searchProductsPanel.components;
 
 import main.model.dto.ProductDto;
 import main.ui.components.buttons.StyledButton;
 import main.ui.App;
+import main.ui.screens.productPanel.ProductUpdatePanel;
 
 import java.awt.event.ActionEvent;
 

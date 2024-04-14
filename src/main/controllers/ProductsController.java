@@ -44,4 +44,12 @@ public class ProductsController extends BaseController {
             productUpdatePanel.setProductDto(productUpdatePanel.getProductDto());
         }
     }
+
+    public static void deleteProduct(ProductDto productDto) {
+        try {
+            DataContext.getInstance().getProductTable().delete(productDto.getName());
+        } catch (DomainException e){
+            showExceptionMessage(e);
+        }
+    }
 }

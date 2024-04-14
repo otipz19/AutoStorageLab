@@ -4,6 +4,7 @@ import lombok.Getter;
 import main.model.data.DataContext;
 import main.model.data.records.ProductRecord;
 import main.model.dto.GroupDto;
+import main.model.dto.ProductDto;
 import main.model.exceptions.DomainException;
 import main.ui.App;
 
@@ -97,6 +98,4 @@ public class GroupsController extends BaseController {
                 .mapToDouble(record -> record.getPrice().getValue() * record.getAmount().getValue())
                 .sum();
     }
-
-
 }

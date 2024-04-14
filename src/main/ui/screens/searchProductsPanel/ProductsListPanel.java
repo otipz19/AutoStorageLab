@@ -4,7 +4,7 @@ import main.model.data.DataContext;
 import main.model.dto.GroupDto;
 import main.model.dto.Mapper;
 import main.model.dto.ProductDto;
-import main.ui.screens.productPanel.ProductTitleButton;
+import main.ui.screens.searchProductsPanel.components.ProductTitlePanel;
 import main.ui.screens.searchProductsPanel.components.SearchPanel;
 
 import javax.swing.*;
@@ -74,8 +74,14 @@ public class ProductsListPanel extends JPanel {
     private void drawProductTitles(List<ProductDto> products){
         productsPanel.removeAll();
         for(ProductDto productDto: products){
-            ProductTitleButton productTitleButton = new ProductTitleButton(productDto);
-            productsPanel.add(productTitleButton);
+            ProductTitlePanel productTitlePanel = new ProductTitlePanel(productDto, this);
+            productsPanel.add(productTitlePanel);
         }
+    }
+
+    public void delete(ProductTitlePanel toDelete){
+        productsPanel.remove(toDelete);
+        productsPanel.revalidate();
+        productsPanel.repaint();
     }
 }
