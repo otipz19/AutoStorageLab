@@ -5,12 +5,14 @@ import main.controllers.GroupsController;
 import main.model.dto.GroupDto;
 import main.model.exceptions.DomainException;
 import main.ui.App;
+import main.ui.components.StyledLabel;
 import main.ui.exceptions.InvalidFormInputException;
 import main.ui.screens.ICreationPanel;
 import main.ui.screens.groupCreateScreen.GroupCreateScreen;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 public class GroupCreatePanel extends JPanel implements ICreationPanel {
     private final GroupCreateScreen parent;
@@ -19,14 +21,29 @@ public class GroupCreatePanel extends JPanel implements ICreationPanel {
 
     public GroupCreatePanel(GroupCreateScreen parent) {
         this.parent = parent;
-        setLayout(new GridLayout(2, 2));
-        add(new JLabel("Name: "));
-        name = new GroupNameField(this);
-        add(name);
-        add(new JLabel("Description: "));
-        description = new JTextArea();
-        add(new JScrollPane(description));
         setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+        setLayout(new BorderLayout(50, 10));
+        add(createLabelsPanel(), BorderLayout.WEST);
+        add(createFieldsPanel(), BorderLayout.CENTER);
+    }
+
+    private JPanel createLabelsPanel(){
+        JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
+        String[] labels = new String[] {"Name:", "Description:"};
+        Arrays.stream(labels).forEach(str -> {
+            var label = new StyledLabel(str);
+            panel.add(label);
+        });
+        return panel;
+    }
+
+    private JPanel createFieldsPanel(){
+        JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
+        name = new GroupNameField(this);
+        panel.add(name);
+        description = new JTextArea();
+        panel.add(new JScrollPane(description));
+        return panel;
     }
 
     /**

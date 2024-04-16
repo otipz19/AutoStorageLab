@@ -15,6 +15,8 @@ public class GroupCreateScreen extends JPanel {
 
     public GroupCreateScreen() {
         App.getInstance().setTitle("Create new Group");
+        setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
+        setBackground(new Color(0xe9f2fb));
         setLayout(new BorderLayout());
         groupCreatePanel = new GroupCreatePanel(this);
         confirmationPanel = new ConfirmationPanel(groupCreatePanel);
