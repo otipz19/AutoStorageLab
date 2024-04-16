@@ -4,7 +4,6 @@ import main.controllers.BaseController;
 import main.model.data.DataContext;
 import main.model.data.records.GroupRecord;
 import main.model.data.records.ProductRecord;
-import main.model.dto.Mapper;
 import main.model.exceptions.DomainException;
 
 import javax.swing.*;

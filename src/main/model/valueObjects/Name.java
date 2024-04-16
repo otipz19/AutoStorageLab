@@ -5,6 +5,7 @@ import main.model.exceptions.validation.InvalidRecordNameException;
 import main.model.guard.Guard;
 
 import java.io.Serializable;
+import java.util.regex.Pattern;
 
 /**
  * The Name class represents a name in the application.
@@ -12,6 +13,7 @@ import java.io.Serializable;
  */
 @Getter
 public abstract class Name implements Serializable {
+    private final static Pattern VALID_PATTERN = Pattern.compile("[\\p{IsLatin}\\p{IsCyrillic}]+(\\s+[\\p{IsLatin}\\p{IsCyrillic}]+)*");
     private final String value;
 
     /**
@@ -22,7 +24,7 @@ public abstract class Name implements Serializable {
     public Name(String value){
         Guard.againstNullOrBlank(value);
         validate(value);
-        this.value = value;
+        this.value = value.trim();
     }
 
     /**
@@ -32,12 +34,7 @@ public abstract class Name implements Serializable {
      * @return true if the value is valid, false otherwise
      */
     public static boolean isValid(String value){
-        for(int i = 0; i < value.length(); i++){
-            if(!Character.isLetter(value.charAt(i))){
-                return false;
-            }
-        }
-        return true;
+        return VALID_PATTERN.matcher(value).matches();
     }
 
     /**
