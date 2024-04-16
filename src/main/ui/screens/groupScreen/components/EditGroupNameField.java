@@ -18,7 +18,7 @@ public class EditGroupNameField extends EditableValidatableField {
     private void configInputField() {
         field.setBackground(Color.WHITE);
         field.setForeground(new Color(0x203a54));
-        field.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+//        field.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         field.setHorizontalAlignment(SwingConstants.CENTER);
         field.setEditable(false);
     }

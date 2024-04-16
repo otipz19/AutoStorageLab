@@ -39,6 +39,7 @@ public class AllGroupsScreen extends Screen {
 
     private JPanel createDataPanel(){
         JPanel dataPanel = new JPanel(new BorderLayout(20, 20));
+        dataPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0));
         dataPanel.add(new GroupsLabel(), BorderLayout.NORTH);
         dataPanel.add(createGroupsPanel(), BorderLayout.CENTER);
         totalPriceLabel = new StyledLabel("");

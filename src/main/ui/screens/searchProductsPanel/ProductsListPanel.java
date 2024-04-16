@@ -8,6 +8,7 @@ import main.ui.screens.searchProductsPanel.components.ProductTitlePanel;
 import main.ui.screens.searchProductsPanel.components.SearchPanel;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.List;
 import java.util.UUID;
@@ -22,7 +23,9 @@ public class ProductsListPanel extends JPanel {
         setLayout(new BorderLayout());
         searchPanel = new SearchPanel(this);
         add(searchPanel, BorderLayout.NORTH);
-        add(new JScrollPane(createProductsPanel()), BorderLayout.CENTER);
+        var scroll = new JScrollPane(createProductsPanel());
+        scroll.setBorder(new EmptyBorder(10, 0, 0, 0));
+        add(scroll, BorderLayout.CENTER);
     }
 
     /**

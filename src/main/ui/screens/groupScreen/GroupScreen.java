@@ -46,6 +46,7 @@ public class GroupScreen extends Screen {
         super("Group Details");
         setLayout(new BorderLayout());
         JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         productsListPanel = new ProductsListPanel();
         mainPanel.add(createActionsPanel(), BorderLayout.NORTH);
         mainPanel.add(productsListPanel, BorderLayout.CENTER);
