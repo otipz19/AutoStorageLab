@@ -2,6 +2,7 @@ package main.ui.screens.searchProductsPanel.components;
 
 import main.controllers.ProductsController;
 import main.model.dto.ProductDto;
+import main.ui.components.buttons.StyledButton;
 import main.ui.screens.searchProductsPanel.ProductsListPanel;
 
 import javax.swing.*;
@@ -12,7 +13,7 @@ public class ProductTitlePanel extends JPanel {
         setLayout(new BorderLayout());
         ProductTitleButton productTitleBtn = new ProductTitleButton(productDto);
         add(productTitleBtn, BorderLayout.CENTER);
-        JButton deleteBtn = new JButton("Delete");
+        JButton deleteBtn = new StyledButton("Delete");
         deleteBtn.addActionListener(e -> {
             ProductsController.deleteProduct(productDto);
             parent.delete(this);

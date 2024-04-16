@@ -90,7 +90,7 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
 
     @Override
     public void cancel() {
-        App.goToGroupScreen(productCreateScreen.getGroup());
+        App.returnToPreviousScreen();
     }
 
     /**

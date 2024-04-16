@@ -52,7 +52,7 @@ public class GroupCreatePanel extends JPanel implements ICreationPanel {
 
     @Override
     public void cancel() {
-        App.goToAllGroupsScreen();
+        App.returnToPreviousScreen();
     }
 
     public void onInputChange(boolean isValid) {

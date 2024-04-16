@@ -5,6 +5,7 @@ import main.model.data.DataContext;
 import main.model.dto.GroupDto;
 import main.model.dto.Mapper;
 import main.ui.App;
+import main.ui.components.StyledLabel;
 import main.ui.screens.allGroupsScreen.components.*;
 import main.ui.screens.allGroupsSearchScreen.AllGroupsSearchScreen;
 
@@ -16,7 +17,7 @@ import java.util.*;
 public class AllGroupsScreen extends JPanel {
     private final List<GroupButton> groupButtons = new LinkedList<>();
     private final GroupsLabelButton groupsLabelButton;
-    private JLabel totalPriceLabel;
+    private StyledLabel totalPriceLabel;
 
     public AllGroupsScreen() {
         App.getInstance().setTitle("All Groups");
@@ -27,7 +28,7 @@ public class AllGroupsScreen extends JPanel {
         drawActionBtns();
         loadGroups();
 
-        totalPriceLabel = new JLabel();
+        totalPriceLabel = new StyledLabel("");
         totalPriceLabel.setBounds(58, 640, 600, 50); // Set bounds for totalPriceLabel
         add(totalPriceLabel);
         updateTotalPriceLabel();
@@ -54,6 +55,7 @@ public class AllGroupsScreen extends JPanel {
         DataContext.getInstance().getGroupTable().getAll()
                 .stream()
                 .map(Mapper::map)
+                .sorted(Comparator.comparing(g -> g.getName().getValue()))
                 .forEach(this::addGroup);
     }
 
