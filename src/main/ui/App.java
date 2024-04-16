@@ -8,7 +8,7 @@ import main.ui.screens.allGroupsSearchScreen.AllGroupsSearchScreen;
 import main.ui.screens.groupCreateScreen.GroupCreateScreen;
 import main.ui.screens.groupScreen.GroupScreen;
 import main.ui.screens.productCreateScreen.ProductCreateScreen;
-import main.ui.screens.productPanel.ProductUpdatePanel;
+import main.ui.screens.productPanel.ProductUpdateScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -95,7 +95,7 @@ public class App extends JFrame {
     }
 
     public static void goToProductUpdateScreen(ProductDto productDto){
-        goToScreen(new ProductUpdatePanel(productDto));
+        goToScreen(new ProductUpdateScreen(productDto));
     }
 
     public static void returnToPreviousScreen(){

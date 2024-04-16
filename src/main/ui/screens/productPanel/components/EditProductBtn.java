@@ -3,19 +3,19 @@ package main.ui.screens.productPanel.components;
 import main.controllers.ProductsController;
 import main.ui.components.editableField.EditableFieldButton;
 import main.ui.components.editableField.IEditableConnectedField;
-import main.ui.screens.productPanel.ProductUpdatePanel;
+import main.ui.screens.productPanel.ProductUpdateScreen;
 
 public class EditProductBtn extends EditableFieldButton {
-    private final ProductUpdatePanel productUpdatePanel;
+    private final ProductUpdateScreen productUpdateScreen;
 
-    public EditProductBtn(IEditableConnectedField connectedField, ProductUpdatePanel productUpdatePanel) {
+    public EditProductBtn(IEditableConnectedField connectedField, ProductUpdateScreen productUpdateScreen) {
         super(connectedField, "", 10);
-        this.productUpdatePanel = productUpdatePanel;
+        this.productUpdateScreen = productUpdateScreen;
     }
 
     @Override
     protected void afterClick() {
-        ProductsController.updateProduct(productUpdatePanel);
-        productUpdatePanel.recalculateTotalPrice();
+        ProductsController.updateProduct(productUpdateScreen);
+        productUpdateScreen.recalculateTotalPrice();
     }
 }

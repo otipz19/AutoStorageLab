@@ -3,7 +3,7 @@ package main.ui.screens.searchProductsPanel.components;
 import main.model.dto.ProductDto;
 import main.ui.components.buttons.StyledButton;
 import main.ui.App;
-import main.ui.screens.productPanel.ProductUpdatePanel;
+import main.ui.screens.productPanel.ProductUpdateScreen;
 
 import java.awt.event.ActionEvent;
 
@@ -14,7 +14,7 @@ import java.awt.event.ActionEvent;
  */
 public class ProductTitleButton extends StyledButton {
     private ProductDto productDto;
-    private ProductUpdatePanel productUpdatePanel;
+    private ProductUpdateScreen productUpdateScreen;
 
     /**
      * Constructor for ProductTitleButton.
@@ -29,10 +29,10 @@ public class ProductTitleButton extends StyledButton {
 
     /**
      * Sets the product update panel.
-     * @param productUpdatePanel the product update panel to be set
+     * @param productUpdateScreen the product update panel to be set
      */
-    public void setProductUpdatePanel(ProductUpdatePanel productUpdatePanel) {
-        this.productUpdatePanel = productUpdatePanel;
+    public void setProductUpdatePanel(ProductUpdateScreen productUpdateScreen) {
+        this.productUpdateScreen = productUpdateScreen;
     }
 
     /**

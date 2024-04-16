@@ -3,6 +3,7 @@ package main.ui.components.editableField;
 import main.Icons;
 import main.ui.components.buttons.RoundedButton;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public abstract class EditableFieldButton extends RoundedButton {
@@ -13,6 +14,7 @@ public abstract class EditableFieldButton extends RoundedButton {
         super(label, radius);
         this.connectedField = connectedField;
         setIcon(Icons.buildPenIcon(20, 20));
+        setBackground(Color.WHITE);
         addActionListener(this::onClick);
     }
 

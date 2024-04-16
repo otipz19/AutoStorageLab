@@ -4,7 +4,7 @@ import main.model.data.DataContext;
 import main.model.dto.ProductDto;
 import main.model.exceptions.DomainException;
 import main.model.valueObjects.ProductName;
-import main.ui.screens.productPanel.ProductUpdatePanel;
+import main.ui.screens.productPanel.ProductUpdateScreen;
 
 import java.util.UUID;
 
@@ -30,18 +30,18 @@ public class ProductsController extends BaseController {
     /**
      * Updates a product.
      *
-     * @param productUpdatePanel the panel containing the product details to be updated
+     * @param productUpdateScreen the panel containing the product details to be updated
      */
-    public static void updateProduct(ProductUpdatePanel productUpdatePanel) {
+    public static void updateProduct(ProductUpdateScreen productUpdateScreen) {
         try {
-            ProductName oldName = productUpdatePanel.getProductDto().getName();
-            ProductDto toUpdate = productUpdatePanel.getProductToUpdate();
+            ProductName oldName = productUpdateScreen.getProductDto().getName();
+            ProductDto toUpdate = productUpdateScreen.getProductToUpdate();
             UUID productId = DataContext.getInstance().getProductTable().get(oldName).getId();
             DataContext.getInstance().getProductTable().update(productId, toUpdate);
-            productUpdatePanel.setProductDto(toUpdate);
+            productUpdateScreen.setProductDto(toUpdate);
         } catch (DomainException ex) {
             showExceptionMessage(ex);
-            productUpdatePanel.setProductDto(productUpdatePanel.getProductDto());
+            productUpdateScreen.setProductDto(productUpdateScreen.getProductDto());
         }
     }
 

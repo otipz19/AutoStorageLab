@@ -14,7 +14,6 @@ public class EditGroupButton extends EditableFieldButton {
     public EditGroupButton(IEditableConnectedField connectedField, GroupScreen parent) {
         super(connectedField, "", 10);
         this.parent = parent;
-        setBackground(Color.WHITE);
     }
 
     @Override

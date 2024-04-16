@@ -4,18 +4,18 @@ import main.controllers.ProductsController;
 import main.model.exceptions.DomainException;
 import main.model.valueObjects.ProductAmount;
 import main.ui.exceptions.InvalidFormInputException;
-import main.ui.screens.productPanel.ProductUpdatePanel;
+import main.ui.screens.productPanel.ProductUpdateScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AmountChangeListener implements ActionListener {
-    private ProductUpdatePanel productUpdatePanel;
+    private ProductUpdateScreen productUpdateScreen;
     private boolean shouldAdd;
 
-    public AmountChangeListener(ProductUpdatePanel productUpdatePanel, boolean shouldAdd){
-        this.productUpdatePanel = productUpdatePanel;
+    public AmountChangeListener(ProductUpdateScreen productUpdateScreen, boolean shouldAdd){
+        this.productUpdateScreen = productUpdateScreen;
         this.shouldAdd = shouldAdd;
     }
 
@@ -35,11 +35,11 @@ public class AmountChangeListener implements ActionListener {
             if (toAdd <= 0) {
                 throw new InvalidFormInputException("Only positive values are allowed");
             }
-            int oldAmount = productUpdatePanel.getProductDto().getAmount().getValue();
+            int oldAmount = productUpdateScreen.getProductDto().getAmount().getValue();
             ProductAmount newAmount = new ProductAmount(shouldAdd ? oldAmount + toAdd : oldAmount - toAdd);
-            productUpdatePanel.getAmount().setText(newAmount.toString());
-            ProductsController.updateProduct(productUpdatePanel);
-            productUpdatePanel.recalculateTotalPrice();
+            productUpdateScreen.getAmount().setText(newAmount.toString());
+            ProductsController.updateProduct(productUpdateScreen);
+            productUpdateScreen.recalculateTotalPrice();
         } catch (NumberFormatException ex) {
             showInputErrorMsg("Only numbers are allowed");
         } catch (InvalidFormInputException | DomainException ex) {

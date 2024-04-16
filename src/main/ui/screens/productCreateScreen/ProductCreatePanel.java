@@ -8,7 +8,7 @@ import main.model.valueObjects.ProductAmount;
 import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
 import main.ui.App;
-import main.ui.components.panels.GridedPanel;
+import main.ui.components.StyledLabel;
 import main.ui.exceptions.InvalidFormInputException;
 import main.ui.screens.ICreationPanel;
 
@@ -51,27 +51,35 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
 
     private JPanel createNamePanel() {
         name = new ValidatableNotifierField(ProductName::isValid, this);
-        return new GridedPanel("Name: ", name);
+        return formPanel("Name: ", name);
     }
 
     private JPanel createDescriptionPanel() {
         description = new JTextArea();
-        return new GridedPanel("Description: ", new JScrollPane(description));
+        return formPanel("Description: ", new JScrollPane(description));
     }
 
     private JPanel createManufacturerPanel() {
         manufacturer = new ValidatableNotifierField(ManufacturerName::isValid, this);
-        return new GridedPanel("Manufacturer: ", manufacturer);
+        return formPanel("Manufacturer: ", manufacturer);
     }
 
     private JPanel createAmountPanel() {
         amount = new ValidatableNotifierField(ProductAmount::isValid, this);
-        return new GridedPanel("Amount: ", amount);
+        return formPanel("Amount: ", amount);
     }
 
     private JPanel createPricePanel() {
         price = new ValidatableNotifierField(ProductPrice::isValid, this);
-        return new GridedPanel("Price: ", price);
+        return formPanel("Price: ", price);
+    }
+
+    private JPanel formPanel(String label, JComponent component){
+        JPanel panel = new JPanel();
+        panel.setLayout(new BorderLayout());
+        panel.add(new StyledLabel(label), BorderLayout.WEST);
+        panel.add(component, BorderLayout.CENTER);
+        return panel;
     }
 
     /**

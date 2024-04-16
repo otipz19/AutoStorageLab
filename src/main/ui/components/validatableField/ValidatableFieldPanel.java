@@ -25,6 +25,7 @@ public abstract class ValidatableFieldPanel extends JPanel {
         createLayout(fieldValue);
         setupValidation();
         setValidationState();
+        field.setBackground(Color.WHITE);
     }
 
     public boolean isInputValid() {

@@ -23,6 +23,8 @@ public class ProductCreateScreen extends JPanel {
     public ProductCreateScreen(GroupDto group) {
         this.group = group;
         App.getInstance().setTitle("Create new Product");
+        setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
+        setBackground(new Color(0xe9f2fb));
         setLayout(new BorderLayout());
         productCreatePanel = new ProductCreatePanel(this);
         confirmationPanel = new ConfirmationPanel(productCreatePanel);
