@@ -6,6 +6,7 @@ import main.ui.components.buttons.StyledButton;
 import main.ui.screens.ICreationPanel;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class ConfirmationPanel extends JPanel {
     private final ICreationPanel creationPanel;
@@ -38,6 +39,7 @@ public class ConfirmationPanel extends JPanel {
     private JPanel putBtnInPanel(JButton btn){
         JPanel panel = new JPanel();
         panel.add(btn);
+        btn.setPreferredSize(new Dimension(200, 50));
         btn.setBorder(BorderFactory.createEmptyBorder(5, 15, 5, 15));
         panel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         return panel;

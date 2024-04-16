@@ -14,6 +14,7 @@ import main.ui.screens.ICreationPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
 
 /**
  * Panel for creating a new product.
@@ -34,52 +35,40 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
     private ValidatableNotifierField manufacturer;
     private ValidatableNotifierField amount;
     private ValidatableNotifierField price;
+
     /**
      * Constructs a new ProductCreatePanel.
+     *
      * @param productCreateScreen The screen that this panel is part of.
      */
     public ProductCreatePanel(ProductCreateScreen productCreateScreen) {
         this.productCreateScreen = productCreateScreen;
-        setLayout(new GridLayout(5, 1, 5, 5));
+        setLayout(new BorderLayout(10, 10));
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        add(createNamePanel());
-        add(createDescriptionPanel());
-        add(createManufacturerPanel());
-        add(createAmountPanel());
-        add(createPricePanel());
+        add(createLabelsPanel(), BorderLayout.WEST);
+        add(createFielsPanel(), BorderLayout.CENTER);
     }
 
-    private JPanel createNamePanel() {
+    private JPanel createLabelsPanel(){
+        JPanel labelsPanel = new JPanel(new GridLayout(5, 1, 5, 5));
+        String[] labels = new String[] {"Name:", "Description:", "Manufacturer:", "Amount:", "Price:"};
+        Arrays.stream(labels).forEach(str -> labelsPanel.add(new StyledLabel(str)));
+        return labelsPanel;
+    }
+
+    private JPanel createFielsPanel(){
+        JPanel fieldsPanel = new JPanel(new GridLayout(5, 1, 5, 5));
         name = new ValidatableNotifierField(ProductName::isValid, this);
-        return formPanel("Name: ", name);
-    }
-
-    private JPanel createDescriptionPanel() {
+        fieldsPanel.add(name);
         description = new JTextArea();
-        return formPanel("Description: ", new JScrollPane(description));
-    }
-
-    private JPanel createManufacturerPanel() {
+        fieldsPanel.add(description);
         manufacturer = new ValidatableNotifierField(ManufacturerName::isValid, this);
-        return formPanel("Manufacturer: ", manufacturer);
-    }
-
-    private JPanel createAmountPanel() {
+        fieldsPanel.add(manufacturer);
         amount = new ValidatableNotifierField(ProductAmount::isValid, this);
-        return formPanel("Amount: ", amount);
-    }
-
-    private JPanel createPricePanel() {
+        fieldsPanel.add(amount);
         price = new ValidatableNotifierField(ProductPrice::isValid, this);
-        return formPanel("Price: ", price);
-    }
-
-    private JPanel formPanel(String label, JComponent component){
-        JPanel panel = new JPanel();
-        panel.setLayout(new BorderLayout());
-        panel.add(new StyledLabel(label), BorderLayout.WEST);
-        panel.add(component, BorderLayout.CENTER);
-        return panel;
+        fieldsPanel.add(price);
+        return fieldsPanel;
     }
 
     /**
@@ -103,6 +92,7 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
 
     /**
      * Returns a ProductDto with the input from the fields.
+     *
      * @return A ProductDto with the input from the fields.
      * @throws InvalidFormInputException If the input is invalid.
      */
