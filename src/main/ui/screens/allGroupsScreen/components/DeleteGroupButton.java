@@ -10,6 +10,7 @@ public class DeleteGroupButton extends StyledButton {
     public DeleteGroupButton() {
         super("Delete Group");
         addActionListener(this::onClick);
+        setPreferredSize(new Dimension(200, 50));
     }
 
     private void onClick(ActionEvent e){
