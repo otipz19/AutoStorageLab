@@ -3,12 +3,13 @@ package main.ui;
 import lombok.Getter;
 import main.model.dto.GroupDto;
 import main.model.dto.ProductDto;
+import main.ui.screens.Screen;
 import main.ui.screens.allGroupsScreen.AllGroupsScreen;
 import main.ui.screens.allGroupsSearchScreen.AllGroupsSearchScreen;
 import main.ui.screens.groupCreateScreen.GroupCreateScreen;
 import main.ui.screens.groupScreen.GroupScreen;
 import main.ui.screens.productCreateScreen.ProductCreateScreen;
-import main.ui.screens.productPanel.ProductUpdateScreen;
+import main.ui.screens.productScreen.ProductUpdateScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,12 +31,12 @@ public class App extends JFrame {
      * Map of screens.
      * This map stores all the screens used in the application, with the screen's class name as the key.
      */
-    private class ScreensMap extends HashMap<String, JPanel> {
+    private class ScreensMap extends HashMap<String, Screen> {
         /**
          * Adds a screen to the map.
          * @param screen The screen to add.
          */
-        public void addScreen(JPanel screen) {
+        public void addScreen(Screen screen) {
             put(screen.getClass().getName(), screen);
         }
     }
@@ -45,7 +46,7 @@ public class App extends JFrame {
      */
     private final ScreensMap screens = new ScreensMap();
 
-    private final Stack<JPanel> navigationStack = new Stack<>();
+    private final Stack<Screen> navigationStack = new Stack<>();
 
     /**
      * Constructor.
@@ -99,20 +100,21 @@ public class App extends JFrame {
     }
 
     public static void returnToPreviousScreen(){
-        JPanel panel = new AllGroupsScreen();
+        Screen screen = new AllGroupsScreen();
         if(instance.navigationStack.size() > 1){
             instance.navigationStack.pop();
-            panel = instance.navigationStack.peek();
+            screen = instance.navigationStack.peek();
         }
-        goToScreen(panel);
+        screen.updateState();
+        goToScreen(screen);
         instance.navigationStack.pop();
     }
 
-    private static void goToScreen(JPanel panel){
-        instance.navigationStack.push(panel);
+    private static void goToScreen(Screen screen){
+        instance.navigationStack.push(screen);
         instance.removeAllScreens();
-        instance.screens.addScreen(panel);
-        instance.add(panel);
+        instance.screens.addScreen(screen);
+        instance.add(screen);
         instance.revalidate();
         instance.repaint();
     }

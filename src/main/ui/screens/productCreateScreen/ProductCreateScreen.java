@@ -4,11 +4,12 @@ import lombok.Getter;
 import main.model.dto.GroupDto;
 import main.ui.App;
 import main.ui.components.panels.ConfirmationPanel;
+import main.ui.screens.Screen;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class ProductCreateScreen extends JPanel {
+public class ProductCreateScreen extends Screen {
     @Getter
     private final GroupDto group;
 
@@ -21,10 +22,8 @@ public class ProductCreateScreen extends JPanel {
      * @param group The group that the product belongs to.
      */
     public ProductCreateScreen(GroupDto group) {
+        super("Create new Product");
         this.group = group;
-        App.getInstance().setTitle("Create new Product");
-        setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
-        setBackground(new Color(0xe9f2fb));
         setLayout(new BorderLayout());
         productCreatePanel = new ProductCreatePanel(this);
         confirmationPanel = new ConfirmationPanel(productCreatePanel);

@@ -4,7 +4,7 @@ import main.model.data.DataContext;
 import main.model.dto.ProductDto;
 import main.model.exceptions.DomainException;
 import main.model.valueObjects.ProductName;
-import main.ui.screens.productPanel.ProductUpdateScreen;
+import main.ui.screens.productScreen.ProductUpdateScreen;
 
 import java.util.UUID;
 

@@ -1,9 +1,9 @@
-package main.ui.screens.productPanel.components;
+package main.ui.screens.productScreen.components;
 
 import main.controllers.ProductsController;
 import main.ui.components.editableField.EditableFieldButton;
 import main.ui.components.editableField.IEditableConnectedField;
-import main.ui.screens.productPanel.ProductUpdateScreen;
+import main.ui.screens.productScreen.ProductUpdateScreen;
 
 public class EditProductBtn extends EditableFieldButton {
     private final ProductUpdateScreen productUpdateScreen;

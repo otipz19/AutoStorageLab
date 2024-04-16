@@ -6,6 +6,7 @@ import main.model.dto.GroupDto;
 import main.model.dto.Mapper;
 import main.ui.App;
 import main.ui.components.StyledLabel;
+import main.ui.screens.Screen;
 import main.ui.screens.allGroupsScreen.components.*;
 import main.ui.screens.allGroupsSearchScreen.AllGroupsSearchScreen;
 
@@ -14,13 +15,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
 
-public class AllGroupsScreen extends JPanel {
+public class AllGroupsScreen extends Screen {
     private final List<GroupButton> groupButtons = new LinkedList<>();
     private final GroupsLabelButton groupsLabelButton;
     private StyledLabel totalPriceLabel;
 
     public AllGroupsScreen() {
-        App.getInstance().setTitle("All Groups");
+        super("All Groups");
         setLayout(null);
         groupsLabelButton = new GroupsLabelButton();
         groupsLabelButton.setBounds(58, 58, 600, 50);

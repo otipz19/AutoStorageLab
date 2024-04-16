@@ -3,7 +3,7 @@ package main.ui.screens.searchProductsPanel.components;
 import main.model.dto.ProductDto;
 import main.ui.components.buttons.StyledButton;
 import main.ui.App;
-import main.ui.screens.productPanel.ProductUpdateScreen;
+import main.ui.screens.productScreen.ProductUpdateScreen;
 
 import java.awt.event.ActionEvent;
 

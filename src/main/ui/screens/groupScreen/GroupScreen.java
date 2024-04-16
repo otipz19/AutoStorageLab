@@ -7,6 +7,7 @@ import main.ui.App;
 import main.ui.components.StyledLabel;
 import main.ui.components.buttons.ReturnButton;
 import main.ui.components.editableField.DescriptionArea;
+import main.ui.screens.Screen;
 import main.ui.screens.groupScreen.components.CreateProductButton;
 import main.ui.screens.groupScreen.components.EditGroupButton;
 import main.ui.screens.groupScreen.components.EditGroupNameField;
@@ -20,7 +21,7 @@ import java.awt.*;
  * It extends JPanel and contains fields for group details and products.
  * It also contains methods for creating panels, setting the group, and handling search.
  */
-public class GroupScreen extends JPanel {
+public class GroupScreen extends Screen {
     @Getter
     private GroupDto group;
 
@@ -42,11 +43,9 @@ public class GroupScreen extends JPanel {
      * Initializes the layout, adds panels and buttons.
      */
     public GroupScreen(GroupDto groupDto) {
-        App.getInstance().setTitle("Group Details");
+        super("Group Details");
         setLayout(new BorderLayout());
         JPanel mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
-        mainPanel.setBackground(new Color(0xe9f2fb));
         productsListPanel = new ProductsListPanel();
         mainPanel.add(createActionsPanel(), BorderLayout.NORTH);
         mainPanel.add(productsListPanel, BorderLayout.CENTER);
@@ -145,5 +144,10 @@ public class GroupScreen extends JPanel {
         groupTotalPriceLabel.setText("Total price of products: " + String.format("%.2f", groupTotalPrice));
         int totalAmount = GroupsController.calculateTotalProductAmountByGroup(group);
         groupTotalAmountLabel.setText("Total amount of products: " + totalAmount);
+    }
+
+    @Override
+    public void updateState(){
+        setGroup(group);
     }
 }

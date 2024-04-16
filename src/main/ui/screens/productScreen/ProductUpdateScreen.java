@@ -1,4 +1,4 @@
-package main.ui.screens.productPanel;
+package main.ui.screens.productScreen;
 
 import lombok.Getter;
 import main.model.dto.ProductDto;
@@ -10,8 +10,9 @@ import main.ui.components.buttons.ReturnButton;
 import main.ui.components.buttons.StyledButton;
 import main.ui.components.editableField.DescriptionArea;
 import main.ui.components.editableField.EditableValidatableField;
-import main.ui.screens.productPanel.components.AmountChangeListener;
-import main.ui.screens.productPanel.components.EditProductBtn;
+import main.ui.screens.Screen;
+import main.ui.screens.productScreen.components.AmountChangeListener;
+import main.ui.screens.productScreen.components.EditProductBtn;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -23,7 +24,7 @@ import java.awt.*;
  * It also contains methods for creating panels for each field,
  * setting the product DTO, and getting the updated product DTO.
  */
-public class ProductUpdateScreen extends JPanel {
+public class ProductUpdateScreen extends Screen {
     @Getter
     private ProductDto productDto;
 
@@ -43,6 +44,7 @@ public class ProductUpdateScreen extends JPanel {
      * @param productDto the product DTO to be updated
      */
     public ProductUpdateScreen(ProductDto productDto) {
+        super(productDto.getName().getValue());
         this.productDto = productDto;
 
         setLayout(new BorderLayout());

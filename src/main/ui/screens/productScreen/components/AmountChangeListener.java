@@ -1,10 +1,10 @@
-package main.ui.screens.productPanel.components;
+package main.ui.screens.productScreen.components;
 
 import main.controllers.ProductsController;
 import main.model.exceptions.DomainException;
 import main.model.valueObjects.ProductAmount;
 import main.ui.exceptions.InvalidFormInputException;
-import main.ui.screens.productPanel.ProductUpdateScreen;
+import main.ui.screens.productScreen.ProductUpdateScreen;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
