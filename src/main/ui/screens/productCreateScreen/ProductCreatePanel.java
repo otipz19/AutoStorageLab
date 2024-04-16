@@ -9,6 +9,7 @@ import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
 import main.ui.App;
 import main.ui.components.StyledLabel;
+import main.ui.components.panels.CenteredComponentPanel;
 import main.ui.exceptions.InvalidFormInputException;
 import main.ui.screens.ICreationPanel;
 
@@ -52,7 +53,11 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
     private JPanel createLabelsPanel(){
         JPanel labelsPanel = new JPanel(new GridLayout(5, 1, 5, 5));
         String[] labels = new String[] {"Name:", "Description:", "Manufacturer:", "Amount:", "Price:"};
-        Arrays.stream(labels).forEach(str -> labelsPanel.add(new StyledLabel(str)));
+        Arrays.stream(labels).forEach(str -> {
+            var label = new StyledLabel(str);
+            label.setPreferredSize(new Dimension(150, 50));
+            labelsPanel.add(new CenteredComponentPanel(label));
+        });
         return labelsPanel;
     }
 

@@ -6,6 +6,7 @@ import main.model.dto.GroupDto;
 import main.model.exceptions.DomainException;
 import main.ui.App;
 import main.ui.components.StyledLabel;
+import main.ui.components.panels.CenteredComponentPanel;
 import main.ui.exceptions.InvalidFormInputException;
 import main.ui.screens.ICreationPanel;
 import main.ui.screens.groupCreateScreen.GroupCreateScreen;
@@ -28,13 +29,14 @@ public class GroupCreatePanel extends JPanel implements ICreationPanel {
     }
 
     private JPanel createLabelsPanel(){
-        JPanel panel = new JPanel(new GridLayout(2, 1, 5, 5));
+        JPanel labelsPanel = new JPanel(new GridLayout(2, 1, 5, 5));
         String[] labels = new String[] {"Name:", "Description:"};
         Arrays.stream(labels).forEach(str -> {
             var label = new StyledLabel(str);
-            panel.add(label);
+            label.setPreferredSize(new Dimension(150, 50));
+            labelsPanel.add(new CenteredComponentPanel(label));
         });
-        return panel;
+        return labelsPanel;
     }
 
     private JPanel createFieldsPanel(){
