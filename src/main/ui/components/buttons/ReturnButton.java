@@ -4,7 +4,7 @@ import main.ui.App;
 
 import javax.swing.*;
 
-public class ReturnButton extends JButton {
+public class ReturnButton extends StyledButton {
     public ReturnButton(){
         super("Return");
         addActionListener(e -> App.returnToPreviousScreen());

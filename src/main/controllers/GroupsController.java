@@ -13,6 +13,7 @@ import main.ui.screens.groupScreen.GroupScreen;
 import javax.swing.*;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * The GroupsController class provides methods for managing groups in the application.
@@ -93,10 +94,22 @@ public class GroupsController extends BaseController {
      * @return the total price of all products in the group
      */
     public static double calculateTotalPriceByGroup(GroupDto group) {
-        UUID id = DataContext.getInstance().getGroupTable().get(group.getName()).getId();
+        UUID id = getId(group);
         List<ProductRecord> records = DataContext.getInstance().getProductTable().getByGroupId(id);
         return records.stream()
                 .mapToDouble(record -> record.getPrice().getValue() * record.getAmount().getValue())
                 .sum();
+    }
+
+    public static int calculateTotalProductAmountByGroup(GroupDto group){
+        UUID id = getId(group);
+        return DataContext.getInstance().getProductTable().getByGroupId(id).stream()
+                .map(p -> p.getAmount().getValue())
+                .mapToInt(i -> i)
+                .sum();
+    }
+
+    private static UUID getId(GroupDto group) {
+        return DataContext.getInstance().getGroupTable().get(group.getName()).getId();
     }
 }

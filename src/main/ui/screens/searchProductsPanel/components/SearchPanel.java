@@ -1,6 +1,7 @@
 package main.ui.screens.searchProductsPanel.components;
 
 import main.model.dto.ProductDto;
+import main.ui.components.buttons.StyledButton;
 import main.ui.screens.searchProductsPanel.ProductsListPanel;
 
 import javax.swing.*;
@@ -18,7 +19,7 @@ public class SearchPanel extends JPanel {
         searchField = new JTextField();
         searchField.setSize(580, 50);
         add(searchField, BorderLayout.CENTER);
-        JButton searchBtn = new JButton("Search");
+        JButton searchBtn = new StyledButton("Search");
         searchBtn.addActionListener(e -> parent.performSearch());
         add(searchBtn, BorderLayout.EAST);
     }

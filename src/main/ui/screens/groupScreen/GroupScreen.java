@@ -4,6 +4,7 @@ import lombok.Getter;
 import main.controllers.GroupsController;
 import main.model.dto.GroupDto;
 import main.ui.App;
+import main.ui.components.StyledLabel;
 import main.ui.components.buttons.ReturnButton;
 import main.ui.components.editableField.DescriptionArea;
 import main.ui.screens.groupScreen.components.CreateProductButton;
@@ -30,7 +31,8 @@ public class GroupScreen extends JPanel {
     private EditGroupButton editNameBtn;
     private EditGroupButton editDescriptionBtn;
     private JButton createProductBtn;
-    private JLabel groupTotalPriceLabel;
+    private StyledLabel groupTotalPriceLabel;
+    private StyledLabel groupTotalAmountLabel;
 
     private ProductsListPanel productsListPanel;
 
@@ -63,8 +65,13 @@ public class GroupScreen extends JPanel {
         actionsPanel.add(createReturnBtnPanel());
         actionsPanel.add(createGroupNamePanel());
         actionsPanel.add(createDescriptionPanel());
-        groupTotalPriceLabel = new JLabel();
-        actionsPanel.add(groupTotalPriceLabel);
+        JPanel statsPanel = new JPanel(new GridLayout(1, 2));
+        statsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        groupTotalAmountLabel = new StyledLabel("");
+        statsPanel.add(groupTotalAmountLabel);
+        groupTotalPriceLabel = new StyledLabel("");
+        statsPanel.add(groupTotalPriceLabel);
+        actionsPanel.add(statsPanel);
         return actionsPanel;
     }
 
@@ -119,7 +126,7 @@ public class GroupScreen extends JPanel {
         groupNameField.setText(groupDto.getName().getValue());
         descriptionArea.setText(groupDto.getDescription());
         productsListPanel.loadProducts(groupDto);
-        updateGroupTotalPriceLabel();
+        updateStatsLabels();
     }
 
     /**
@@ -133,8 +140,10 @@ public class GroupScreen extends JPanel {
     /**
      * Updates the group total price label.
      */
-    public void updateGroupTotalPriceLabel() {
+    public void updateStatsLabels() {
         double groupTotalPrice = GroupsController.calculateTotalPriceByGroup(group);
-        groupTotalPriceLabel.setText("Total price of products in group: " + String.format("%.2f", groupTotalPrice));
+        groupTotalPriceLabel.setText("Total price of products: " + String.format("%.2f", groupTotalPrice));
+        int totalAmount = GroupsController.calculateTotalProductAmountByGroup(group);
+        groupTotalAmountLabel.setText("Total amount of products: " + totalAmount);
     }
 }

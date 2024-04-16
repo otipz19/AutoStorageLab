@@ -3,19 +3,19 @@ package main.ui.screens.groupScreen.components;
 import main.Icons;
 import main.ui.App;
 import main.ui.components.buttons.RoundedButton;
+import main.ui.components.buttons.StyledButton;
 import main.ui.screens.groupScreen.GroupScreen;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-public class CreateProductButton extends RoundedButton {
+public class CreateProductButton extends StyledButton {
     private GroupScreen parent;
 
     public CreateProductButton(GroupScreen parent) {
-        super("", 10);
+        super("Create new product");
         this.parent = parent;
         setBackground(Color.WHITE);
-        setIcon(Icons.buildPlusIcon(20, 20));
         addActionListener(this::onClick);
     }
 

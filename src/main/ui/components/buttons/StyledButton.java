@@ -13,7 +13,7 @@ public class StyledButton extends RoundedButton {
         setBackground(Color.WHITE);
         setForeground(new Color(0x628eba));
         setOpaque(false);
-        setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        setBorder(BorderFactory.createLineBorder(Color.BLUE, 10));
         setContentAreaFilled(false);
         setHorizontalAlignment(SwingConstants.CENTER);
         setVerticalAlignment(SwingConstants.CENTER);
