@@ -3,7 +3,7 @@ package main.model.dto;
 import main.model.data.DataContext;
 import main.model.data.records.GroupRecord;
 import main.model.data.records.ProductRecord;
-import main.model.valueObjects.GroupName;
+import main.model.valueObjects.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -73,5 +73,41 @@ public class Mapper {
         return records.stream()
                 .map(r -> Mapper.map(r, DataContext.getInstance().getGroupTable().get(r.getGroupId()).getName()))
                 .toList();
+    }
+
+    public static GroupSerializationDto mapSerialization(GroupRecord record){
+        var dto = new GroupSerializationDto();
+        dto.setId(record.getId());
+        dto.setName(record.getName().getValue());
+        dto.setDescription(record.getDescription());
+        return dto;
+    }
+
+    public static ProductSerializationDto mapSerialization(ProductRecord record){
+        var dto = new ProductSerializationDto();
+        dto.setId(record.getId());
+        dto.setName(record.getName().getValue());
+        dto.setDescription(record.getDescription());
+        dto.setManufacturer(record.getManufacturer().getValue());
+        dto.setAmount(record.getAmount().getValue());
+        dto.setPrice(record.getPrice().getValue());
+        dto.setGroupId(record.getGroupId());
+        return dto;
+    }
+
+    public static GroupRecord mapSerialization(GroupSerializationDto dto){
+        return new GroupRecord(dto.getId(), new GroupName(dto.getName()), dto.getDescription());
+    }
+
+    public static ProductRecord mapSerialization(ProductSerializationDto dto){
+        return new ProductRecord(
+                dto.getId(),
+                new ProductName(dto.getName()),
+                dto.getDescription(),
+                new ManufacturerName(dto.getManufacturer()),
+                new ProductAmount(dto.getAmount()),
+                new ProductPrice(dto.getPrice()),
+                dto.getGroupId()
+        );
     }
 }

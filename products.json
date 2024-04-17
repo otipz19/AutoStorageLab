@@ -1,0 +1,9 @@
+[ {
+  "id" : "92a23912-7bb8-4a80-a22c-54e109bf242d",
+  "name" : "first product",
+  "description" : "this is a description of first product",
+  "manufacturer" : "manufacturer",
+  "amount" : 100,
+  "price" : 50.0,
+  "groupId" : "306b8279-faea-4d31-8966-dfc2a59e6f96"
+} ]
