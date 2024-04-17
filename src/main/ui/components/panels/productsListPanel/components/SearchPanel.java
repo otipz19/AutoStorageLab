@@ -36,7 +36,7 @@ public class SearchPanel extends JPanel {
         String searchText = searchField.getText().toLowerCase();
         Pattern pattern = buildRegexPatternFromSearchText(searchText);
         return products.stream()
-                .filter(product -> pattern.matcher(product.getName().getValue().toLowerCase()).find())
+                .filter(product -> pattern.matcher(product.getName().getValue().toLowerCase()).matches())
                 .toList();
     }
 
