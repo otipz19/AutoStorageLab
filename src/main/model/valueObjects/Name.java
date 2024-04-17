@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  */
 @Getter
 public abstract class Name implements Serializable {
-    private final static Pattern VALID_PATTERN = Pattern.compile("[\\p{IsLatin}\\p{IsCyrillic}]+(\\s+[\\p{IsLatin}\\p{IsCyrillic}]+)*");
+    private final static Pattern VALID_PATTERN = Pattern.compile("[\\p{IsLatin}\\p{IsCyrillic}\"'-]+(\\s+[\\p{IsLatin}\\p{IsCyrillic}\"'-]+)*");
     private final String value;
 
     /**

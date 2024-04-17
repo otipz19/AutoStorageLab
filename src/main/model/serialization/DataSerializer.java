@@ -88,6 +88,7 @@ public class DataSerializer {
             loadProducts();
         } catch (FileNotFoundException | NoSuchFileException e) {
             JOptionPane.showMessageDialog(null, "Save files were not found! Loading default profile");
+            DataContext.resetData();
         } catch (DomainException e) {
             JOptionPane.showMessageDialog(
                     null,
@@ -95,6 +96,7 @@ public class DataSerializer {
                     "DOMAIN ERROR",
                     JOptionPane.ERROR_MESSAGE
             );
+            DataContext.resetData();
         }
     }
 

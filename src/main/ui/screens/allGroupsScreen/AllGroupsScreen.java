@@ -50,7 +50,7 @@ public class AllGroupsScreen extends Screen {
     }
 
     private JScrollPane createGroupsPanel(){
-        groupsPanel = new JPanel(new GridLayout(10, 3, 5, 5));
+        groupsPanel = new JPanel(new GridLayout(10, 0, 5, 5));
         var scroll = new JScrollPane(groupsPanel);
         scroll.setBorder(new EmptyBorder(0, 0, 0, 0));
         return scroll;

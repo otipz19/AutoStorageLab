@@ -12,8 +12,10 @@ import main.ui.components.panels.productsListPanel.components.StatsPanel;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class ProductsListPanel extends JPanel {
     private List<ProductDto> products;
@@ -41,8 +43,7 @@ public class ProductsListPanel extends JPanel {
      */
     private JPanel createProductsPanel() {
         productsPanel = new JPanel();
-        productsPanel.setLayout(new GridLayout(10, 1));
-        productsPanel.setSize(580, 500);
+        productsPanel.setLayout(new BoxLayout(productsPanel, BoxLayout.Y_AXIS));
         return productsPanel;
     }
 
@@ -88,10 +89,10 @@ public class ProductsListPanel extends JPanel {
      */
     private void drawProductTitles(List<ProductDto> products) {
         productsPanel.removeAll();
-        for (ProductDto productDto : products) {
+        products.stream().sorted(Comparator.comparing(p -> p.getName().getValue())).forEach(productDto ->  {
             ProductTitlePanel productTitlePanel = new ProductTitlePanel(productDto, this);
             productsPanel.add(productTitlePanel);
-        }
+        });
     }
 
     public void delete(ProductTitlePanel toDelete) {

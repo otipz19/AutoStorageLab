@@ -27,6 +27,7 @@ public class ProductTable implements IProductTable {
     @Override
     public void bulkInsert(List<ProductRecord> productRecords){
         for(var record: productRecords){
+            throwIfGroupDoesNotExist(record.getGroupId());
             addRecordToIndexes(record);
         }
     }
