@@ -5,6 +5,7 @@ import main.model.dto.ProductDto;
 import main.model.valueObjects.ManufacturerName;
 import main.model.valueObjects.ProductName;
 import main.model.valueObjects.ProductPrice;
+import main.ui.components.NoLineTitledBorder;
 import main.ui.components.StyledLabel;
 import main.ui.components.buttons.ReturnButton;
 import main.ui.components.buttons.StyledButton;
@@ -12,6 +13,7 @@ import main.ui.components.editableField.DescriptionArea;
 import main.ui.components.editableField.EditableValidatableField;
 import main.ui.screens.Screen;
 import main.ui.screens.productScreen.components.AmountChangeListener;
+import main.ui.screens.productScreen.components.AmountLabel;
 import main.ui.screens.productScreen.components.EditProductBtn;
 
 import javax.swing.*;
@@ -32,7 +34,7 @@ public class ProductUpdateScreen extends Screen {
     private DescriptionArea description;
     private EditableValidatableField manufacturer;
     @Getter
-    private JLabel amount;
+    private AmountLabel amount;
     private EditableValidatableField price;
     @Getter
     private StyledLabel totalPrice;
@@ -48,24 +50,29 @@ public class ProductUpdateScreen extends Screen {
         this.productDto = productDto;
 
         setLayout(new BorderLayout());
-        setBorder(BorderFactory.createEmptyBorder(50, 100, 50, 100));
-        setBackground(new Color(0xe9f2fb));
+        JPanel mainPanel = new JPanel(new BorderLayout(5, 5));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        add(mainPanel, BorderLayout.CENTER);
 
-        JPanel fieldsPanel = new JPanel(new GridLayout(6, 1, 5, 5));
-        fieldsPanel.add(createNamePanel());
+        JPanel fieldsPanel = new JPanel();
+        fieldsPanel.setLayout(new BoxLayout(fieldsPanel, BoxLayout.Y_AXIS));
+
+        JPanel smallFields = new JPanel(new GridLayout(4, 1, 5, 5));
+        smallFields.add(createNamePanel());
+        smallFields.add(createManufacturerPanel());
+        smallFields.add(createAmountPanel());
+        smallFields.add(createPricePanel());
+
+        fieldsPanel.add(smallFields);
         fieldsPanel.add(createDescriptionPanel());
-        fieldsPanel.add(createManufacturerPanel());
-        fieldsPanel.add(createAmountPanel());
-        fieldsPanel.add(createPricePanel());
-        fieldsPanel.add(createTotalPricePanel());
-        fieldsPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        add(fieldsPanel, BorderLayout.CENTER);
+        mainPanel.add(fieldsPanel, BorderLayout.CENTER);
 
         setProductDto(productDto);
 
         JButton returnButton = new ReturnButton();
-        add(returnButton, BorderLayout.NORTH);
+        mainPanel.add(returnButton, BorderLayout.NORTH);
+        mainPanel.add(createTotalPricePanel(), BorderLayout.SOUTH);
     }
 
     /**
@@ -78,7 +85,7 @@ public class ProductUpdateScreen extends Screen {
                 nameField.getText(),
                 description.getText(),
                 manufacturer.getText(),
-                Integer.parseInt(amount.getText()),
+                amount.getValue(),
                 Double.parseDouble(price.getText()),
                 productDto.getGroupName().getValue());
     }
@@ -93,7 +100,7 @@ public class ProductUpdateScreen extends Screen {
         nameField.setText(productDto.getName().getValue());
         description.setText(productDto.getDescription());
         manufacturer.setText(productDto.getManufacturer().getValue());
-        amount.setText(Integer.toString(productDto.getAmount().getValue()));
+        amount.setValue(productDto.getAmount().getValue());
         price.setText(Double.toString(productDto.getPrice().getValue()));
     }
 
@@ -116,8 +123,13 @@ public class ProductUpdateScreen extends Screen {
      */
     private JPanel createDescriptionPanel() {
         description = new DescriptionArea();
+        JScrollPane scroll = new JScrollPane(description);
+        scroll.setPreferredSize(new Dimension(580, 100));
+        scroll.setMaximumSize(new Dimension(580, 200));
         EditProductBtn descriptionEditBtn = new EditProductBtn(description, this);
-        return formPanel("Description: ", new JScrollPane(description), descriptionEditBtn);
+        var panel = formPanel("Description: ", scroll, descriptionEditBtn);
+        panel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
+        return panel;
     }
 
     /**
@@ -138,15 +150,18 @@ public class ProductUpdateScreen extends Screen {
      * @return the amount panel
      */
     private JPanel createAmountPanel() {
-        amount = new JLabel();
-        JPanel btnsPanel = new JPanel(new GridLayout(1, 2, 25, 25));
+        amount = new AmountLabel();
+        JPanel btnsPanel = new JPanel(new GridLayout(1, 2, 5, 5));
         JButton addBtn = new StyledButton("Add");
         addBtn.addActionListener(new AmountChangeListener(this, true));
         JButton removeBtn = new StyledButton("Remove");
         removeBtn.addActionListener(new AmountChangeListener(this, false));
         btnsPanel.add(addBtn);
         btnsPanel.add(removeBtn);
-        return formPanel("Amount: ", amount, btnsPanel);
+        JPanel amountPanel = new JPanel(new BorderLayout(5, 5));
+        amountPanel.add(amount, BorderLayout.CENTER);
+        amountPanel.add(btnsPanel, BorderLayout.EAST);
+        return amountPanel;
     }
 
     /**
@@ -170,15 +185,14 @@ public class ProductUpdateScreen extends Screen {
      * @return the form panel
      */
     private JPanel formPanel(String label, JComponent field, JComponent btn) {
-        JPanel panel = new JPanel(new GridLayout(2, 2));
-        panel.add(new JLabel(label));
-        panel.add(new JPanel());
-        panel.add(field);
-        panel.add(btn);
+        JPanel panel = new JPanel(new BorderLayout());
+        field.setBorder(new NoLineTitledBorder(label));
+        panel.add(field, BorderLayout.CENTER);
+        panel.add(btn, BorderLayout.EAST);
         return panel;
     }
 
-    private JPanel createTotalPricePanel(){
+    private JPanel createTotalPricePanel() {
         JPanel panel = new JPanel(new BorderLayout());
         totalPrice = new StyledLabel("");
         recalculateTotalPrice();
@@ -186,7 +200,7 @@ public class ProductUpdateScreen extends Screen {
         return panel;
     }
 
-    public void recalculateTotalPrice(){
+    public void recalculateTotalPrice() {
         double total = productDto.getPrice().getValue() * productDto.getAmount().getValue();
         totalPrice.setText("Total price: " + total);
     }

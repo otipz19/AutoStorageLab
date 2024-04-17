@@ -37,7 +37,7 @@ public class AmountChangeListener implements ActionListener {
             }
             int oldAmount = productUpdateScreen.getProductDto().getAmount().getValue();
             ProductAmount newAmount = new ProductAmount(shouldAdd ? oldAmount + toAdd : oldAmount - toAdd);
-            productUpdateScreen.getAmount().setText(newAmount.toString());
+            productUpdateScreen.getAmount().setValue(newAmount.getValue());
             ProductsController.updateProduct(productUpdateScreen);
             productUpdateScreen.recalculateTotalPrice();
         } catch (NumberFormatException ex) {
