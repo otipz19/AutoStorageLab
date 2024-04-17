@@ -93,8 +93,10 @@ public class AllGroupsScreen extends Screen {
                 .filter(btn -> btn.getGroupDto().getName().equals(groupDto.getName()))
                 .findFirst().get();
         groupButtons.remove(toRemove);
-        groupsPanel.remove(toRemove);
-        groupsPanel.revalidate();
-        groupsPanel.repaint();
+        SwingUtilities.invokeLater(() -> {
+            groupsPanel.remove(toRemove);
+            groupsPanel.revalidate();
+            groupsPanel.repaint();
+        });
     }
 }
