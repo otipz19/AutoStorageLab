@@ -15,7 +15,7 @@ public class SearchPanel extends JPanel {
     private ProductsListPanel parent;
     private JTextField searchField;
 
-    public SearchPanel(ProductsListPanel parent){
+    public SearchPanel(ProductsListPanel parent) {
         this.parent = parent;
         setLayout(new BorderLayout(5, 5));
         searchField = new JTextField();
@@ -30,24 +30,31 @@ public class SearchPanel extends JPanel {
 
     /**
      * Returns a list of products matching the search field text.
+     *
      * @return a list of matching products
      */
-    public List<ProductDto> getMatchingProducts(List<ProductDto> products){
+    public List<ProductDto> getMatchingProducts(List<ProductDto> products) {
         String searchText = searchField.getText().toLowerCase();
         Pattern pattern = buildRegexPatternFromSearchText(searchText);
         return products.stream()
-                .filter(product -> pattern.matcher(product.getName().getValue().toLowerCase()).find())
+                .filter(product -> pattern.matcher(product.getName().getValue().toLowerCase()).matches())
                 .toList();
     }
 
     /**
      * Builds a regex pattern from the search text.
+     *
      * @param searchText the search text
      * @return the regex pattern
      */
     private static Pattern buildRegexPatternFromSearchText(String searchText) {
-        searchText = searchText.replaceAll("\\?", ".{1}");
-        searchText = searchText.replaceAll("\\*", ".*");
+        boolean hasAnySpecialCharacters = Pattern.compile("[\\?\\*]").matcher(searchText).find();
+        if (hasAnySpecialCharacters) {
+            searchText = searchText.replaceAll("\\?", ".{1}");
+            searchText = searchText.replaceAll("\\*", ".*");
+        } else {
+            searchText = ".*" + searchText + ".*";
+        }
         return Pattern.compile(searchText);
     }
 }
