@@ -89,10 +89,18 @@ public class ProductsListPanel extends JPanel {
      */
     private void drawProductTitles(List<ProductDto> products) {
         productsPanel.removeAll();
-        products.stream().sorted(Comparator.comparing(p -> p.getName().getValue())).forEach(productDto ->  {
+        products.stream().sorted(Comparator.comparing(p -> p.getName().getValue())).forEach(productDto -> {
             ProductTitlePanel productTitlePanel = new ProductTitlePanel(productDto, this);
             productsPanel.add(productTitlePanel);
         });
+        if (products.size() < 10) {
+            int emptyBodiesCount = 10 - products.size();
+            for (int i = 0; i < emptyBodiesCount; i++) {
+                JPanel emptyPanel = new JPanel();
+                emptyPanel.setPreferredSize(new Dimension(productsPanel.getWidth(), productsPanel.getHeight() / 10));
+                productsPanel.add(emptyPanel);
+            }
+        }
     }
 
     public void delete(ProductTitlePanel toDelete) {
