@@ -12,13 +12,21 @@ import java.awt.*;
  * This screen contains a search field and a panel for displaying the search results.
  */
 public class AllGroupsSearchScreen extends Screen {
+    private ProductsListPanel productsListPanel;
+
     public AllGroupsSearchScreen() {
         super("Search All Groups");
         setLayout(new BorderLayout());
         add(createMainPanel(), BorderLayout.CENTER);
     }
 
-    private JPanel createMainPanel(){
+    @Override
+    public void updateState() {
+        productsListPanel.loadProducts();
+        productsListPanel.performSearch();
+    }
+
+    private JPanel createMainPanel() {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(createReturnBtnPanel(), BorderLayout.NORTH);
         mainPanel.add(createProductsListPanel(), BorderLayout.CENTER);
@@ -33,8 +41,8 @@ public class AllGroupsSearchScreen extends Screen {
         return returnBtnPanel;
     }
 
-    private JPanel createProductsListPanel(){
-        ProductsListPanel productsListPanel = new ProductsListPanel();
+    private JPanel createProductsListPanel() {
+        productsListPanel = new ProductsListPanel();
         productsListPanel.loadProducts();
         return productsListPanel;
     }

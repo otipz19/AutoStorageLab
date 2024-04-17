@@ -30,6 +30,7 @@ public class AllGroupsScreen extends Screen {
 
     @Override
     public void updateState(){
+        groupButtons.clear();
         groupsPanel.removeAll();
         loadGroups();
     }
@@ -95,6 +96,5 @@ public class AllGroupsScreen extends Screen {
         groupButtons.remove(toRemove);
         groupsPanel.remove(toRemove);
         groupsPanel.revalidate();
-        groupsPanel.repaint();
     }
 }

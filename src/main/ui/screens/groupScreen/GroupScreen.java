@@ -140,5 +140,6 @@ public class GroupScreen extends Screen {
     @Override
     public void updateState(){
         setGroup(group);
+        productsListPanel.performSearch();
     }
 }
