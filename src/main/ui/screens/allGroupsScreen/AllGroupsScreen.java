@@ -19,14 +19,17 @@ import java.util.List;
 public class AllGroupsScreen extends Screen {
     private final List<GroupButton> groupButtons = new LinkedList<>();
     private JPanel groupsPanel;
-    private StyledLabel totalPriceLabel;
 
     public AllGroupsScreen() {
         super("All Groups");
         setLayout(new BorderLayout());
         add(createMainPanel(), BorderLayout.CENTER);
 
-        updateTotalPriceLabel();
+        loadGroups();
+    }
+
+    @Override
+    public void updateState(){
         loadGroups();
     }
 
@@ -42,8 +45,6 @@ public class AllGroupsScreen extends Screen {
         dataPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 0));
         dataPanel.add(new GroupsLabel(), BorderLayout.NORTH);
         dataPanel.add(createGroupsPanel(), BorderLayout.CENTER);
-        totalPriceLabel = new StyledLabel("");
-        dataPanel.add(totalPriceLabel, BorderLayout.SOUTH);
         return dataPanel;
     }
 
@@ -94,10 +95,5 @@ public class AllGroupsScreen extends Screen {
         groupsPanel.remove(toRemove);
         groupsPanel.revalidate();
         groupsPanel.repaint();
-    }
-
-    public void updateTotalPriceLabel() {
-        double totalPrice = GroupsController.getTotalPrice();
-        totalPriceLabel.setText("Total price of all products: " + totalPrice);
     }
 }

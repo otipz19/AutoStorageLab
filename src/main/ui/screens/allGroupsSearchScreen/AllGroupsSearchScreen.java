@@ -1,9 +1,8 @@
 package main.ui.screens.allGroupsSearchScreen;
 
-import main.ui.App;
 import main.ui.components.buttons.ReturnButton;
 import main.ui.screens.Screen;
-import main.ui.screens.searchProductsPanel.ProductsListPanel;
+import main.ui.components.panels.productsListPanel.ProductsListPanel;
 
 import javax.swing.*;
 import java.awt.*;

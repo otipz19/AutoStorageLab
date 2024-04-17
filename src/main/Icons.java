@@ -11,6 +11,7 @@ public class Icons {
     private static final String CHECKMARK_IMAGE_PATH = "images/checkmark.png";
     private static final String PLUS_IMAGE_PATH = "images/plus.png";
     private static final String CROSS_IMAGE_PATH = "images/cross.png";
+    private static final String SEARCH_ICON_IMAGE_PATH = "images/search_icon.png";
 
     /**
      * Creates and returns a pen icon of the specified width and height.
@@ -54,6 +55,10 @@ public class Icons {
      */
     public static ImageIcon buildCrossIcon(int width, int height){
         return buildIcon(CROSS_IMAGE_PATH, width, height);
+    }
+
+    public static ImageIcon buildSearchIcon(int width, int height){
+        return buildIcon(SEARCH_ICON_IMAGE_PATH, width, height);
     }
 
     /**

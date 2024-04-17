@@ -3,7 +3,6 @@ package main.ui.screens.groupScreen;
 import lombok.Getter;
 import main.controllers.GroupsController;
 import main.model.dto.GroupDto;
-import main.ui.App;
 import main.ui.components.StyledLabel;
 import main.ui.components.buttons.ReturnButton;
 import main.ui.components.editableField.DescriptionArea;
@@ -11,7 +10,7 @@ import main.ui.screens.Screen;
 import main.ui.screens.groupScreen.components.CreateProductButton;
 import main.ui.screens.groupScreen.components.EditGroupButton;
 import main.ui.screens.groupScreen.components.EditGroupNameField;
-import main.ui.screens.searchProductsPanel.ProductsListPanel;
+import main.ui.components.panels.productsListPanel.ProductsListPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,8 +31,6 @@ public class GroupScreen extends Screen {
     private EditGroupButton editNameBtn;
     private EditGroupButton editDescriptionBtn;
     private JButton createProductBtn;
-    private StyledLabel groupTotalPriceLabel;
-    private StyledLabel groupTotalAmountLabel;
 
     private ProductsListPanel productsListPanel;
 
@@ -65,13 +62,6 @@ public class GroupScreen extends Screen {
         actionsPanel.add(createReturnBtnPanel());
         actionsPanel.add(createGroupNamePanel());
         actionsPanel.add(createDescriptionPanel());
-        JPanel statsPanel = new JPanel(new GridLayout(1, 2));
-        statsPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        groupTotalAmountLabel = new StyledLabel("");
-        statsPanel.add(groupTotalAmountLabel);
-        groupTotalPriceLabel = new StyledLabel("");
-        statsPanel.add(groupTotalPriceLabel);
-        actionsPanel.add(statsPanel);
         return actionsPanel;
     }
 
@@ -126,7 +116,6 @@ public class GroupScreen extends Screen {
         groupNameField.setText(groupDto.getName().getValue());
         descriptionArea.setText(groupDto.getDescription());
         productsListPanel.loadProducts(groupDto);
-        updateStatsLabels();
     }
 
     /**
@@ -140,12 +129,7 @@ public class GroupScreen extends Screen {
     /**
      * Updates the group total price label.
      */
-    public void updateStatsLabels() {
-        double groupTotalPrice = GroupsController.calculateTotalPriceByGroup(group);
-        groupTotalPriceLabel.setText("Total price of products: " + String.format("%.2f", groupTotalPrice));
-        int totalAmount = GroupsController.calculateTotalProductAmountByGroup(group);
-        groupTotalAmountLabel.setText("Total amount of products: " + totalAmount);
-    }
+
 
     @Override
     public void updateState(){

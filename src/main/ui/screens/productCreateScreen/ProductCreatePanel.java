@@ -84,7 +84,7 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
     public void create() {
         try {
             ProductsController.createProduct(getProductDto());
-            App.goToGroupScreen(productCreateScreen.getGroup()); // Navigate to the GroupScreen for the group of the created product
+            App.returnToPreviousScreen();
         } catch (InvalidFormInputException ex) {
             BaseController.showExceptionMessage(ex);
         }

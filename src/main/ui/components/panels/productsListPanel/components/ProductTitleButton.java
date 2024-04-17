@@ -1,4 +1,4 @@
-package main.ui.screens.searchProductsPanel.components;
+package main.ui.components.panels.productsListPanel.components;
 
 import main.model.dto.ProductDto;
 import main.ui.components.buttons.StyledButton;

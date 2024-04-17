@@ -63,7 +63,7 @@ public class GroupCreatePanel extends JPanel implements ICreationPanel {
     public void create() {
         try {
             GroupsController.createGroup(getGroupDto());
-            App.goToAllGroupsScreen();
+            App.returnToPreviousScreen();
         } catch (InvalidFormInputException ex) {
             BaseController.showExceptionMessage(ex);
         }

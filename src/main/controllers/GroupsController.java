@@ -87,6 +87,13 @@ public class GroupsController extends BaseController {
         return DataContext.getInstance().getProductTable().calculateTotalPrice();
     }
 
+    public static int getTotalAmount(){
+        return DataContext.getInstance().getProductTable().getAll().stream()
+                .map(p -> p.getAmount().getValue())
+                .mapToInt(i -> i)
+                .sum();
+    }
+
     /**
      * Calculates the total price of all products in a group.
      *

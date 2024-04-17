@@ -1,11 +1,13 @@
-package main.ui.screens.searchProductsPanel;
+package main.ui.components.panels.productsListPanel;
 
 import main.model.data.DataContext;
 import main.model.dto.GroupDto;
 import main.model.dto.Mapper;
 import main.model.dto.ProductDto;
-import main.ui.screens.searchProductsPanel.components.ProductTitlePanel;
-import main.ui.screens.searchProductsPanel.components.SearchPanel;
+import main.ui.components.StyledLabel;
+import main.ui.components.panels.productsListPanel.components.ProductTitlePanel;
+import main.ui.components.panels.productsListPanel.components.SearchPanel;
+import main.ui.components.panels.productsListPanel.components.StatsPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -15,9 +17,11 @@ import java.util.UUID;
 
 public class ProductsListPanel extends JPanel {
     private List<ProductDto> products;
+    private GroupDto group;
 
     private SearchPanel searchPanel;
     private JPanel productsPanel;
+    private StatsPanel statsPanel;
 
     public ProductsListPanel() {
         setLayout(new BorderLayout());
@@ -26,10 +30,13 @@ public class ProductsListPanel extends JPanel {
         var scroll = new JScrollPane(createProductsPanel());
         scroll.setBorder(new EmptyBorder(10, 0, 0, 0));
         add(scroll, BorderLayout.CENTER);
+        statsPanel = new StatsPanel();
+        add(statsPanel, BorderLayout.SOUTH);
     }
 
     /**
      * Creates and returns the products panel.
+     *
      * @return the products panel
      */
     private JPanel createProductsPanel() {
@@ -55,36 +62,42 @@ public class ProductsListPanel extends JPanel {
         productsPanel.repaint();
     }
 
-    public void loadProducts(){
+    public void loadProducts() {
         products = Mapper.map(DataContext.getInstance().getProductTable().getAll());
         drawProductTitles(products);
+        statsPanel.updateStatsLabels(null);
     }
 
     /**
      * Loads the products for the group.
+     *
      * @param groupDto the group DTO
      */
     public void loadProducts(GroupDto groupDto) {
+        group = groupDto;
         UUID groupId = DataContext.getInstance().getGroupTable().get(groupDto.getName()).getId();
         products = Mapper.map(DataContext.getInstance().getProductTable().getByGroupId(groupId));
         drawProductTitles(products);
+        statsPanel.updateStatsLabels(groupDto);
     }
 
     /**
      * Draws the product titles for the products.
+     *
      * @param products the products
      */
-    private void drawProductTitles(List<ProductDto> products){
+    private void drawProductTitles(List<ProductDto> products) {
         productsPanel.removeAll();
-        for(ProductDto productDto: products){
+        for (ProductDto productDto : products) {
             ProductTitlePanel productTitlePanel = new ProductTitlePanel(productDto, this);
             productsPanel.add(productTitlePanel);
         }
     }
 
-    public void delete(ProductTitlePanel toDelete){
+    public void delete(ProductTitlePanel toDelete) {
         productsPanel.remove(toDelete);
         productsPanel.revalidate();
         productsPanel.repaint();
+        statsPanel.updateStatsLabels(group);
     }
 }

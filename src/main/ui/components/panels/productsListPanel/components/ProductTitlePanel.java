@@ -1,9 +1,9 @@
-package main.ui.screens.searchProductsPanel.components;
+package main.ui.components.panels.productsListPanel.components;
 
 import main.controllers.ProductsController;
 import main.model.dto.ProductDto;
 import main.ui.components.buttons.StyledButton;
-import main.ui.screens.searchProductsPanel.ProductsListPanel;
+import main.ui.components.panels.productsListPanel.ProductsListPanel;
 
 import javax.swing.*;
 import java.awt.*;
