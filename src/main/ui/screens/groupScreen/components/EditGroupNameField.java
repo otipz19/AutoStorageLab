@@ -11,7 +11,6 @@ import java.awt.*;
 public class EditGroupNameField extends EditableValidatableField {
     public EditGroupNameField() {
         super(GroupName::isValid);
-        setBackground(new Color(0xe9f2fb));
         configInputField();
     }
 

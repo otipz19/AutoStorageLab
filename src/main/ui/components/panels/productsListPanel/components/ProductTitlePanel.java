@@ -12,7 +12,8 @@ import java.awt.*;
 
 public class ProductTitlePanel extends JPanel {
     public ProductTitlePanel(ProductDto productDto, ProductsListPanel parent) {
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(5, 5));
+        setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
         ProductTitleButton productTitleBtn = new ProductTitleButton(productDto);
         add(productTitleBtn, BorderLayout.CENTER);
         JButton deleteBtn = new RoundedButton("", 10);

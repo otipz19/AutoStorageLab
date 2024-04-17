@@ -2,6 +2,7 @@ package main.ui.screens.groupScreen;
 
 import lombok.Getter;
 import main.model.dto.GroupDto;
+import main.ui.components.NoLineTitledBorder;
 import main.ui.components.buttons.ReturnButton;
 import main.ui.components.editableField.DescriptionArea;
 import main.ui.screens.Screen;
@@ -11,6 +12,7 @@ import main.ui.screens.groupScreen.components.EditGroupNameField;
 import main.ui.components.panels.productsListPanel.ProductsListPanel;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**
@@ -84,7 +86,7 @@ public class GroupScreen extends Screen {
     private JPanel createGroupNamePanel() {
         JPanel groupNamePanel = new JPanel(new BorderLayout(5, 5));
         groupNameField = new EditGroupNameField();
-        groupNameField.setSize(580, 50);
+        groupNameField.setBorder(new NoLineTitledBorder("Name: "));
         groupNamePanel.add(groupNameField, BorderLayout.CENTER);
         editNameBtn = new EditGroupButton(groupNameField, this);
         editNameBtn.setSize(50, 50);
@@ -103,6 +105,7 @@ public class GroupScreen extends Screen {
         JScrollPane scroll = new JScrollPane(descriptionArea);
         scroll.setPreferredSize(new Dimension(580, 100));
         scroll.setMaximumSize(new Dimension(580, 200));
+        scroll.setBorder(new NoLineTitledBorder("Description: "));
         descriptionPanel.add(scroll, BorderLayout.CENTER);
         editDescriptionBtn = new EditGroupButton(descriptionArea, this);
         editDescriptionBtn.setSize(50, 50);
