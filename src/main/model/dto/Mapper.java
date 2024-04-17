@@ -5,6 +5,7 @@ import main.model.data.records.GroupRecord;
 import main.model.data.records.ProductRecord;
 import main.model.valueObjects.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,9 +71,9 @@ public class Mapper {
     }
 
     public static List<ProductDto> map(List<ProductRecord> records) {
-        return records.stream()
+        return new ArrayList<>(records.stream()
                 .map(r -> Mapper.map(r, DataContext.getInstance().getGroupTable().get(r.getGroupId()).getName()))
-                .toList();
+                .toList());
     }
 
     public static GroupSerializationDto mapSerialization(GroupRecord record){

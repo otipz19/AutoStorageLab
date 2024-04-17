@@ -34,7 +34,7 @@ public class ProductTable implements IProductTable {
 
     @Override
     public List<ProductRecord> getAll(){
-        return primaryKey.values().stream().toList();
+        return new ArrayList<>(primaryKey.values().stream().toList());
     }
 
     @Override
@@ -62,7 +62,7 @@ public class ProductTable implements IProductTable {
             return new ArrayList<>();
         }
         //copy of internal list
-        return related.stream().toList();
+        return new ArrayList<>(related.stream().toList());
     }
 
     @Override

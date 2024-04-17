@@ -30,7 +30,7 @@ public class GroupTable implements IGroupTable {
 
     @Override
     public List<GroupRecord> getAll() {
-        return primaryKey.values().stream().toList();
+        return new ArrayList<>(primaryKey.values().stream().toList());
     }
 
     @Override

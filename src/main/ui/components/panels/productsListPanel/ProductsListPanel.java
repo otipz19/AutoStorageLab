@@ -61,12 +61,13 @@ public class ProductsListPanel extends JPanel {
         }
         productsPanel.revalidate();
         productsPanel.repaint();
+        statsPanel.updateStatsLabels(matchingProducts);
     }
 
     public void loadProducts() {
         products = Mapper.map(DataContext.getInstance().getProductTable().getAll());
         drawProductTitles(products);
-        statsPanel.updateStatsLabels(null);
+        statsPanel.updateStatsLabels(products);
     }
 
     /**
@@ -79,7 +80,7 @@ public class ProductsListPanel extends JPanel {
         UUID groupId = DataContext.getInstance().getGroupTable().get(groupDto.getName()).getId();
         products = Mapper.map(DataContext.getInstance().getProductTable().getByGroupId(groupId));
         drawProductTitles(products);
-        statsPanel.updateStatsLabels(groupDto);
+        statsPanel.updateStatsLabels(products);
     }
 
     /**
@@ -103,10 +104,11 @@ public class ProductsListPanel extends JPanel {
         }
     }
 
-    public void delete(ProductTitlePanel toDelete) {
+    public void delete(ProductTitlePanel toDelete, ProductDto productDto) {
+        products.remove(productDto);
         productsPanel.remove(toDelete);
         productsPanel.revalidate();
         productsPanel.repaint();
-        statsPanel.updateStatsLabels(group);
+        statsPanel.updateStatsLabels(products);
     }
 }

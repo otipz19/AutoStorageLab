@@ -21,7 +21,7 @@ public class ProductTitlePanel extends JPanel {
         deleteBtn.setIcon(Icons.buildCrossIcon(20, 20));
         deleteBtn.addActionListener(e -> {
             ProductsController.deleteProduct(productDto);
-            parent.delete(this);
+            parent.delete(this, productDto);
         });
         add(deleteBtn, BorderLayout.EAST);
     }
