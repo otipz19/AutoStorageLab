@@ -22,6 +22,7 @@ public class AllGroupsSearchScreen extends Screen {
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(createReturnBtnPanel(), BorderLayout.NORTH);
         mainPanel.add(createProductsListPanel(), BorderLayout.CENTER);
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         return mainPanel;
     }
 

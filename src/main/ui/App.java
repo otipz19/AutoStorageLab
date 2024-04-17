@@ -136,7 +136,7 @@ public class App extends JFrame {
         setTitle("Auto Storage Lab");
         setSize(1000, 750);
         getContentPane().setBackground(new Color(0xe9f2fb));
-        setResizable(false);
+//        setResizable(false);
         setLocationRelativeTo(null);
     }
 }

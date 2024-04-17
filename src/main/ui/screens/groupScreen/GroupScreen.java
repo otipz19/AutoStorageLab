@@ -1,9 +1,7 @@
 package main.ui.screens.groupScreen;
 
 import lombok.Getter;
-import main.controllers.GroupsController;
 import main.model.dto.GroupDto;
-import main.ui.components.StyledLabel;
 import main.ui.components.buttons.ReturnButton;
 import main.ui.components.editableField.DescriptionArea;
 import main.ui.screens.Screen;
@@ -42,7 +40,7 @@ public class GroupScreen extends Screen {
     public GroupScreen(GroupDto groupDto) {
         super("Group Details");
         setLayout(new BorderLayout());
-        JPanel mainPanel = new JPanel(new BorderLayout());
+        JPanel mainPanel = new JPanel(new BorderLayout(5, 5));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         productsListPanel = new ProductsListPanel();
         mainPanel.add(createActionsPanel(), BorderLayout.NORTH);
@@ -58,10 +56,13 @@ public class GroupScreen extends Screen {
      */
     private JPanel createActionsPanel(){
         JPanel actionsPanel = new JPanel();
-        actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.Y_AXIS));
-        actionsPanel.add(createReturnBtnPanel());
-        actionsPanel.add(createGroupNamePanel());
-        actionsPanel.add(createDescriptionPanel());
+        actionsPanel.setLayout(new BorderLayout(5, 5));
+        JPanel smallPanel = new JPanel();
+        smallPanel.setLayout(new BoxLayout(smallPanel, BoxLayout.Y_AXIS));
+        smallPanel.add(createReturnBtnPanel());
+        smallPanel.add(createGroupNamePanel());
+        actionsPanel.add(smallPanel, BorderLayout.NORTH);
+        actionsPanel.add(createDescriptionPanel(), BorderLayout.CENTER);
         return actionsPanel;
     }
 
@@ -81,7 +82,7 @@ public class GroupScreen extends Screen {
      * @return the group name panel
      */
     private JPanel createGroupNamePanel() {
-        JPanel groupNamePanel = new JPanel(new BorderLayout());
+        JPanel groupNamePanel = new JPanel(new BorderLayout(5, 5));
         groupNameField = new EditGroupNameField();
         groupNameField.setSize(580, 50);
         groupNamePanel.add(groupNameField, BorderLayout.CENTER);
@@ -97,10 +98,12 @@ public class GroupScreen extends Screen {
      * @return the description panel
      */
     private JPanel createDescriptionPanel() {
-        JPanel descriptionPanel = new JPanel(new BorderLayout());
+        JPanel descriptionPanel = new JPanel(new BorderLayout(5, 5));
         descriptionArea = new DescriptionArea();
-        descriptionArea.setSize(580, 50);
-        descriptionPanel.add(descriptionArea, BorderLayout.CENTER);
+        JScrollPane scroll = new JScrollPane(descriptionArea);
+        scroll.setPreferredSize(new Dimension(580, 100));
+        scroll.setMaximumSize(new Dimension(580, 200));
+        descriptionPanel.add(scroll, BorderLayout.CENTER);
         editDescriptionBtn = new EditGroupButton(descriptionArea, this);
         editDescriptionBtn.setSize(50, 50);
         descriptionPanel.add(editDescriptionBtn, BorderLayout.EAST);

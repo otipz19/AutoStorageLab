@@ -17,7 +17,7 @@ public class SearchPanel extends JPanel {
 
     public SearchPanel(ProductsListPanel parent){
         this.parent = parent;
-        setLayout(new BorderLayout());
+        setLayout(new BorderLayout(5, 5));
         searchField = new JTextField();
         searchField.setSize(580, 50);
         add(searchField, BorderLayout.CENTER);

@@ -1,7 +1,9 @@
 package main.ui.components.panels.productsListPanel.components;
 
+import main.Icons;
 import main.controllers.ProductsController;
 import main.model.dto.ProductDto;
+import main.ui.components.buttons.RoundedButton;
 import main.ui.components.buttons.StyledButton;
 import main.ui.components.panels.productsListPanel.ProductsListPanel;
 
@@ -13,7 +15,9 @@ public class ProductTitlePanel extends JPanel {
         setLayout(new BorderLayout());
         ProductTitleButton productTitleBtn = new ProductTitleButton(productDto);
         add(productTitleBtn, BorderLayout.CENTER);
-        JButton deleteBtn = new StyledButton("Delete");
+        JButton deleteBtn = new RoundedButton("", 10);
+        deleteBtn.setBackground(Color.WHITE);
+        deleteBtn.setIcon(Icons.buildCrossIcon(20, 20));
         deleteBtn.addActionListener(e -> {
             ProductsController.deleteProduct(productDto);
             parent.delete(this);

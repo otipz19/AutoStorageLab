@@ -66,7 +66,7 @@ public class ProductCreatePanel extends JPanel implements ICreationPanel {
         name = new ValidatableNotifierField(ProductName::isValid, this);
         fieldsPanel.add(name);
         description = new JTextArea();
-        fieldsPanel.add(description);
+        fieldsPanel.add(new JScrollPane(description));
         manufacturer = new ValidatableNotifierField(ManufacturerName::isValid, this);
         fieldsPanel.add(manufacturer);
         amount = new ValidatableNotifierField(ProductAmount::isValid, this);
